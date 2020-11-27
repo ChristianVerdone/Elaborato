@@ -1,4 +1,4 @@
-package personale.ui;
+package struttureEventi.ui;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.HashSet;

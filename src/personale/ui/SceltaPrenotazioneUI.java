@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import struttureEventi.ui.AbitazioneUI;
+
 import javax.swing.JButton;
 
 public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
