@@ -1,11 +1,11 @@
 package struttureEventi;
 
-
+import contabilità.Cliente;
 
 public class PrenotazioneSv extends Prenotazione {
 
-	public PrenotazioneSv(String idPrenotazione, Tessera tessera, String idStruttura) {
-		super(idPrenotazione);
+	public PrenotazioneSv(String idPrenotazione, Cliente cliente,  Tessera tessera, String idStruttura) {
+		super(idPrenotazione, cliente);
 		this.tessera = tessera;
 		this.idStruttura = idStruttura;
 	}
