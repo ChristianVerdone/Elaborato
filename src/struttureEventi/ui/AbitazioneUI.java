@@ -1,4 +1,4 @@
-package personale.ui;
+package struttureEventi.ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,7 +12,7 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import contabilità.Cliente;
-import struttureEventi.PrenotazioneAbitazione;
+import struttureEventi.classes.PrenotazioneAbitazione;
 
 import javax.swing.JTextField;
 import javax.swing.JMenu;
