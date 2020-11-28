@@ -1,11 +1,11 @@
-package struttureEventi;
+package struttureEventi.classes;
 
-
+import contabilità.Cliente;
 
 public class PrenotazioneEvento extends Prenotazione {
 
-	public PrenotazioneEvento(String idPrenotazione, String evento, String biglietto) {
-		super(idPrenotazione);
+	public PrenotazioneEvento(String idPrenotazione, Cliente cliente, String evento, String biglietto) {
+		super(idPrenotazione, cliente);
 		this.evento = evento;
 		this.biglietto = biglietto;
 	}

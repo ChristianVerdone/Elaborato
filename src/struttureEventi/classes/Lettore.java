@@ -1,4 +1,4 @@
-package struttureEventi;
+package struttureEventi.classes;
 
 import java.time.LocalDateTime;
 
