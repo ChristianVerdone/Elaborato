@@ -10,8 +10,6 @@ public class PrenotazioneEvento extends Prenotazione {
 		this.biglietto = biglietto;
 	}
 	
-	
-	
 	public String getEvento() {
 		return evento;
 	}
@@ -25,7 +23,11 @@ public class PrenotazioneEvento extends Prenotazione {
 		this.biglietto = biglietto;
 	}
 
-
+	@Override
+	public String toString() {
+		return "PrenotazioneEvento [idPrenotazione=" + idPrenotazione + ", cliente=" + cliente + ", evento=" + evento
+				+ ", biglietto=" + biglietto + "]";
+	}
 
 	private String evento;
 	private String biglietto;

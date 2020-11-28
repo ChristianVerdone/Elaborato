@@ -17,5 +17,11 @@ public class PrenotazioneRistorante extends Prenotazione{
 		this.nTavolo = nTavolo;
 	}
 
+	@Override
+	public String toString() {
+		return "PrenotazioneRistorante [idPrenotazione=" + idPrenotazione + ", cliente=" + cliente + ", nTavolo="
+				+ nTavolo + "]";
+	}
+	
 	private int nTavolo;
 }
