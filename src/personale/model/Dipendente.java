@@ -2,7 +2,7 @@ package personale.model;
 
 public class Dipendente {
 
-	public Dipendente(String cf, String nome, String cognome, String mansione, double stipendio) {
+	public Dipendente(String cf, String nome, String cognome, String mansione, Integer stipendio) {
 		this.cf = cf;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -24,14 +24,14 @@ public class Dipendente {
 	public String getNome() { return nome; }
 	public String getCognome() { return cognome; }
 	public String getMansione() { return mansione; }
-	public double getStipendio() { return stipendio; }
+	public Integer getStipendio() { return stipendio; }
 	
 	public void setCf(String cf) { this.cf = cf; }
 	public void setNome(String nome) { this.nome = nome; }
 	public void setCognome(String cognome) { this.cognome = cognome; }
 	public void setMansione(String mansione) { this.mansione = mansione; }
-	public void setStipendio(double stipendio) { this.stipendio = stipendio; }
+	public void setStipendio(Integer stipendio) { this.stipendio = stipendio; }
 	
 	private String cf, nome, cognome, mansione;
-	private double stipendio;	
+	private Integer stipendio;	
 }
