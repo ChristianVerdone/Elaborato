@@ -1,4 +1,4 @@
-package struttureEventi;
+package struttureEventi.classes;
 
 public class Abitazione {
 
@@ -10,6 +10,7 @@ public class Abitazione {
 		this.descrizione = descrizione;
 	}
 	
+
 	public String getIdAbitazione() {
 		return idAbitazione;
 	}

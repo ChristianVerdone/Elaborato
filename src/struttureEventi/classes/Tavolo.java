@@ -1,4 +1,4 @@
-package struttureEventi;
+package struttureEventi.classes;
 
 public class Tavolo {
 
