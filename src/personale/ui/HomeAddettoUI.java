@@ -53,7 +53,9 @@ public class HomeAddettoUI extends HomeUI {
 			/* To do */
 			break;
 		case "pren":
-			/* To do */
+			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
+			p.start();
+			this.dispose();
 			break;	
 		}
 	}
