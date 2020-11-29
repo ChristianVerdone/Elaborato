@@ -14,6 +14,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import personale.model.Account;
+import repository.DAOAccount;
+import repository.DAOFactory;
 
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
@@ -24,6 +26,7 @@ public class LoginUI extends JFrame implements ActionListener {
 	private JLabel lbl_error_username;
 	private JPasswordField pf;
 	private JLabel lbl_error_password;
+	private JButton btn_login;
 
 	/**
 	 * Launch the application.
@@ -120,48 +123,64 @@ public class LoginUI extends JFrame implements ActionListener {
 		separator.setBounds(113, 200, 200, 2);
 		this.getContentPane().add(separator);
 
-		JButton btn_login = new JButton("Login");
+		btn_login = new JButton("Login");
 		btn_login.setBounds(165, 210, 85, 25);
 		btn_login.addActionListener(this);
 		this.getContentPane().add(btn_login);
 
 	}
 
+	private void endLoginProcessing(String msg, boolean usn, boolean pwd) {
+		JOptionPane.showMessageDialog(this, msg);
+		lbl_error_username.setVisible(usn);
+		lbl_error_password.setVisible(pwd);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/* Temporaneo */
 		String username = tf_username.getText().toString();
 		String password = String.valueOf(pf.getPassword());
-
 		String msg = "";
 		boolean error_username = true;
 		boolean error_password = true;
 
-		if(username.length() < 4) msg = "Username di almeno 3 caratteri\n";
-		else if(username.length() > 32) msg = "Username di massimo 32 caratteri\n";
+		/* Controllo validità inserimento */
+		if(username.length() < 3) msg = "Username di almeno 3 caratteri\n";
+		else if(username.length() > 16) msg = "Username di massimo 16 caratteri\n";
 		else error_username = false;
 
+		if(password.length() < 6) msg += "Password di almeno 6 caratteri";
+		else if(password.length() > 30) msg += "Password di massimo 30 caratteri";
+		else error_password = false;	
 
-		if(password.length() < 7) msg += "Password di almeno 6 caratteri";
-		else if(password.length() > 32) msg += "Password di massimo 32 caratteri";
-		else error_password = false;
+		if(!msg.equals("")) { 
+			endLoginProcessing(msg, error_username, error_password);
+			return;
+		}
 
-		lbl_error_username.setVisible(error_username);
-		lbl_error_password.setVisible(error_password);
+		/* Controllo su database MySQL */	
+		DAOAccount dao_account = DAOFactory.getDAOAccount();
+		Account curr_user = dao_account.doRetrieveByUsername(username);
 
-		if(!msg.equals("")) JOptionPane.showMessageDialog(this, msg);
-		else {
-			/* Nel controller, inserire factory method*/
+		if(curr_user == null) {
+			endLoginProcessing("Non esiste alcun utente: " + username, true, error_password);
+			return;
+		} else if (curr_user.getPassword().equals(password)) {
 			JOptionPane.showMessageDialog(this, "Accesso riuscito");
-			switch(username) {
-			case "admin": new HomeAdminUI(new Account(username, password, Account.Permessi.ALL));
-			break;
-			case "reception": new HomeAdminUI(new Account(username, password, Account.Permessi.REDUCED));
-			break;
-			default : new HomeUI(new Account(username, password, Account.Permessi.NONE));
+			switch(curr_user.getTipologiaPermessi()) {
+			case ALL: 
+				new HomeAdminUI(curr_user);
+				break;
+			case REDUCED: 
+				new HomeAddettoUI(curr_user);
+				break;
+			default : 
+				new HomeUI(curr_user);	
 			}
-		
 			this.dispose();
+		} else {
+			endLoginProcessing("Password errata", error_username, true);
+			return;
 		}
 	}
 }
