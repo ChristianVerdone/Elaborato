@@ -16,7 +16,7 @@ public class HomeAddettoUI extends HomeUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomeAddettoUI window = new HomeAddettoUI(new Account("userAddetto", "psw012", Account.Permessi.REDUCED));
+					HomeAddettoUI window = new HomeAddettoUI(new Account("userAddetto", "psw02", Account.Permessi.REDUCED));
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

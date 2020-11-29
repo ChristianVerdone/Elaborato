@@ -10,6 +10,7 @@ public class Abitazione {
 		this.descrizione = descrizione;
 	}
 	
+
 	public String getIdAbitazione() {
 		return idAbitazione;
 	}
