@@ -23,6 +23,7 @@ public class EventoUI {
 	
 	private HashMap<String, Cliente> clienti;
 	private HashMap<String, Evento> eventi;
+	private HashMap<String, Biglietto> biglietti;
 	private JFrame frame;
 
 	/**
@@ -79,15 +80,15 @@ public class EventoUI {
 		scrollPane.setBounds(195, 10, 229, 50);
 		frame.getContentPane().add(scrollPane);
 		
-		HashMap<String, Biglietto> biglietti = new HashMap<String, Biglietto>();
-		Biglietto b = new Biglietto("1", 12, true);
-		Biglietto b2 = new Biglietto("2", 13, true);
+		biglietti = new HashMap<String, Biglietto>();
+		Biglietto b = new Biglietto("1", 12, true,"Escursione in montagna");
+		Biglietto b2 = new Biglietto("2", 13, true, "Escursione in montagna");
 		biglietti.put(b.getIdBiglietto(), b);
 		biglietti.put(b2.getIdBiglietto(), b2);
 		
-		Evento event =new Evento("001", "Escursione in montagna", "escursione", "montagna", biglietti);
+		Evento event =new Evento("001", "Escursione in montagna", "escursione", "montagna");
 		eventi = new HashMap<String, Evento>();
-		eventi.put(event.getIdEvento(), event);
+		eventi.put(event.getNome(), event);
 		
 		DefaultListModel<String> listmodel = new DefaultListModel<>();
 		listmodel.addAll(eventi.keySet());
@@ -104,11 +105,8 @@ public class EventoUI {
 		scrollPane_1.setBounds(195, 76, 229, 50);
 		frame.getContentPane().add(scrollPane_1);
 		
-		String s = listE.getSelectedValue().toString();
-		Evento e = eventi.get(s);
-		
 		DefaultListModel<String> listmodelB = new DefaultListModel<String>();
-		listmodelB.addAll(e.getBiglietti().keySet()); //metodo per prendere solo i biglietti disponibili
+		listmodelB.addAll(biglietti.keySet()); //metodo per prendere solo i biglietti disponibili
 		
 		JList listB = new JList(listmodelB);
 		scrollPane_1.setViewportView(listB);
@@ -139,7 +137,7 @@ public class EventoUI {
 				String s = listE.getSelectedValue().toString();
 				Evento ev = eventi.get(s);
 				s = listB.getSelectedValue().toString();
-				Biglietto b = ev.getBiglietti().get(s);
+				Biglietto b = biglietti.get(s);
 				s = listC.getSelectedValue().toString();
 				Cliente c = clienti.get(s);
 				PrenotazioneEvento p = new PrenotazioneEvento(Integer.toString(i), c, ev.getIdEvento(), b.getIdBiglietto());

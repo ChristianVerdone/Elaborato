@@ -3,8 +3,8 @@ package struttureEventi.classes;
 public class Biglietto {
 	
 	
-	public Biglietto(String idBiglietto, float costo, boolean disponibilità) {
-		
+	public Biglietto(String idBiglietto, float costo, boolean disponibilità, String nomeEvento) {
+		this.nomeEvento= nomeEvento;
 		this.idBiglietto = idBiglietto;
 		this.costo = costo;
 		this.disponibilità = disponibilità;
@@ -29,7 +29,7 @@ public class Biglietto {
 		this.disponibilità = disponibilità;
 	}
 
-
+	private String nomeEvento;
 	private String idBiglietto;
 	private float costo;
 	private boolean disponibilità;
