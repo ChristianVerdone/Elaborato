@@ -86,8 +86,8 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 		try {
 			
 			
-			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneEvento, Cliente, Biglietto, Evento)"
-					+ " values (?, ?, ?)";
+			String query = " insert into PrenotazioniEventi ( IdPrenotazioneEvento, Cliente, Biglietto, Evento)"
+					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, pe.getIdPrenotazione());
 			preparedStmt.setString(2, pe.getCliente().getCf());
