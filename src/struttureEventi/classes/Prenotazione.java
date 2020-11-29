@@ -22,6 +22,11 @@ public class Prenotazione {
 		this.cliente = cliente;
 	}
 
+	@Override
+	public String toString() {
+		return "Prenotazione [idPrenotazione=" + idPrenotazione + ", cliente=" + cliente + "]";
+	}
+
 	protected String idPrenotazione;
 	public Cliente cliente;
 	

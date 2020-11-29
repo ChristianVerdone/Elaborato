@@ -6,10 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import struttureEventi.ui.AbitazioneUI;
-import struttureEventi.ui.SceltaCliente;
-
 import javax.swing.JButton;
+import javax.swing.JLabel;
+
+import struttureEventi.ui.AbitazioneUI;
+import struttureEventi.ui.EventoUI;
+import struttureEventi.ui.RistoranteUI;
+import struttureEventi.ui.StrutturaUI;
 
 public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 
@@ -46,6 +49,7 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Scegliere la prenotazione");
 		
 		JButton btnAbitazione = new JButton("Prenotazione Abitazione");
 		btnAbitazione.setBounds(109, 58, 202, 23);
@@ -64,25 +68,32 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 		btnRistorante.setActionCommand("ristorante");
 		btnRistorante.addActionListener(this);
 		frame.getContentPane().add(btnRistorante);
+		
+		JButton btnEvento = new JButton("Prenotazione Evento");
+		btnEvento.setActionCommand("evento");
+		btnEvento.setBounds(109, 160, 202, 23);
+		frame.getContentPane().add(btnEvento);
+		
+		JLabel lblNewLabel = new JLabel("Scegliere la prenotazione che si desidera effettuare");
+		lblNewLabel.setBounds(85, 11, 253, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		
 		switch(e.getActionCommand()) {
 		case "abitazione":
-			SceltaCliente sc= new SceltaCliente(e.getActionCommand());
-			sc.Scelta(e.getActionCommand());
-		case "struttura": 
-			/**StrutturaUI s = new StrutturaUI(); 
-			s.start(); 
-			this.dispose();*/ 
-			break;	 
-		case "ristorante": 
-			/**RistoranteUI r = new RistoranteUI(); 
-			r.start(); 
-			this.dispose(); */
-			break; 
-			 
+			AbitazioneUI a=new AbitazioneUI();
+			a.start();
+			this.dispose();
+			break;
+		case "struttura":
+			/* To do */
+			break;	
+		case "ristorante":
+			/* To do */
+			break;
 		}
 	}
 }
