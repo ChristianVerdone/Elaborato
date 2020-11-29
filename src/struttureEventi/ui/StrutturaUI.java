@@ -108,7 +108,7 @@ public class StrutturaUI {
 		scrollPane_1.setBounds(141, 128, 220, 55);
 		frame.getContentPane().add(scrollPane_1);
 		
-		Tessera t = new Tessera("01", true);
+		Tessera t = new Tessera("01", "tessera 1");
 		tessere = new HashMap<String, Tessera>();
 		tessere.put(t.getId(), t);
 		//ci vuole un metodo per inserire solo le tessere disponibili

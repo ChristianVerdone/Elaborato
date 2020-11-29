@@ -1,11 +1,9 @@
 package struttureEventi.classes;
 
-
-
 public class Tessera {
-	public Tessera(String id, boolean disponibilità) {
+	public Tessera(String id, String descrizione) {
 		this.id = id;
-		this.disponibilità = disponibilità;
+		this.descrizione = descrizione;
 	}
 	
 	public String getId() {
@@ -14,14 +12,7 @@ public class Tessera {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	public boolean isDisponibilità() {
-		return disponibilità;
-	}
-	public void setDisponibilità(boolean disponibilità) {
-		this.disponibilità = disponibilità;
-	}
 
 	private String id;
-	private boolean disponibilità;
+	private String descrizione;
 }
