@@ -18,7 +18,8 @@ create table EVENTI(
 create table BIGLIETTI(
 	IdBiglietto char(5) PRIMARY KEY,
     Costo decimal(4,2) NOT NULL,
-    Disponibilità boolean NOT NULL
+    Disponibilità boolean NOT NULL,
+    NomeEvento varchar(30) not null
 );
 
 create table CONTITOTALI(
@@ -104,6 +105,7 @@ create table PRENOTAZIONIRISTORANTE(
 );
 
 create table PRENOTAZIONIEVENTI(
+	IdPrenotazioneEvento char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
     Biglietto char(5) references BIGLIETTI(IdBiglietto),
     Evento char(5) references EVENTI(IdEvento)
@@ -139,16 +141,16 @@ insert into EVENTI values
 #ho impostato la disponibilità a true per semplicità, secondo me potremmo anche toglierla
 
 insert into BIGLIETTI values
-("BI001", "12.50", true),
-("BI002", "12.50", true),
-("BI003", "15.50", true),
-("BI004", "17.50", true),
-("BI005", "12.50", true),
-("BI006", "17.50", true),
-("BI007", "17.50", true),
-("BI008", "13.50", true),
-("BI009", "18.50", true),
-("BI010", "12.50", true);
+("BI001", "12.50", true, "Portaria"),
+("BI002", "12.50", true, "La Cerreta"),
+("BI003", "15.50", true, "La Fenice in live"),
+("BI004", "17.50", true,  "Campionato di pallavolo"),
+("BI005", "12.50", true, "Le mille note di Beethoven "),
+("BI006", "17.50", true, "Once upon a time"),
+("BI007", "17.50", true, "Once upon a time"),
+("BI008", "13.50", true, "Campionato di pallavolo"),
+("BI009", "18.50", true, "La Cerreta"),
+("BI010", "12.50", true, "Portaria");
 
 insert into contitotali values
 ("CT001", 305.60, "2020-10-24", "AMNNCC66G32N523K"),
@@ -243,13 +245,13 @@ insert into prenotazioniristorante values
 
 
 insert into prenotazionieventi values
-("AMNNCC66G32N523K", "BI001", "EV001"),
-("FRNELN43B54D432N", "BI002", "EV002"),
-("AMNNCC66G32N523K", "BI003", "EV003"),
-("CRSDNT73B24C634L", "BI004", "EV004"),
-("CGNPLO78H12N234D", "BI005", "EV005"),
-("CGNPLO78H12N234D", "BI006", "EV006"),
-("PSTRSL78F34D519C", "BI007", "EV006");
+("PE001", "AMNNCC66G32N523K", "BI001", "EV001"),
+("PE002","FRNELN43B54D432N", "BI002", "EV002"),
+("PE003","AMNNCC66G32N523K", "BI003", "EV003"),
+("PE004","CRSDNT73B24C634L", "BI004", "EV004"),
+("PE007","CGNPLO78H12N234D", "BI005", "EV005"),
+("PE005","CGNPLO78H12N234D", "BI006", "EV006"),
+("PE006","PSTRSL78F34D519C", "BI007", "EV006");
 
 
 insert into prenotazionistrutture values
@@ -263,3 +265,4 @@ insert into movimenti values
 ("TS003", "L01", true),
 ("TS002", "L02", true),
 ("TS005", "L02", true);
+
