@@ -15,8 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.JSpinner;
 
 import personale.model.Account;
 import personale.model.Account.Permessi;
@@ -25,7 +24,7 @@ import repository.DAOAccount;
 import repository.DAODipendenti;
 import repository.DAOFactory;
 
-import javax.swing.JSpinner;
+
 
 public class RegistrazioneUI extends JFrame implements ActionListener{
 	

@@ -69,7 +69,7 @@ public class DAOAccountImpl implements DAOAccount {
 	public int delete(String username) {
 		try {
 			Statement statement = connection.getConnection().createStatement();
-			int result = statement.executeUpdate("DELETE FROM accounts WHERE Username=" + username);
+			return statement.executeUpdate("DELETE FROM accounts WHERE username=" + username);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -92,10 +92,6 @@ public class DAOAccountImpl implements DAOAccount {
 			//Ritorna il numero di righe manipolate
 			return preparedStmt.executeUpdate();
 			
-			/*Statement stm = connection.getConnection().createStatement();
-			stm.executeUpdate("INSERT INTO ACCOUNTS " + 
-					"VALUES (\""+ account.getUsername() +" \", \"" +  cf + "\", \"" +
-					account.getPassword()+"\", " + getIntFromPermessi(account.getTipologiaPermessi()) +"),");*/
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}

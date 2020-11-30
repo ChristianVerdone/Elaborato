@@ -11,12 +11,19 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerDateModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
 
 import personale.model.Dipendente;
 import personale.model.Servizio;
@@ -25,27 +32,13 @@ import repository.DAODipendenti;
 import repository.DAOFactory;
 import repository.DAOTurniLavoro;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.JTable;
-
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalUnit;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 
 
 
@@ -126,27 +119,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		JScrollPane scrollPane_table = new JScrollPane(table);
 		scrollPane_table.setBounds(310, 105, 386, 207);
 		getContentPane().add(scrollPane_table);
-
-		/* --> JList invece di table
-		Set<Dipendente> items = new HashSet<Dipendente>();
-		int x = 0;
-		while( x < 5) {
-			items.add(new Dipendente("CF0001", "Giorgio", "Napolitano", "Responsabile evento", 1700));
-			items.add(new Dipendente("CF0002", "Adamo", "Pilota", "Cuoco", 1200));
-			items.add(new Dipendente("CF0003", "Paola", "De Medici", "Guida", 1300));
-			items.add(new Dipendente("CF0004", "Gennaro", "Napoli", "Addetto Reception", 1700));
-			items.add(new Dipendente("CF0005", "Agatha", "Christie", "Amministratore", 1300));
-			x++;
-		}
-		DefaultListModel<Dipendente> dlf = new DefaultListModel<Dipendente>();
-		dlf.addAll(items);
-		JList list = new JList(dlf);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.addListSelectionListener(this);
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(334, 108, 362, 227);
-		scrollPane.setViewportView(list);	
-		getContentPane().add(scrollPane);*/	
 		
 		JButton btn_refresh = new JButton("Ricarica dati\r\n");
 		btn_refresh.setBounds(310, 318, 123, 21);
@@ -223,7 +195,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		String key = cbm_service.getSelectedItem().toString();
-		key = key.substring(key.indexOf("(") + 1, key.indexOf(")"));
+		key = key.substring(1, key.indexOf(")"));
 		Servizio ser = null;
 		
 		switch(command) {
@@ -247,8 +219,8 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 			}
 			
 			ser = map_ser.get(key);
-			Date a = (Date) spr_startDate.getValue();
-			LocalDate inizioTurno = a.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			Date temp_date = (Date) spr_startDate.getValue();
+			LocalDate inizioTurno = temp_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			TurnoLavoro tl = new TurnoLavoro(cf, inizioTurno, ser);
 			
 			DAOTurniLavoro dao_turni = DAOFactory.getDAOTurniLavoro();
@@ -290,7 +262,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 	private void getServizi() {
 		map_ser = DAOFactory.getDAOTurniLavoro().doRetrieveAllServizi();
 		for(String s : map_ser.keySet()) {
-			String element = " (" + map_ser.get(s).getId() + ") " + map_ser.get(s).getDescrizione();
+			String element = "(" + map_ser.get(s).getId() + ") " + map_ser.get(s).getDescrizione();
 			cbm_service.addElement(element);
 		}
 	}

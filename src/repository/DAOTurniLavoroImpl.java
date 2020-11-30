@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -54,8 +53,8 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 	}
 
 	@Override
-	public Map<String, Servizio> doRetrieveAllServizi() {
-		Map<String, Servizio> map_ser = new HashMap<String, Servizio>();
+	public HashMap<String, Servizio> doRetrieveAllServizi() {
+		HashMap<String, Servizio> map_ser = new HashMap<String, Servizio>();
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
@@ -97,12 +96,6 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 			e.printStackTrace();
 		}
 		return set_turni;
-	}
-
-	@Override
-	public void delete(String id) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -149,6 +142,11 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 			e.printStackTrace();
 		}
 		return set_turni;
+	}
+	
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
 	}
 
 }

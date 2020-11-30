@@ -13,10 +13,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import personale.model.Account;
-import personale.model.Dipendente;
 import personale.model.Servizio;
 import personale.model.TurnoLavoro;
-import repository.DAODipendenti;
 import repository.DAOFactory;
 import repository.DAOTurniLavoro;
 
@@ -42,7 +40,7 @@ public class HomeUI extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomeUI window = new HomeUI(new Account("user01", "1234567", Account.Permessi.NONE));
+					HomeUI window = new HomeUI(new Account("ryanp12", "ryan12", Account.Permessi.NONE));
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

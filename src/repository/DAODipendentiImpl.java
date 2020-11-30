@@ -8,9 +8,7 @@ import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
-import personale.model.Account;
 import personale.model.Dipendente;
-import personale.model.Account.Permessi;
 
 public class DAODipendentiImpl implements DAODipendenti {
 
@@ -71,9 +69,15 @@ public class DAODipendentiImpl implements DAODipendenti {
 	}
 
 	@Override
-	public int delete(String tipo) {
+	public int delete(String cf) {
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			return statement.executeUpdate("DELETE FROM dipendenti WHERE CFiscale=" + cf);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
-		
 	}
 
 	@Override
@@ -91,13 +95,6 @@ public class DAODipendentiImpl implements DAODipendenti {
 			
 			//Ritorna il numero di righe manipolate
 			return preparedStmt.executeUpdate();
-			
-			
-			/*Statement stm = connection.getConnection().createStatement();
-			stm.executeUpdate("INSERT INTO dipendenti VALUES" + 
-					"(\""+ dip.getCf() + "\", \"" + dip.getNome() + 
-					"\", \"" + dip.getCognome() + "\", \""+ dip.getMansione() +
-					"\", "+dip.getStipendio()+"),");*/
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
