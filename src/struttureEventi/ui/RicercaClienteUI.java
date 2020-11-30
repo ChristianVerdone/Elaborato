@@ -97,7 +97,7 @@ public class RicercaClienteUI extends JFrame implements ActionListener {
 		items.addAll(clienti);
 		
 		for(Cliente cl : clienti) {
-			dtm.addRow(new Object[]{cl.getCf(), cl.getNome(),  cl.getCognome()});
+			dtm.addRow(new Object[]{cl.getNome(), cl.getCognome(),  cl.getCf()});
 		}
 		
 		table = new JTable();

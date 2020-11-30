@@ -15,7 +15,7 @@ public class DAOPrenotazioneAbitazioneTester {
 			for (PrenotazioneAbitazione p : pa)
 				System.out.println(p.toString());
 
-		//df.getDAOPrenotazioneAbitazione().doRetrieveById(");
+	
 
 	}
 }
