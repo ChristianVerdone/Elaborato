@@ -59,7 +59,7 @@ create table CONTIRISTORANTE(
 );
 
 create table TAVOLIRISTORANTE(
-	NumeroTavolo varchar(2) PRIMARY KEY,
+	NumeroTavolo numeric(2) PRIMARY KEY,
     NumeroPosti decimal(2) NOT NULL
 );
 
@@ -99,9 +99,9 @@ create table PRENOTAZIONIABITAZIONI(
 );
 
 create table PRENOTAZIONIRISTORANTE(
+	IDPrenotazioneRistorante char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    TavoloRistorante varchar(2) references TAVOLI(NumeroTavolo),
-    ContoRistorante char(5) references CONTIRISTORANTE(IdConto)
+    Tavolo numeric(2) references TAVOLI(NumeroTavolo)
 );
 
 create table PRENOTAZIONIEVENTI(
@@ -194,13 +194,13 @@ insert into contiristorante values
 ("CR006", 120.40);
 
 insert into tavoliristorante values
-("1", 6),
-("2", 4),
-("3", 8),
-("4", 10),
-("5", 3),
-("6", 6),
-("7", 4);
+("01", 6),
+("02", 4),
+("03", 8),
+("04", 10),
+("05", 3),
+("06", 6),
+("07", 4);
 
 insert into servizi values
 ("SE001", "Pulizia camere", 0900, 1100),	#bisogna gestire le date
@@ -238,10 +238,10 @@ insert into prenotazioniabitazioni values
 
 
 insert into prenotazioniristorante values
-("AMNNCC66G32N523K", "1", "CR001"),
-("FRNELN43B54D432N", "2", "CR002"),
-("AMNNCC66G32N523K", "3", "CB003"),
-("CGNPLO78H12N234D", "4", "CB004");
+("PR001", "AMNNCC66G32N523K", "1"),
+("PR002","FRNELN43B54D432N", "2"),
+("PR003","AMNNCC66G32N523K", "3"),
+("PR004", "CGNPLO78H12N234D", "4");
 
 
 insert into prenotazionieventi values

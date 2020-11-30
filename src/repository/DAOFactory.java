@@ -38,4 +38,11 @@ public class DAOFactory {
 		return new DAOPrenotazioneAbitazioneImpl();
 	}
 	
+	public static DAOTavoloRistorante getDAOTavoloRistorante() {
+		return new DAOTavoloRistoranteImp();
+	}
+	public static DAOPrenotazioneRistorante getDAOPrenotazioneRistorante() {
+		return new DAOPrenotazioneRistoranteImpl();
+	}
+	
 }
