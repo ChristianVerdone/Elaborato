@@ -180,7 +180,7 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 		
 		String task = cbm_description.getSelectedItem().toString();
 		Permessi prm = Permessi.NONE;
-		if(task == "Addetto Reception") prm = Permessi.REDUCED;
+		if(task == "Addetto reception") prm = Permessi.REDUCED;
 		else if(task == "Amministratore") prm = Permessi.ALL;
 		
 		Integer salary = (Integer) spinner.getValue();
@@ -204,7 +204,7 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 		Account curr_user = dao_account.doRetrieveByUsername(username);
 		
 		if(curr_user != null) {
-			JOptionPane.showMessageDialog(this, "Username non piÃ¹ disponibile");
+			JOptionPane.showMessageDialog(this, "Username non più disponibile");
 			return;
 		}
 		
@@ -216,7 +216,10 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 			if(dao_account.update(cf, new Account(username, password, prm)) == 0) {
 				System.out.println("Errore nella creazione dell'account");
 			}
-			else JOptionPane.showMessageDialog(this, "Registrazione avvenuta con successo");
+			else { 
+				JOptionPane.showMessageDialog(this, "Registrazione avvenuta con successo");
+				this.dispose();
+			}
 		}
 	}
 }

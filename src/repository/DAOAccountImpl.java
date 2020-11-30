@@ -11,15 +11,15 @@ import javax.swing.JOptionPane;
 import personale.model.Account;
 import personale.model.Account.Permessi;
 
-public class ConcreteDAOAccount implements DAOAccount {
+public class DAOAccountImpl implements DAOAccount {
 	
 	private MySQLConnection connection;
 
-	public ConcreteDAOAccount() {
+	public DAOAccountImpl() {
 		this.connection = new MySQLConnection();
 	}
 
-	public ConcreteDAOAccount(MySQLConnection connection) {
+	public DAOAccountImpl(MySQLConnection connection) {
 		super();
 		this.connection = connection;
 	}
@@ -65,7 +65,6 @@ public class ConcreteDAOAccount implements DAOAccount {
 		return acc;
 	}
 
-	/* Per ora non considero la possibilità di rimuovere un account */
 	@Override
 	public int delete(String username) {
 		try {

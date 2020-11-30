@@ -12,15 +12,15 @@ import personale.model.Account;
 import personale.model.Dipendente;
 import personale.model.Account.Permessi;
 
-public class ConcreteDAODipendenti implements DAODipendenti {
+public class DAODipendentiImpl implements DAODipendenti {
 
 	private MySQLConnection connection;
 
-	public ConcreteDAODipendenti() {
+	public DAODipendentiImpl() {
 		this.connection = new MySQLConnection();
 	}
 
-	public ConcreteDAODipendenti(MySQLConnection connection) {
+	public DAODipendentiImpl(MySQLConnection connection) {
 		super();
 		this.connection = connection;
 	}
