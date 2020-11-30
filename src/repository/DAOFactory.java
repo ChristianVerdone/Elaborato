@@ -45,4 +45,14 @@ public class DAOFactory {
 		return new DAOPrenotazioneRistoranteImpl();
 	}
 	
+	public static DAOTessera getDAOTessera() {
+		return new DAOTesseraImp();
+	}
+	public static DAOPrenotazioneStruttura getDAOPrenotazioneStruttura() {
+		return new DAOPrenotazioneStrutturaImpl();
+	}
+	
+	public static DAOStrutturraVillaggio getDAOStrutturaVillaggio() {
+		return new DAOStrutturaVillaggioImpl();
+	}
 }

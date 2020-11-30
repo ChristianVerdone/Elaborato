@@ -29,8 +29,8 @@ create table CONTITOTALI(
     Cliente char(16) references CLIENTI(CodiceFiscale)
 );
 
-create table STRUTTUREVILLAGIO(
-	IdStruttura char(5) PRIMARY KEY,
+create table STRUTTUREVILLAGGIO(
+	IdStruttura varchar(15) PRIMARY KEY,
     Tipo varchar(20) NOT NULL,
     Tariffa decimal(4,2) NOT NULL
 );
@@ -38,7 +38,7 @@ create table STRUTTUREVILLAGIO(
 create table LETTORI(
 	IdLettore char(3) PRIMARY KEY,
     DescrizioneLettore varchar(50) NOT NULL,
-    StrutturaVillaggio char(5) references STRUTTUREVILLAGIO(IdStruttura)
+    StrutturaVillaggio varchar(15) references STRUTTUREVILLAGGIO(IdStruttura)
 );
 
 create table TESSERE(
@@ -112,8 +112,9 @@ create table PRENOTAZIONIEVENTI(
 );
 
 create table PRENOTAZIONISTRUTTURE(
+	IdPrenotazioneStruttura char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    StrutturaVillaggio char(5) references STRUTTUREVILLAGGIO(IdStruttura),
+    Struttura varchar(15) references STRUTTUREVILLAGGIO(IdStruttura),
     Tessera char(5) references TESSERE(IdTessera)
 );
 
@@ -160,13 +161,13 @@ insert into contitotali values
 ("CT005", 540.20, "2020-02-10", "PSTRSL78F34D519C"),
 ("CT006", 230.30, "2020-05-21", "FRNSLV98B43G645F");
 
-insert into strutturevillagio values
-("SV001", "Campo tennis", 3.00),
-("SV002", "Campo da calcio", 4.00);
+insert into strutturevillaggio values
+("Campo da tennis", "Sport", 3.00),
+("Campo da calcio", "Sport", 4.00);
 
 insert into lettori values
-("L01", "Lettore tessere campo da tennis", "SV001"),
-("L02", "Lettore tessere campo da calcio", "SV002");
+("L01", "Lettore tessere campo da tennis", "Campo da tennis"),
+("L02", "Lettore tessere campo da calcio", "Campo da calcio");
 
 insert into tessere values
 ("TS001", "Tessera per il campo da tennis"),
@@ -255,10 +256,10 @@ insert into prenotazionieventi values
 
 
 insert into prenotazionistrutture values
-("AMNNCC66G32N523K", "SV001", "TS001"),
-("FRNELN43B54D432N", "SV001", "TS003"),
-("PSTRSL78F34D519C", "SV002", "TS002"),
-("CGNPLO78H12N234D", "SV002", "TS005");
+("PS001", "AMNNCC66G32N523K", "Campo da tennis", "TS001"),
+("PS002","FRNELN43B54D432N", "Campo da tennis", "TS003"),
+("PS003","PSTRSL78F34D519C", "Campo da calcio", "TS002"),
+("PS004","CGNPLO78H12N234D", "Campo da calcio", "TS005");
 
 insert into movimenti values
 ("TS001", "L01", true),
