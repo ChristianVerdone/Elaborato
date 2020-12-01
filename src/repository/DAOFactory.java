@@ -6,12 +6,12 @@ public class DAOFactory {
 
 	public DAOFactory() { }
 	
-	public static ConcreteDAOAccount getDAOAccount() {
-		return new ConcreteDAOAccount();
+	public static DAOAccount getDAOAccount() {
+		return new DAOAccountImpl();
 	}
 
-	public static ConcreteDAODipendenti getDAODipendenti() {
-		return new ConcreteDAODipendenti();
+	public static DAODipendenti getDAODipendenti() {
+		return new DAODipendentiImpl();
 	}
 	
 	public static DAOCliente getDAOCliente() {
@@ -36,6 +36,10 @@ public class DAOFactory {
 	
 	public static DAOPrenotazioneAbitazione getDAOPrenotazioneAbitazione() {
 		return new DAOPrenotazioneAbitazioneImpl();
+	}
+	
+	public static DAOTurniLavoro getDAOTurniLavoro() {
+		return new DAOTurniLavoroImpl();
 	}
 	
 }
