@@ -29,8 +29,8 @@ create table CONTITOTALI(
     Cliente char(16) references CLIENTI(CodiceFiscale)
 );
 
-create table STRUTTUREVILLAGIO(
-	IdStruttura char(5) PRIMARY KEY,
+create table STRUTTUREVILLAGGIO(
+	IdStruttura varchar(15) PRIMARY KEY,
     Tipo varchar(20) NOT NULL,
     Tariffa decimal(4,2) NOT NULL
 );
@@ -38,7 +38,7 @@ create table STRUTTUREVILLAGIO(
 create table LETTORI(
 	IdLettore char(3) PRIMARY KEY,
     DescrizioneLettore varchar(50) NOT NULL,
-    StrutturaVillaggio char(5) references STRUTTUREVILLAGIO(IdStruttura)
+    StrutturaVillaggio varchar(15) references STRUTTUREVILLAGGIO(IdStruttura)
 );
 
 create table TESSERE(
@@ -59,15 +59,15 @@ create table CONTIRISTORANTE(
 );
 
 create table TAVOLIRISTORANTE(
-	NumeroTavolo varchar(2) PRIMARY KEY,
+	NumeroTavolo numeric(2) PRIMARY KEY,
     NumeroPosti decimal(2) NOT NULL
 );
 
 create table SERVIZI(
-	IdServizio char(5) PRIMARY KEY,
+	IdTurno char(5) PRIMARY KEY,
     DescrizioneServizio varchar(100) NOT NULL,
-    oraInizio time NOT NULL,
-	oraFine time NOT NULL
+    DataInizio time NOT NULL,
+	DataFine time NOT NULL
 );
 
 create table DIPENDENTI(
@@ -87,8 +87,7 @@ create table ACCOUNTS(
 
 create table TURNIDILAVORO(
     Dipendente char(16) references DIPENDENTI(CFiscale),
-    Servizio char(5) references SERVIZI(IdTurno),
-    DataInizioTurno date NOT NULL
+    Servizio char(5) references SERVIZI(IdTurno)
 );
 
 create table PRENOTAZIONIABITAZIONI(
@@ -100,9 +99,11 @@ create table PRENOTAZIONIABITAZIONI(
 );
 
 create table PRENOTAZIONIRISTORANTE(
+	IDPrenotazioneRistorante char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    TavoloRistorante varchar(2) references TAVOLI(NumeroTavolo),
-    ContoRistorante char(5) references CONTIRISTORANTE(IdConto)
+    Tavolo numeric(2) references TAVOLI(NumeroTavolo),
+    DataPrenotazione date,
+    OraPrenotazione time
 );
 
 create table PRENOTAZIONIEVENTI(
@@ -113,8 +114,9 @@ create table PRENOTAZIONIEVENTI(
 );
 
 create table PRENOTAZIONISTRUTTURE(
+	IdPrenotazioneStruttura char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    StrutturaVillaggio char(5) references STRUTTUREVILLAGGIO(IdStruttura),
+    Struttura varchar(15) references STRUTTUREVILLAGGIO(IdStruttura),
     Tessera char(5) references TESSERE(IdTessera)
 );
 
@@ -161,13 +163,13 @@ insert into contitotali values
 ("CT005", 540.20, "2020-02-10", "PSTRSL78F34D519C"),
 ("CT006", 230.30, "2020-05-21", "FRNSLV98B43G645F");
 
-insert into strutturevillagio values
-("SV001", "Campo tennis", 3.00),
-("SV002", "Campo da calcio", 4.00);
+insert into strutturevillaggio values
+("Campo da tennis", "Sport", 3.00),
+("Campo da calcio", "Sport", 4.00);
 
 insert into lettori values
-("L01", "Lettore tessere campo da tennis", "SV001"),
-("L02", "Lettore tessere campo da calcio", "SV002");
+("L01", "Lettore tessere campo da tennis", "Campo da tennis"),
+("L02", "Lettore tessere campo da calcio", "Campo da calcio");
 
 insert into tessere values
 ("TS001", "Tessera per il campo da tennis"),
@@ -195,19 +197,19 @@ insert into contiristorante values
 ("CR006", 120.40);
 
 insert into tavoliristorante values
-("1", 6),
-("2", 4),
-("3", 8),
-("4", 10),
-("5", 3),
-("6", 6),
-("7", 4);
+("01", 6),
+("02", 4),
+("03", 8),
+("04", 10),
+("05", 3),
+("06", 6),
+("07", 4);
 
 insert into servizi values
-("SE001", "Pulizia camere", "09:00:00", "11:00:00"),	#bisogna gestire le date
-("SE002", "Guida per le escursioni", "12:00:00", "16:00:00"),
-("SE003", "Collaudatore dello spettacolo", "20:00:00", "23:00:00"),
-("SE004", "Addetto alla reception", "09:00:00", "18:00:00");
+("SE001", "Pulizia camere", 0900, 1100),	#bisogna gestire le date
+("SE002", "Guida per le escursioni", 1200, 1600),
+("SE003", "Collaudatore dello spettacolo", 2000, 2300),
+("SE004", "Addetto alla reception", 0900, 1800);
 
 
 insert into dipendenti values
@@ -224,25 +226,25 @@ insert into accounts values
 ("gervasod99", "DMRGVS03C29A662P", "gerva99", 2);
 
 insert into turnidilavoro values
-("MRALSN08C52F205P", "SE004", "2020-12-14"),
-("GRNRSL06H65D969E", "SE001", "2020-12-14"),
-("GRNMTT08T29L219Z", "SE002", "2020-12-15"),
-("DMRGVS03C29A662P", "SE003", "2020-12-16");
+("MRALSN08C52F205P", "SE004"),
+("GRNRSL06H65D969E", "SE001"),
+("GRNMTT08T29L219Z", "SE002"),
+("DMRGVS03C29A662P", "SE003");
 
 insert into prenotazioniabitazioni values
 ("PA01","AMNNCC66G32N523K", "AB001", "2020-10-13", "2020-10-23"),
 ("PA02","FRNELN43B54D432N", "AB002",  "2020-12-13", "2020-12-23"),
 ("PA03", "CRSDNT73B24C634L", "AB003", "2020-10-10", "2020-11-02"),
-("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-10-23"),
+("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-09-23"),
 ("PA05","PSTRSL78F34D519C", "AB005", "2021-01-13", "2021-02-13"),
 ("PA06", "FRNSLV98B43G645F", "AB006", "2020-12-22", "2021-01-23");
 
 
 insert into prenotazioniristorante values
-("AMNNCC66G32N523K", "1", "CR001"),
-("FRNELN43B54D432N", "2", "CR002"),
-("AMNNCC66G32N523K", "3", "CB003"),
-("CGNPLO78H12N234D", "4", "CB004");
+("PR001", "AMNNCC66G32N523K", "1", "2020-10-14",  "20:00"),
+("PR002","FRNELN43B54D432N", "2", "2020-12-14", "20:00"),
+("PR003","AMNNCC66G32N523K", "3", "2020-10-15", "13:00"),
+("PR004", "CGNPLO78H12N234D", "4", "2020-08-26", "12:00");
 
 
 insert into prenotazionieventi values
@@ -256,10 +258,11 @@ insert into prenotazionieventi values
 
 
 insert into prenotazionistrutture values
-("AMNNCC66G32N523K", "SV001", "TS001"),
-("FRNELN43B54D432N", "SV001", "TS003"),
-("PSTRSL78F34D519C", "SV002", "TS002"),
-("CGNPLO78H12N234D", "SV002", "TS005");
+("PS001", "AMNNCC66G32N523K", "Campo da tennis", "TS001"),
+("PS006", "AMNNCC66G32N523K", "Campo da tennis", "TS006"),
+("PS002","FRNELN43B54D432N", "Campo da tennis", "TS003"),
+("PS003","PSTRSL78F34D519C", "Campo da calcio", "TS002"),
+("PS004","CGNPLO78H12N234D", "Campo da calcio", "TS005");
 
 insert into movimenti values
 ("TS001", "L01", true),
