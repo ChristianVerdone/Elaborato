@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
-import contabilità.Cliente;
+import contabilitï¿½.Cliente;
 import struttureEventi.classes.PrenotazioneEvento;
 import struttureEventi.classes.PrenotazioneRistorante;
 

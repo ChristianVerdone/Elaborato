@@ -38,6 +38,23 @@ public class DAOFactory {
 		return new DAOPrenotazioneAbitazioneImpl();
 	}
 	
+	public static DAOTavoloRistorante getDAOTavoloRistorante() {
+		return new DAOTavoloRistoranteImp();
+	}
+	public static DAOPrenotazioneRistorante getDAOPrenotazioneRistorante() {
+		return new DAOPrenotazioneRistoranteImpl();
+	}
+	
+	public static DAOTessera getDAOTessera() {
+		return new DAOTesseraImp();
+	}
+	public static DAOPrenotazioneStruttura getDAOPrenotazioneStruttura() {
+		return new DAOPrenotazioneStrutturaImpl();
+	}
+	
+	public static DAOStrutturraVillaggio getDAOStrutturaVillaggio() {
+		return new DAOStrutturaVillaggioImpl();
+	}
 	public static DAOTurniLavoro getDAOTurniLavoro() {
 		return new DAOTurniLavoroImpl();
 	}

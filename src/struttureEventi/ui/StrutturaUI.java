@@ -6,25 +6,43 @@ import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 import contabilità.Cliente;
+import repository.DAOFactory;
+import struttureEventi.classes.PrenotazioneEvento;
+import struttureEventi.classes.PrenotazioneRistorante;
 import struttureEventi.classes.PrenotazioneSv;
 import struttureEventi.classes.Tessera;
+import util.GenerateRandom;
 
-public class StrutturaUI {
+import java.awt.Component;
+
+public class StrutturaUI extends JFrame implements ActionListener {
 	
-	private HashMap<String, Tessera> tessere;
-	private HashMap<String, Cliente> clienti;
+	private ArrayList<Tessera> tessere;
+	private ArrayList<Cliente> clienti;
 	private JFrame frame;
-
+	private JTable table;
+	private JTable tableT;
+	private Cliente cliente;
+	private Tessera tessera;
+	private String struttura;
+	private int c, t;
 	/**
 	 * Launch the application.
 	 */
@@ -58,22 +76,21 @@ public class StrutturaUI {
 	 * Create the application.
 	 */
 	public StrutturaUI() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+		
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 450, 312);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Prenotazione Struttura");
 		
-		String[] strutture = {"Campo da tennis", "Campo calcetto"};
+		String[] strutture = {"Campo da tennis", "Campo da calcio"};
 		
 		JComboBox struttbox = new JComboBox(strutture);
+		struttbox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				struttura=(String) struttbox.getSelectedItem();
+			}
+		});
 		struttbox.setBounds(141, 7, 131, 22);
 		frame.getContentPane().add(struttbox);
 		
@@ -82,58 +99,134 @@ public class StrutturaUI {
 		lblNewLabel_1.setBounds(10, 11, 131, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
-		Cliente c = new Cliente("aaaa", "Mario", "Bianco");
-		clienti = new HashMap<String, Cliente>();
-		clienti.put(c.getNome(), c);
 		
-		DefaultListModel<String> listmodel = new DefaultListModel<>();
-		listmodel.addAll(clienti.keySet());
+		
 		
 		JLabel lblNewLabel_2 = new JLabel("Seleziona il cliente");
 		lblNewLabel_2.setBounds(10, 50, 112, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(141, 48, 219, 55);
-		frame.getContentPane().add(scrollPane);
 		
-		JList listC = new JList(listmodel);
-		scrollPane.setViewportView(listC);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona la tessera");
-		lblNewLabel.setBounds(12, 130, 121, 14);
+		lblNewLabel.setBounds(1, 138, 121, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(141, 128, 220, 55);
-		frame.getContentPane().add(scrollPane_1);
-		
-		Tessera t = new Tessera("01", "tessera 1");
-		tessere = new HashMap<String, Tessera>();
-		tessere.put(t.getId(), t);
-		//ci vuole un metodo per inserire solo le tessere disponibili
-		
-		DefaultListModel<String> listmodel2 = new DefaultListModel<>();
-		listmodel2.addAll(tessere.keySet());
-		
-		JList listT = new JList(listmodel2);
-		scrollPane_1.setViewportView(listT);
 		
 		JButton btnNewButton = new JButton("Prenota");
-		btnNewButton.setBounds(0, 238, 434, 23);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Random r = new Random();
-				int i = r.nextInt();
-				String idT = listT.getSelectedValue().toString();
-				Tessera t = tessere.get(idT);
-				String idC = listC.getSelectedValue().toString();
-				Cliente c = clienti.get(idC);
-				PrenotazioneSv p=new PrenotazioneSv(Integer.toString(i),c,t , struttbox.getSelectedItem().toString());
-				System.out.println(p.toString());
-			}
-		});
+		btnNewButton.setBounds(0, 250, 434, 23);
+		btnNewButton.setActionCommand("prenota");
+		btnNewButton.addActionListener(this);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(btnNewButton);
+		/**CLIENTI*/
+		clienti = new ArrayList<Cliente>();
+		for (Cliente cl : DAOFactory.getDAOCliente().doRetrieveAll().values()) {
+			clienti.add(cl);
+		}
+		DefaultTableModel dtm = new DefaultTableModel() {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		dtm.setColumnIdentifiers(new String[]{"Nome","Cognome","CF"});
+		
+		//Da spostare in un controller
+		Set<Cliente> items = new HashSet<Cliente>(); 
+		items.addAll(clienti);
+		
+		for(Cliente cl : clienti) {
+			dtm.addRow(new Object[]{cl.getNome(), cl.getCognome(),  cl.getCf()});
+		}
+		
+		table = new JTable();
+		table.setBounds(344, 322, 314, -206);
+		table.setModel(dtm);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//table.getSelectionModel().addListSelectionListener(this);
+		JScrollPane scrollPane_table = new JScrollPane(table);
+		scrollPane_table.setBounds(45, 309, 319, 99);
+		frame.getContentPane().add(scrollPane_table);
+		JScrollPane scrollPane_table_1 = new JScrollPane(table);
+		scrollPane_table_1.setBounds(115, 40, 309, 89);
+		frame.getContentPane().add(scrollPane_table_1);
+		
+		/**TESSERE*/
+		tessere = new ArrayList<Tessera>();
+		for (Tessera t : DAOFactory.getDAOTessera().doRetrieveAll().values()) {
+			tessere.add(t);
+		}
+		DefaultTableModel dtmT = new DefaultTableModel() {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		dtmT.setColumnIdentifiers(new String[]{"Tessera","Descrizione"});
+		
+		//Da spostare in un controller
+		Set<Tessera> itemsTessere = new HashSet<Tessera>(); 
+		itemsTessere.addAll(tessere);
+		
+		for(Tessera t : tessere) {
+			dtmT.addRow(new Object[]{t.getId(), t.getDescrizione()});
+		}
+		
+		tableT = new JTable();
+		tableT.setBounds(344, 322, 314, -206);
+		tableT.setModel(dtmT);
+		tableT.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//table.getSelectionModel().addListSelectionListener(this);
+		
+		JScrollPane scrollPane_table_Tessere = new JScrollPane(tableT);
+		scrollPane_table_Tessere.setBounds(117, 150, 307, 87);
+		frame.getContentPane().add(scrollPane_table_Tessere);
+		
+		
 	}
-}
+	
+	public  void actionPerformed(ActionEvent e) {
+
+		
+	
+	String command= e.getActionCommand();
+	
+	switch (command) {
+	case "prenota":
+		 c =table.getSelectedRow();
+		 t =tableT.getSelectedRow();
+		
+		if (struttura==null) { 
+			JOptionPane.showMessageDialog(this, "Selezionare la struttura.");
+			break;}
+	
+		if(c==-1) {
+			JOptionPane.showMessageDialog(this, "Selezionare un cliente.");
+			break;}
+		if(t==-1) {
+			JOptionPane.showMessageDialog(this, "Selezionare una tessera.");
+			break;}
+		cliente=clienti.get(c);
+		tessera=tessere.get(t);
+		GenerateRandom g = new GenerateRandom();
+		String idPrenotazione = "PE" + g.GenerateRandom();
+		PrenotazioneSv p= new PrenotazioneSv(idPrenotazione, cliente, DAOFactory.getDAOStrutturaVillaggio().doRetrieveById(struttura), tessera);
+		System.out.println(DAOFactory.getDAOStrutturaVillaggio().doRetrieveById(struttura));
+		int prenotazione=DAOFactory.getDAOPrenotazioneStruttura().updatePrenotazioneStruttura(p);
+		this.dispose();
+		frame.dispose();
+		if(prenotazione!= 0) 
+			JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
+		else if(prenotazione==0)
+			JOptionPane.showMessageDialog(this, "Errore durante la registrazione della prenotazione!");
+			
+		else if(DAOFactory.getDAOPrenotazioneStruttura().doRetrieveById(idPrenotazione)!= null) {
+			JOptionPane.showMessageDialog(this, "Non è possibile registrare la prenotazione.\nE' già presente una prenotazione con identificativo " + idPrenotazione);
+		}
+		this.dispose();
+		frame.dispose();
+		break;
+	
+	}
+	}}

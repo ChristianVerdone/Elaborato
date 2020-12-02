@@ -2,15 +2,12 @@ package struttureEventi.classes;
 
 import java.util.HashMap;
 
-public class StrutturaVillagio {
+public class StrutturaVillaggio {
 	
-	public StrutturaVillagio(String idStruttura, float tariffaOraria, String tipo, HashMap<String, Tessera> tessere,
-			HashMap<String, Lettore> lettori) {
+	public StrutturaVillaggio(String idStruttura, float tariffaOraria, String tipo) {
 		this.idStruttura = idStruttura;
 		this.tariffaOraria = tariffaOraria;
 		this.tipo = tipo;
-		this.tessere = tessere;
-		this.lettori = lettori;
 	}
 	
 	public String getIdStruttura() {
@@ -31,22 +28,17 @@ public class StrutturaVillagio {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public HashMap<String, Tessera> getTessere() {
-		return tessere;
+
+
+	@Override
+	public String toString() {
+		return "StrutturaVillaggio [idStruttura=" + idStruttura + ", tariffaOraria=" + tariffaOraria + ", tipo=" + tipo
+				+ "]";
 	}
-	public void setTessere(HashMap<String, Tessera> tessere) {
-		this.tessere = tessere;
-	}
-	public HashMap<String, Lettore> getLettori() {
-		return lettori;
-	}
-	public void setLettori(HashMap<String, Lettore> lettori) {
-		this.lettori = lettori;
-	}
+
 
 	private String idStruttura;
 	private float tariffaOraria;
 	private String tipo;
-	private HashMap<String, Tessera> tessere;
-	private HashMap<String, Lettore> lettori;
+
 }
