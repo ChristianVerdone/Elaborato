@@ -29,6 +29,20 @@ public class Biglietto {
 		this.disponibilità = disponibilità;
 	}
 
+	public String getNomeEvento() {
+		return nomeEvento;
+	}
+
+	public void setNomeEvento(String nomeEvento) {
+		this.nomeEvento = nomeEvento;
+	}
+
+	@Override
+	public String toString() {
+		return "Biglietto [nomeEvento=" + nomeEvento + ", idBiglietto=" + idBiglietto + ", costo=" + costo
+				+ ", disponibilità=" + disponibilità + "]";
+	}
+
 	private String nomeEvento;
 	private String idBiglietto;
 	private float costo;

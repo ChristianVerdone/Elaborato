@@ -34,6 +34,12 @@ public class Evento {
 		this.descrizione = descrizione;
 	}
 
+	@Override
+	public String toString() {
+		return "Evento [idEvento=" + idEvento + ", nome=" + nome + ", tipo=" + tipo + ", descrizione=" + descrizione
+				+ "]";
+	}
+
 	private String idEvento;
 	private String nome;
 	private String tipo;

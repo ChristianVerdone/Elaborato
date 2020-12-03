@@ -18,7 +18,8 @@ create table EVENTI(
 create table BIGLIETTI(
 	IdBiglietto char(5) PRIMARY KEY,
     Costo decimal(4,2) NOT NULL,
-    Disponibilità boolean NOT NULL
+    Disponibilitï¿½ boolean NOT NULL,
+    NomeEvento varchar(30) not null
 );
 
 create table CONTITOTALI(
@@ -28,8 +29,8 @@ create table CONTITOTALI(
     Cliente char(16) references CLIENTI(CodiceFiscale)
 );
 
-create table STRUTTUREVILLAGIO(
-	IdStruttura char(5) PRIMARY KEY,
+create table STRUTTUREVILLAGGIO(
+	IdStruttura varchar(15) PRIMARY KEY,
     Tipo varchar(20) NOT NULL,
     Tariffa decimal(4,2) NOT NULL
 );
@@ -37,7 +38,7 @@ create table STRUTTUREVILLAGIO(
 create table LETTORI(
 	IdLettore char(3) PRIMARY KEY,
     DescrizioneLettore varchar(50) NOT NULL,
-    StrutturaVillaggio char(5) references STRUTTUREVILLAGIO(IdStruttura)
+    StrutturaVillaggio varchar(15) references STRUTTUREVILLAGGIO(IdStruttura)
 );
 
 create table TESSERE(
@@ -58,7 +59,7 @@ create table CONTIRISTORANTE(
 );
 
 create table TAVOLIRISTORANTE(
-	NumeroTavolo varchar(2) PRIMARY KEY,
+	NumeroTavolo numeric(2) PRIMARY KEY,
     NumeroPosti decimal(2) NOT NULL
 );
 
@@ -98,20 +99,24 @@ create table PRENOTAZIONIABITAZIONI(
 );
 
 create table PRENOTAZIONIRISTORANTE(
+	IDPrenotazioneRistorante char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    TavoloRistorante varchar(2) references TAVOLI(NumeroTavolo),
-    ContoRistorante char(5) references CONTIRISTORANTE(IdConto)
+    Tavolo numeric(2) references TAVOLI(NumeroTavolo),
+    DataPrenotazione date,
+    OraPrenotazione time
 );
 
 create table PRENOTAZIONIEVENTI(
+	IdPrenotazioneEvento char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
     Biglietto char(5) references BIGLIETTI(IdBiglietto),
     Evento char(5) references EVENTI(IdEvento)
 );
 
 create table PRENOTAZIONISTRUTTURE(
+	IdPrenotazioneStruttura char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    StrutturaVillaggio char(5) references STRUTTUREVILLAGGIO(IdStruttura),
+    Struttura varchar(15) references STRUTTUREVILLAGGIO(IdStruttura),
     Tessera char(5) references TESSERE(IdTessera)
 );
 
@@ -121,7 +126,7 @@ create table MOVIMENTI(
     Tipo boolean NOT NULL
 );
 insert into CLIENTI values 
-("AMNNCC66G32N523K", "Niccolò", "Ammaniti"),
+("AMNNCC66G32N523K", "Niccolï¿½", "Ammaniti"),
 ("FRNELN43B54D432N", "Elena", "Ferrante"),
 ("CRSDNT73B24C634L", "Donato", "Carrisi"),
 ("CGNPLO78H12N234D", "Paolo", "Cognetti"),
@@ -129,26 +134,26 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria è tappa del percorso in questione."),
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria ï¿½ tappa del percorso in questione."),
 ("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini."),
-("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirà al suo pubblico ancora una volta la grande musica interpretata dai più grandi artisti del veneziano"),
+("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirï¿½ al suo pubblico ancora una volta la grande musica interpretata dai piï¿½ grandi artisti del veneziano"),
 ("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio"),
-("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i più grandi pezzi dell'illustre Ludwig van Beethoven "),
+("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i piï¿½ grandi pezzi dell'illustre Ludwig van Beethoven "),
 ("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino");
 
-#ho impostato la disponibilità a true per semplicità, secondo me potremmo anche toglierla
+#ho impostato la disponibilitï¿½ a true per semplicitï¿½, secondo me potremmo anche toglierla
 
 insert into BIGLIETTI values
-("BI001", "12.50", true),
-("BI002", "12.50", true),
-("BI003", "15.50", true),
-("BI004", "17.50", true),
-("BI005", "12.50", true),
-("BI006", "17.50", true),
-("BI007", "17.50", true),
-("BI008", "13.50", true),
-("BI009", "18.50", true),
-("BI010", "12.50", true);
+("BI001", "12.50", true, "Portaria"),
+("BI002", "12.50", true, "La Cerreta"),
+("BI003", "15.50", true, "La Fenice in live"),
+("BI004", "17.50", true,  "Campionato di pallavolo"),
+("BI005", "12.50", true, "Le mille note di Beethoven "),
+("BI006", "17.50", true, "Once upon a time"),
+("BI007", "17.50", true, "Once upon a time"),
+("BI008", "13.50", true, "Campionato di pallavolo"),
+("BI009", "18.50", true, "La Cerreta"),
+("BI010", "12.50", true, "Portaria");
 
 insert into contitotali values
 ("CT001", 305.60, "2020-10-24", "AMNNCC66G32N523K"),
@@ -158,13 +163,13 @@ insert into contitotali values
 ("CT005", 540.20, "2020-02-10", "PSTRSL78F34D519C"),
 ("CT006", 230.30, "2020-05-21", "FRNSLV98B43G645F");
 
-insert into strutturevillagio values
-("SV001", "Campo tennis", 3.00),
-("SV002", "Campo da calcio", 4.00);
+insert into strutturevillaggio values
+("Campo da tennis", "Sport", 3.00),
+("Campo da calcio", "Sport", 4.00);
 
 insert into lettori values
-("L01", "Lettore tessere campo da tennis", "SV001"),
-("L02", "Lettore tessere campo da calcio", "SV002");
+("L01", "Lettore tessere campo da tennis", "Campo da tennis"),
+("L02", "Lettore tessere campo da calcio", "Campo da calcio");
 
 insert into tessere values
 ("TS001", "Tessera per il campo da tennis"),
@@ -192,13 +197,13 @@ insert into contiristorante values
 ("CR006", 120.40);
 
 insert into tavoliristorante values
-("1", 6),
-("2", 4),
-("3", 8),
-("4", 10),
-("5", 3),
-("6", 6),
-("7", 4);
+("01", 6),
+("02", 4),
+("03", 8),
+("04", 10),
+("05", 3),
+("06", 6),
+("07", 4);
 
 insert into servizi values
 ("SE001", "Pulizia camere", 0900, 1100),	#bisogna gestire le date
@@ -230,7 +235,7 @@ insert into prenotazioniabitazioni values
 ("PA01","AMNNCC66G32N523K", "AB001", "2020-10-13", "2020-10-23"),
 ("PA02","FRNELN43B54D432N", "AB002",  "2020-12-13", "2020-12-23"),
 ("PA03", "CRSDNT73B24C634L", "AB003", "2020-10-10", "2020-11-02"),
-("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-10-23"),
+("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-09-23"),
 ("PA05","PSTRSL78F34D519C", "AB005", "2021-01-13", "2021-02-13"),
 ("PA06", "FRNSLV98B43G645F", "AB006", "2020-12-22", "2021-01-23");
 
@@ -243,13 +248,13 @@ insert into prenotazioniristorante values
 
 
 insert into prenotazionieventi values
-("AMNNCC66G32N523K", "BI001", "EV001"),
-("FRNELN43B54D432N", "BI002", "EV002"),
-("AMNNCC66G32N523K", "BI003", "EV003"),
-("CRSDNT73B24C634L", "BI004", "EV004"),
-("CGNPLO78H12N234D", "BI005", "EV005"),
-("CGNPLO78H12N234D", "BI006", "EV006"),
-("PSTRSL78F34D519C", "BI007", "EV006");
+("PE001", "AMNNCC66G32N523K", "BI001", "EV001"),
+("PE002","FRNELN43B54D432N", "BI002", "EV002"),
+("PE003","AMNNCC66G32N523K", "BI003", "EV003"),
+("PE004","CRSDNT73B24C634L", "BI004", "EV004"),
+("PE007","CGNPLO78H12N234D", "BI005", "EV005"),
+("PE005","CGNPLO78H12N234D", "BI006", "EV006"),
+("PE006","PSTRSL78F34D519C", "BI007", "EV006");
 
 
 insert into prenotazionistrutture values
@@ -263,3 +268,4 @@ insert into movimenti values
 ("TS003", "L01", true),
 ("TS002", "L02", true),
 ("TS005", "L02", true);
+

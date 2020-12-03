@@ -72,6 +72,7 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 		JButton btnEvento = new JButton("Prenotazione Evento");
 		btnEvento.setActionCommand("evento");
 		btnEvento.setBounds(109, 160, 202, 23);
+		btnEvento.addActionListener(this);
 		frame.getContentPane().add(btnEvento);
 		
 		JLabel lblNewLabel = new JLabel("Scegliere la prenotazione che si desidera effettuare");
@@ -85,6 +86,7 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 		case "abitazione":
 			SceltaCliente sc= new SceltaCliente(e.getActionCommand());
 			sc.Scelta(e.getActionCommand());
+			break;
 		case "struttura":
 			StrutturaUI s = new StrutturaUI();
 			s.start();

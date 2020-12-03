@@ -1,18 +1,17 @@
 package repository;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 import struttureEventi.classes.PrenotazioneAbitazione;
+import struttureEventi.classes.PrenotazioneSv;
 
-
-public class DAOPrenotazioneAbitazioneTester {
+public class DAOPrenotazioneStrutturaTester {
 	public static void main(String[] args) {
 		DAOFactory df = new DAOFactory();
-		HashSet<PrenotazioneAbitazione> pa = df.getDAOPrenotazioneAbitazione().doRetrieveAll();
+		HashSet<PrenotazioneSv> ps = df.getDAOPrenotazioneStruttura().doRetrieveAll();
 
-		if (!pa.isEmpty())
-			for (PrenotazioneAbitazione p : pa)
+		if (!ps.isEmpty())
+			for (PrenotazioneSv p : ps)
 				System.out.println(p.toString());
 
 	

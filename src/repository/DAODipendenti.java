@@ -8,6 +8,6 @@ public interface DAODipendenti {
 	
 	public HashSet<Dipendente> doRetrieveAll();
 	public Dipendente doRetrieveByCf(String cf);
-	public int delete(String tipo);
+	public int delete(String cf);
 	public int update(Dipendente dip);
 }

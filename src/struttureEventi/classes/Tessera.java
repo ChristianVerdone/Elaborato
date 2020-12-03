@@ -12,6 +12,20 @@ public class Tessera {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void seDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Tessera [id=" + id + ", descrizione=" + descrizione + "]";
+	}
+
 
 	private String id;
 	private String descrizione;
