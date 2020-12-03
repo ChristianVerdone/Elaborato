@@ -18,7 +18,7 @@ create table EVENTI(
 create table BIGLIETTI(
 	IdBiglietto char(5) PRIMARY KEY,
     Costo decimal(4,2) NOT NULL,
-    Disponibilità boolean NOT NULL,
+    Disponibilitï¿½ boolean NOT NULL,
     NomeEvento varchar(30) not null
 );
 
@@ -101,7 +101,9 @@ create table PRENOTAZIONIABITAZIONI(
 create table PRENOTAZIONIRISTORANTE(
 	IDPrenotazioneRistorante char(5) primary key,
     Cliente char(16) references CLIENTI(CodiceFiscale),
-    Tavolo numeric(2) references TAVOLI(NumeroTavolo)
+    Tavolo numeric(2) references TAVOLI(NumeroTavolo),
+    DataPrenotazione date,
+    OraPrenotazione time
 );
 
 create table PRENOTAZIONIEVENTI(
@@ -124,7 +126,7 @@ create table MOVIMENTI(
     Tipo boolean NOT NULL
 );
 insert into CLIENTI values 
-("AMNNCC66G32N523K", "Niccolò", "Ammaniti"),
+("AMNNCC66G32N523K", "Niccolï¿½", "Ammaniti"),
 ("FRNELN43B54D432N", "Elena", "Ferrante"),
 ("CRSDNT73B24C634L", "Donato", "Carrisi"),
 ("CGNPLO78H12N234D", "Paolo", "Cognetti"),
@@ -132,14 +134,14 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria è tappa del percorso in questione."),
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria ï¿½ tappa del percorso in questione."),
 ("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini."),
-("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirà al suo pubblico ancora una volta la grande musica interpretata dai più grandi artisti del veneziano"),
+("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirï¿½ al suo pubblico ancora una volta la grande musica interpretata dai piï¿½ grandi artisti del veneziano"),
 ("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio"),
-("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i più grandi pezzi dell'illustre Ludwig van Beethoven "),
+("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i piï¿½ grandi pezzi dell'illustre Ludwig van Beethoven "),
 ("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino");
 
-#ho impostato la disponibilità a true per semplicità, secondo me potremmo anche toglierla
+#ho impostato la disponibilitï¿½ a true per semplicitï¿½, secondo me potremmo anche toglierla
 
 insert into BIGLIETTI values
 ("BI001", "12.50", true, "Portaria"),
@@ -233,16 +235,16 @@ insert into prenotazioniabitazioni values
 ("PA01","AMNNCC66G32N523K", "AB001", "2020-10-13", "2020-10-23"),
 ("PA02","FRNELN43B54D432N", "AB002",  "2020-12-13", "2020-12-23"),
 ("PA03", "CRSDNT73B24C634L", "AB003", "2020-10-10", "2020-11-02"),
-("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-10-23"),
+("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-09-23"),
 ("PA05","PSTRSL78F34D519C", "AB005", "2021-01-13", "2021-02-13"),
 ("PA06", "FRNSLV98B43G645F", "AB006", "2020-12-22", "2021-01-23");
 
 
 insert into prenotazioniristorante values
-("PR001", "AMNNCC66G32N523K", "1"),
-("PR002","FRNELN43B54D432N", "2"),
-("PR003","AMNNCC66G32N523K", "3"),
-("PR004", "CGNPLO78H12N234D", "4");
+("AMNNCC66G32N523K", "1", "CR001"),
+("FRNELN43B54D432N", "2", "CR002"),
+("AMNNCC66G32N523K", "3", "CB003"),
+("CGNPLO78H12N234D", "4", "CB004");
 
 
 insert into prenotazionieventi values
@@ -256,10 +258,10 @@ insert into prenotazionieventi values
 
 
 insert into prenotazionistrutture values
-("PS001", "AMNNCC66G32N523K", "Campo da tennis", "TS001"),
-("PS002","FRNELN43B54D432N", "Campo da tennis", "TS003"),
-("PS003","PSTRSL78F34D519C", "Campo da calcio", "TS002"),
-("PS004","CGNPLO78H12N234D", "Campo da calcio", "TS005");
+("AMNNCC66G32N523K", "SV001", "TS001"),
+("FRNELN43B54D432N", "SV001", "TS003"),
+("PSTRSL78F34D519C", "SV002", "TS002"),
+("CGNPLO78H12N234D", "SV002", "TS005");
 
 insert into movimenti values
 ("TS001", "L01", true),

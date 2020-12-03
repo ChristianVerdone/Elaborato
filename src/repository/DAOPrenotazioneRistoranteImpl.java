@@ -1,12 +1,18 @@
 package repository;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
-import contabilità.Cliente;
+import contabilitï¿½.Cliente;
 import struttureEventi.classes.PrenotazioneEvento;
 import struttureEventi.classes.PrenotazioneRistorante;
 
@@ -34,8 +40,11 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 				String idPrenotazione=result.getString("IdPrenotazioneRistorante");
 				String cliente=result.getString("Cliente");
 				int tavolo=result.getInt("Tavolo");
-				PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo);
-				
+				String data=result.getString("dataPrenotazione");
+				//LocalDate dataPrenotazione = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String ora=result.getString("oraPrenotazione");
+				LocalDateTime dt=LocalDateTime.parse(data+" " + ora, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+				PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo, dt);
 				prCollection.add(pr);
 		}} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,7 +52,7 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		return prCollection;
 	}
 
-	@Override
+
 	public PrenotazioneRistorante doRetrieveById(String id) {
 		PrenotazioneRistorante pr=null;;
 		Statement statement = null;
@@ -55,7 +64,11 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 				String idPrenotazione=result.getString("IdPrenotazioneRistorante");
 				String cliente=result.getString("Cliente");
 				int tavolo=result.getInt("Tavolo");
-				 pr = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo);
+				String data=result.getString("dataPrenotazione");
+				//LocalDate dataPrenotazione = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String ora=result.getString("oraPrenotazione");
+				LocalDateTime dt=LocalDateTime.parse(data+ora, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+				pr = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo, dt);
 				
 			
 
@@ -80,12 +93,22 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		try {
 			
 			
-			String query = " insert into PrenotazioniRistorante ( IdPrenotazioneRistorante, Cliente, Tavolo)"
-					+ " values (?, ?, ?)";
+			String query = " insert into PrenotazioniRistorante ( IdPrenotazioneRistorante, Cliente, Tavolo, DataPrenotazione, OraPrenotazione)"
+					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, pr.getIdPrenotazione());
 			preparedStmt.setString(2, pr.getCliente().getCf());
 			preparedStmt.setInt(3, pr.getnTavolo());
+			LocalDateTime d=pr.getData();
+			String data = d.getYear() + "-" + d.getMonthValue() + "-" +d.getDayOfMonth();
+			Date dataPrenotazione = Date.valueOf(data);
+			preparedStmt.setDate(4, dataPrenotazione);
+			//String o= d.toString().substring(11, 15);
+			//LocalTime hour= LocalTime.parse(d.getHour()+":"+d.getMinute()+":" + d.getSecond() , DateTimeFormatter.ofPattern("HH:mm:ss"));
+			//Time ora= Time.valueOf(hour);
+			String str= d.getHour()+":"+d.getMinute()+":" + d.getSecond();
+			Time a = Time.valueOf(str);
+			preparedStmt.setTime(5, a);
 			
 
 			return preparedStmt.executeUpdate();
