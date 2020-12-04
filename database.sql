@@ -1,6 +1,3 @@
-drop database if exists sannioVillage;
-create database sannioVillage;
-use sannioVillage;
 
 create table CLIENTI(
 	CodiceFiscale char(16) PRIMARY KEY,
@@ -18,7 +15,7 @@ create table EVENTI(
 create table BIGLIETTI(
 	IdBiglietto char(5) PRIMARY KEY,
     Costo decimal(4,2) NOT NULL,
-    Disponibilit� boolean NOT NULL,
+    Disponibilità boolean NOT NULL,
     NomeEvento varchar(30) not null
 );
 
@@ -55,6 +52,7 @@ create table ABITAZIONI(
 
 create table CONTIRISTORANTE(
 	IdConto char(5) PRIMARY KEY,
+    PrenotazioneRistorante char(5) references prenotazioniristorante(IDPrenotazioneRistorante),
     ContoTotale decimal(5,2) NOT NULL
 );
 
@@ -126,7 +124,7 @@ create table MOVIMENTI(
     Tipo boolean NOT NULL
 );
 insert into CLIENTI values 
-("AMNNCC66G32N523K", "Niccol�", "Ammaniti"),
+("AMNNCC66G32N523K", "Niccolò", "Ammaniti"),
 ("FRNELN43B54D432N", "Elena", "Ferrante"),
 ("CRSDNT73B24C634L", "Donato", "Carrisi"),
 ("CGNPLO78H12N234D", "Paolo", "Cognetti"),
@@ -134,7 +132,7 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria � tappa del percorso in questione."),
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria è tappa del percorso in questione."),
 ("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini."),
 ("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrir� al suo pubblico ancora una volta la grande musica interpretata dai pi� grandi artisti del veneziano"),
 ("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio"),
@@ -189,12 +187,12 @@ insert into abitazioni values
 ("Suite", 2, 30.00, "Abitazione con stanza doppia perfetta per coppie");
 
 insert into contiristorante values
-("CR001", 80.00),
-("CR002", 90.50),
-("CR003", 60.50),
-("CR004", 67.30),
-("CR005", 58.30),
-("CR006", 120.40);
+("CR001","PR002", 80.00),
+("CR002","PR001", 90.50),
+("CR003","PR003", 60.50),
+("CR004","PR004", 67.30),
+("CR005","PR005", 58.30),
+("CR006","PR006", 120.40);
 
 insert into tavoliristorante values
 ("01", 6),
@@ -232,19 +230,21 @@ insert into turnidilavoro values
 ("DMRGVS03C29A662P", "SE003");
 
 insert into prenotazioniabitazioni values
-("PA01","AMNNCC66G32N523K", "AB001", "2020-10-13", "2020-10-23"),
-("PA02","FRNELN43B54D432N", "AB002",  "2020-12-13", "2020-12-23"),
-("PA03", "CRSDNT73B24C634L", "AB003", "2020-10-10", "2020-11-02"),
-("PA04", "CGNPLO78H12N234D", "AB004", "2020-08-13", "2020-09-23"),
-("PA05","PSTRSL78F34D519C", "AB005", "2021-01-13", "2021-02-13"),
-("PA06", "FRNSLV98B43G645F", "AB006", "2020-12-22", "2021-01-23");
+("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", "2020-10-23"),
+("PA02","FRNELN43B54D432N", "Standard",  "2020-12-13", "2020-12-23"),
+("PA03", "CRSDNT73B24C634L", "Camera doppia", "2020-10-10", "2020-11-02"),
+("PA04", "CGNPLO78H12N234D", "Appartamento", "2020-08-13", "2020-09-23"),
+("PA05","PSTRSL78F34D519C", "Camera singola", "2021-01-13", "2021-02-13"),
+("PA06", "FRNSLV98B43G645F", "Suite", "2020-12-22", "2021-01-23");
 
 
 insert into prenotazioniristorante values
-("AMNNCC66G32N523K", "1", "CR001"),
-("FRNELN43B54D432N", "2", "CR002"),
-("AMNNCC66G32N523K", "3", "CB003"),
-("CGNPLO78H12N234D", "4", "CB004");
+("PR001","AMNNCC66G32N523K", "01", "2020-10-14","20:00"),
+("PR002","FRNELN43B54D432N", "02", "2020-12-15","21:00"),
+("PR003","AMNNCC66G32N523K", "03", "2020-10-30","21:30"),
+("PR004","CGNPLO78H12N234D", "04", "2020-08-15","20:30"),
+("PR005","PSTRSL78F34D519C", "05", "2021-01-16","21:30"),
+("PR006","CRSDNT73B24C634L", "06", "2020-12-24","21:30");
 
 
 insert into prenotazionieventi values
@@ -258,10 +258,10 @@ insert into prenotazionieventi values
 
 
 insert into prenotazionistrutture values
-("AMNNCC66G32N523K", "SV001", "TS001"),
-("FRNELN43B54D432N", "SV001", "TS003"),
-("PSTRSL78F34D519C", "SV002", "TS002"),
-("CGNPLO78H12N234D", "SV002", "TS005");
+("PS001","AMNNCC66G32N523K", "Campo da tennis", "TS001"),
+("PS002","FRNELN43B54D432N", "Campo da tennis", "TS003"),
+("PS003","PSTRSL78F34D519C", "Campo da calcio", "TS002"),
+("PS004","CGNPLO78H12N234D", "Campo da calcio", "TS005");
 
 insert into movimenti values
 ("TS001", "L01", true),
