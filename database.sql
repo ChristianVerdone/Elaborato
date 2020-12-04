@@ -66,8 +66,8 @@ create table TAVOLIRISTORANTE(
 create table SERVIZI(
 	IdTurno char(5) PRIMARY KEY,
     DescrizioneServizio varchar(100) NOT NULL,
-    DataInizio time NOT NULL,
-	DataFine time NOT NULL
+    OraInizio time NOT NULL,
+	OraFine time NOT NULL
 );
 
 create table DIPENDENTI(
