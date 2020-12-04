@@ -13,15 +13,11 @@ public class PrenotazioneEvento extends Prenotazione {
 	public Evento getEvento() {
 		return evento;
 	}
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
+	
 	public Biglietto getBiglietto() {
 		return biglietto;
 	}
-	public void setBiglietto(Biglietto biglietto) {
-		this.biglietto = biglietto;
-	}
+	
 
 	@Override
 	public String toString() {

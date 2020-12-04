@@ -1,12 +1,10 @@
 package repository;
 
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
 import struttureEventi.classes.PrenotazioneEvento;

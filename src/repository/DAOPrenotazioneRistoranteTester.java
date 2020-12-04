@@ -2,7 +2,6 @@ package repository;
 
 import java.util.HashSet;
 
-import struttureEventi.classes.PrenotazioneEvento;
 import struttureEventi.classes.PrenotazioneRistorante;
 
 public class DAOPrenotazioneRistoranteTester {

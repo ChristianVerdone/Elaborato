@@ -2,7 +2,6 @@ package repository;
 
 import java.util.HashMap;
 
-import struttureEventi.classes.Abitazione;
 import struttureEventi.classes.Biglietto;
 
 public class DAOBigliettoTester {

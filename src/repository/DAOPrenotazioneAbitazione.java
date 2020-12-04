@@ -1,6 +1,5 @@
 package repository;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 import struttureEventi.classes.PrenotazioneAbitazione;
