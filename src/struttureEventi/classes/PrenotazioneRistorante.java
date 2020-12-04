@@ -8,11 +8,11 @@ import contabilità.Cliente;
 
 public class PrenotazioneRistorante extends Prenotazione{
 
-	public PrenotazioneRistorante(String idPrenotazione, Cliente cliente, int nTavolo, LocalDateTime data) {
+	public PrenotazioneRistorante(String idPrenotazione, Cliente cliente, int nTavolo, LocalDateTime data, Time ora) {
 		super(idPrenotazione, cliente);
 		this.nTavolo = nTavolo;
 		this.data = data;
-		
+		this.ora= ora;
 	}
 
 	public int getnTavolo() {
@@ -22,10 +22,6 @@ public class PrenotazioneRistorante extends Prenotazione{
 	public void setnTavolo(int nTavolo) {
 		this.nTavolo = nTavolo;
 	}
-
-
-	
-
 
 	public LocalDateTime getData() {
 		return data;
@@ -43,19 +39,11 @@ public class PrenotazioneRistorante extends Prenotazione{
 		this.ora = ora;
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
 		return "PrenotazioneRistorante [nTavolo=" + nTavolo + ", data=" + data +  ", idPrenotazione="
 				+ idPrenotazione + ", cliente=" + cliente + "]";
 	}
-
-
-
-
 
 	private int nTavolo;
 	private LocalDateTime data;
