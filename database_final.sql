@@ -62,10 +62,10 @@ create table TAVOLIRISTORANTE(
 );
 
 create table SERVIZI(
-	IdTurno char(5) PRIMARY KEY,
+	IdServizio char(5) PRIMARY KEY,
     DescrizioneServizio varchar(100) NOT NULL,
-    OraInizio time NOT NULL,
-	OraFine time NOT NULL
+    oraInizio time NOT NULL,
+	oraFine time NOT NULL
 );
 
 create table DIPENDENTI(
@@ -85,7 +85,8 @@ create table ACCOUNTS(
 
 create table TURNIDILAVORO(
     Dipendente char(16) references DIPENDENTI(CFiscale),
-    Servizio char(5) references SERVIZI(IdTurno)
+    Servizio char(5) references SERVIZI(IdTurno),
+    DataInizioTurno date NOT NULL
 );
 
 create table PRENOTAZIONIABITAZIONI(
@@ -204,10 +205,10 @@ insert into tavoliristorante values
 ("07", 4);
 
 insert into servizi values
-("SE001", "Pulizia camere", 0900, 1100),	#bisogna gestire le date
-("SE002", "Guida per le escursioni", 1200, 1600),
-("SE003", "Collaudatore dello spettacolo", 2000, 2300),
-("SE004", "Addetto alla reception", 0900, 1800);
+("SE001", "Pulizia camere", "09:00:00", "11:00:00"),	#bisogna gestire le date
+("SE002", "Guida per le escursioni", "12:00:00", "16:00:00"),
+("SE003", "Collaudatore dello spettacolo", "20:00:00", "23:00:00"),
+("SE004", "Addetto alla reception", "09:00:00", "18:00:00");
 
 
 insert into dipendenti values
@@ -224,10 +225,10 @@ insert into accounts values
 ("gervasod99", "DMRGVS03C29A662P", "gerva99", 2);
 
 insert into turnidilavoro values
-("MRALSN08C52F205P", "SE004"),
-("GRNRSL06H65D969E", "SE001"),
-("GRNMTT08T29L219Z", "SE002"),
-("DMRGVS03C29A662P", "SE003");
+("MRALSN08C52F205P", "SE004", "2020-12-14"),
+("GRNRSL06H65D969E", "SE001", "2020-12-14"),
+("GRNMTT08T29L219Z", "SE002", "2020-12-15"),
+("DMRGVS03C29A662P", "SE003", "2020-12-16");
 
 insert into prenotazioniabitazioni values
 ("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", "2020-10-23"),
