@@ -43,6 +43,12 @@ public class HomeAddettoUI extends HomeUI {
 		btn_prenotations.addActionListener(this);
 		getContentPane().add(btn_prenotations);
 		
+		JButton btn_amount = new JButton("Registra conto");
+		btn_amount.setBounds(10, 285, 205, 21);
+		btn_amount.setActionCommand("amount");
+		btn_amount.addActionListener(this);
+		getContentPane().add(btn_amount);
+		
 	}
 	
 	@Override
@@ -56,7 +62,10 @@ public class HomeAddettoUI extends HomeUI {
 			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
 			p.start();
 			this.dispose();
-			break;	
+			break;
+		case "amount":
+			/* To do */
+			break;
 		}
 	}
 
