@@ -2,7 +2,7 @@ package struttureEventi.classes;
 
 import java.time.LocalDateTime;
 
-import contabilità.Cliente;
+import contabilitï¿½.Cliente;
 
 public class PrenotazioneRistorante extends Prenotazione{
 
@@ -10,7 +10,6 @@ public class PrenotazioneRistorante extends Prenotazione{
 		super(idPrenotazione, cliente);
 		this.nTavolo = nTavolo;
 		this.data = data;
-		
 	}
 
 	public int getnTavolo() {
@@ -30,5 +29,5 @@ public class PrenotazioneRistorante extends Prenotazione{
 
 	private int nTavolo;
 	private LocalDateTime data;
-
+	private Time ora;
 }

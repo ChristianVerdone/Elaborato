@@ -36,7 +36,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
-public class UIPagamento implements ListSelectionListener {
+public class PagamentoUI implements ListSelectionListener {
 	
 	
 	private JFrame frame;
@@ -51,11 +51,11 @@ public class UIPagamento implements ListSelectionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void start() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UIPagamento window = new UIPagamento();
+					PagamentoUI window = new PagamentoUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,7 +68,7 @@ public class UIPagamento implements ListSelectionListener {
 	/**
 	 * Create the application.
 	 */
-	public UIPagamento() {
+	public PagamentoUI() {
 		initialize();
 	}
 
@@ -122,10 +122,10 @@ public class UIPagamento implements ListSelectionListener {
 				double contoTotaleAbitazione=contoAbitazione.doRetrieveContoAbitazioneByCf(codCliente);
 				DAOContoTotaleImpl contoStruttura=new DAOContoTotaleImpl();
 				double contoTotaleStruttura=contoStruttura.doRetrieveContoStrutturaCf(codCliente);
-				//DAOContoTotaleImpl contoRistorante=new DAOContoTotaleImpl();
-				//double contoTotaleRistorante=contoAbitazione.doRetrieveContoAbitazioneByCf(codCliente);
+				DAOContoTotaleImpl contoRistorante=new DAOContoTotaleImpl();
+				double contoTotaleRistorante=contoRistorante.doRetrieveContoRistoranteCf(codCliente);
 				
-				double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura;//+contoTotaleRistorante;
+				double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura+contoTotaleRistorante;
 				String contoStringa=String.valueOf(contoTotale).toString();
 				fieldConto.setText(contoStringa);
 					
@@ -153,29 +153,17 @@ public class UIPagamento implements ListSelectionListener {
 					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
+					ContoTotale ct= new ContoTotale(id,(Double.parseDouble(fieldConto.getText())),LocalDate.now(),textCodiceFiscale.getText()); 
+					System.out.println(ct.toString());	
+					int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
+					if(check==0) 
+						JOptionPane.showMessageDialog(null, "Errore nella registrazione della prenotazione!");
+					else if(check!=0)
+						JOptionPane.showMessageDialog(null, "Prenotazione effettuata!");
+				    }
 				}
 				
-				ContoTotale ct= new ContoTotale(id,(Double.parseDouble(fieldConto.getText())),LocalDate.now(),textCodiceFiscale.getText()); 
 				
-				/*System.out.println(ct.toString());	
-				try {
-					File f=new File("pagamenti.txt");
-					if(f.exists()) {
-						System.out.print("FUNZIONA!");
-					}
-					FileWriter fw= new FileWriter(f); 
-					PrintWriter pw =new PrintWriter(fw);
-					pw.print(ct.toString());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}*/
-				int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
-				if(check==0) 
-					JOptionPane.showMessageDialog(null, "Errore nella registrazione della prenotazione!");
-				else if(check!=0)
-					JOptionPane.showMessageDialog(null, "Prenotazione effettuata!");
-			    }
 			});
 		
 		
@@ -231,16 +219,17 @@ public class UIPagamento implements ListSelectionListener {
 					JOptionPane.showMessageDialog(null, "Il numero della carta è sbagliato riprova", "Errore",JOptionPane.ERROR_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
+					ContoTotale ct= new ContoTotale(id,(Double.parseDouble(fieldConto.getText())),LocalDate.now(),textCodiceFiscale.getText()); 
+					System.out.println(ct.toString());	
+					int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
+					if(check==0) 
+						JOptionPane.showMessageDialog(null, "Errore nella registrazione della prenotazione!");
+					else if(check!=0)
+						JOptionPane.showMessageDialog(null, "Prenotazione effettuata!");
+				    }
 				}
 				
-				ContoTotale ct= new ContoTotale(id,(Double.parseDouble(fieldConto.getText())),LocalDate.now(),textCodiceFiscale.getText()); 
-				System.out.println(ct.toString());	
-				int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
-				if(check==0) 
-					JOptionPane.showMessageDialog(null, "Errore nella registrazione della prenotazione!");
-				else if(check!=0)
-					JOptionPane.showMessageDialog(null, "Prenotazione effettuata!");
-			    }
+				
 		});
 		
 	}
