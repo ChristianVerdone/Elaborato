@@ -59,4 +59,7 @@ public class DAOFactory {
 		return new DAOTurniLavoroImpl();
 	}
 	
+	public static DAOContoTotale getDAOContoTotale() {
+		return new DAOContoTotaleImpl();
+	}
 }
