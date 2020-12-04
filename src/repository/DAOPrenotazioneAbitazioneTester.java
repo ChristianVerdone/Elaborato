@@ -1,6 +1,6 @@
 package repository;
 
-import java.util.HashMap;
+
 import java.util.HashSet;
 
 import struttureEventi.classes.PrenotazioneAbitazione;
@@ -15,7 +15,7 @@ public class DAOPrenotazioneAbitazioneTester {
 			for (PrenotazioneAbitazione p : pa)
 				System.out.println(p.toString());
 
-		//df.getDAOPrenotazioneAbitazione().doRetrieveById(");
+	
 
 	}
 }

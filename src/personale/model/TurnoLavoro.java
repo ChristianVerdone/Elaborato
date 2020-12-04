@@ -10,15 +10,10 @@ public class TurnoLavoro {
 		this.servizio = servizio;
 	}
 
-	/* Getters and Setters */
+	/* Getters*/
 	public String getDip() { return dip; }
 	public LocalDate getInizio() { return inizio; }
 	public Servizio getServizio() { return servizio; }
-	
-	
-	public void setDip(String dip) { this.dip = dip; }
-	public void setInizio(LocalDate inizio) { this.inizio = inizio; }
-	public void setDescrizione(Servizio servizio) { this.servizio = servizio; }
 	
 	private String dip;
 	private LocalDate inizio;

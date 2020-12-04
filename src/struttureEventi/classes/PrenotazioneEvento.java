@@ -1,27 +1,23 @@
 package struttureEventi.classes;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 
 public class PrenotazioneEvento extends Prenotazione {
 
-	public PrenotazioneEvento(String idPrenotazione, Cliente cliente, String evento, String biglietto) {
+	public PrenotazioneEvento(String idPrenotazione, Cliente cliente, Evento evento, Biglietto biglietto) {
 		super(idPrenotazione, cliente);
 		this.evento = evento;
 		this.biglietto = biglietto;
 	}
 	
-	public String getEvento() {
+	public Evento getEvento() {
 		return evento;
 	}
-	public void setEvento(String evento) {
-		this.evento = evento;
-	}
-	public String getBiglietto() {
+	
+	public Biglietto getBiglietto() {
 		return biglietto;
 	}
-	public void setBiglietto(String biglietto) {
-		this.biglietto = biglietto;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -29,6 +25,6 @@ public class PrenotazioneEvento extends Prenotazione {
 				+ ", biglietto=" + biglietto + "]";
 	}
 
-	private String evento;
-	private String biglietto;
+	private Evento evento;
+	private Biglietto biglietto;
 }

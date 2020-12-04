@@ -1,4 +1,4 @@
-package contabilità;
+package contabilita;
 
 public class Cliente {
 	
@@ -13,26 +13,15 @@ public class Cliente {
 	public String getNome() {
 		return nome;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+
 	public String getCognome() {
 		return cognome;
 	}
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+	
 	public String getCf() {
 		return cf;
 	}
-	public void setCf(String cf) {
-		this.cf = cf;
-	}
-	
-	
-
-
-
+		
 
 	@Override
 	public String toString() {

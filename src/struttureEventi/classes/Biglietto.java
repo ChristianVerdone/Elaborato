@@ -13,20 +13,26 @@ public class Biglietto {
 	public String getIdBiglietto() {
 		return idBiglietto;
 	}
-	public void setIdBiglietto(String idBiglietto) {
-		this.idBiglietto = idBiglietto;
-	}
+	
 	public float getCosto() {
 		return costo;
 	}
-	public void setCosto(float costo) {
-		this.costo = costo;
-	}
+	
 	public boolean isDisponibilità() {
 		return disponibilità;
 	}
-	public void setDisponibilità(boolean disponibilità) {
-		this.disponibilità = disponibilità;
+	
+
+	public String getNomeEvento() {
+		return nomeEvento;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Biglietto [nomeEvento=" + nomeEvento + ", idBiglietto=" + idBiglietto + ", costo=" + costo
+				+ ", disponibilità=" + disponibilità + "]";
 	}
 
 	private String nomeEvento;

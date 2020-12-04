@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
+import contabilita.PagamentoUI;
 import personale.model.Account;
+import struttureEventi.ui.RegistrazioneEvento;
 
 public class HomeAddettoUI extends HomeUI {
 
@@ -16,7 +18,7 @@ public class HomeAddettoUI extends HomeUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomeAddettoUI window = new HomeAddettoUI(new Account("alessandram90", "ales90", Account.Permessi.REDUCED));
+					HomeAddettoUI window = new HomeAddettoUI(new Account("userAddetto", "psw02", Account.Permessi.REDUCED));
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +58,9 @@ public class HomeAddettoUI extends HomeUI {
 		super.actionPerformed(e);
 		switch(e.getActionCommand()) {
 		case "event":
-			/* To do */
+			RegistrazioneEvento re = new RegistrazioneEvento();
+			re.start();
+			this.dispose();
 			break;
 		case "pren":
 			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
@@ -64,7 +68,9 @@ public class HomeAddettoUI extends HomeUI {
 			this.dispose();
 			break;
 		case "amount":
-			/* To do */
+			PagamentoUI pagamento=new PagamentoUI();
+			pagamento.start();
+			this.dispose();
 			break;
 		}
 	}

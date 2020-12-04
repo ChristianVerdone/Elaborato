@@ -9,9 +9,17 @@ public class Tessera {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	
+	public String getDescrizione() {
+		return descrizione;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "Tessera [id=" + id + ", descrizione=" + descrizione + "]";
+	}
+
 
 	private String id;
 	private String descrizione;

@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.HashSet;
 
-import contabilità.Cliente;
-import struttureEventi.classes.Abitazione;
 import struttureEventi.classes.PrenotazioneAbitazione;
 
 public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione {
@@ -72,7 +69,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				String datai=result.getString("dataInizio");
 				LocalDate datainizio = LocalDate.parse(datai, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				String dataf=result.getString("dataFine");
-				LocalDate datafine = LocalDate.parse(datai, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				pa = new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
 			
 			}
@@ -102,7 +99,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
-			preparedStmt.setString(1, pa.getId());
+			preparedStmt.setString(1, pa.getIdPrenotazione());
 			preparedStmt.setString(2, pa.getCliente().getCf());
 			preparedStmt.setString(3, pa.getAbitazione().getIdAbitazione());
 			LocalDate datai=pa.getDataInizio();

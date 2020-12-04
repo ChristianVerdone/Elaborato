@@ -1,6 +1,6 @@
 package struttureEventi.classes;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 
 public class Prenotazione {
 	
@@ -12,14 +12,9 @@ public class Prenotazione {
 	public String getIdPrenotazione() {
 		return idPrenotazione;
 	}
-	public void setIdPrenotazione(String idPrenotazione) {
-		this.idPrenotazione = idPrenotazione;
-	}
+	
 	public Cliente getCliente() {
 		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 
 	@Override
