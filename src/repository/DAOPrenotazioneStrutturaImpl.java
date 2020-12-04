@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 
-import struttureEventi.classes.PrenotazioneRistorante;
 import struttureEventi.classes.PrenotazioneSv;
-import struttureEventi.classes.StrutturaVillaggio;
 
 public class DAOPrenotazioneStrutturaImpl implements DAOPrenotazioneStruttura {
 	private MySQLConnection connection;

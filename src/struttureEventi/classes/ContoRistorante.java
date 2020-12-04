@@ -2,25 +2,36 @@ package struttureEventi.classes;
 
 public class ContoRistorante {
 
-	public ContoRistorante(int nTavolo, Prenotazione prenotazioneRistorante) {
 
-		this.nTavolo = nTavolo;
+	public ContoRistorante(String idConto, float costo, Prenotazione prenotazioneRistorante) {
+		this.idConto = idConto;
+		this.costo = costo;
 		this.prenotazioneRistorante = prenotazioneRistorante;
 	}
 	
-	public int getnTavolo() {
-		return nTavolo;
+	
+	public String getIdConto() {
+		return idConto;
 	}
-	public void setnTavolo(int nTavolo) {
-		this.nTavolo = nTavolo;
+	
+	public float getCosto() {
+		return costo;
 	}
+	
 	public Prenotazione getPrenotazioneRistorante() {
 		return prenotazioneRistorante;
 	}
-	public void setPrenotazioneRistorante(Prenotazione prenotazioneRistorante) {
-		this.prenotazioneRistorante = prenotazioneRistorante;
+	
+
+
+	@Override
+	public String toString() {
+		return "ContoRistorante [idConto=" + idConto + ", costo=" + costo + ", prenotazioneRistorante="
+				+ prenotazioneRistorante + "]";
 	}
 
-	private int nTavolo;
+
+	private String idConto;
+	private float costo;
 	private Prenotazione prenotazioneRistorante;
 }

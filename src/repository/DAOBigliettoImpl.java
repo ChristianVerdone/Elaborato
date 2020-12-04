@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 
 import struttureEventi.classes.Biglietto;
-import struttureEventi.classes.Evento;
+
 
 public class DAOBigliettoImpl implements DAOBiglietto {
 	

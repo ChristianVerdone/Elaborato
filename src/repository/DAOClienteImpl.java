@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 
 import contabilità.Cliente;
-import struttureEventi.classes.Abitazione;
 
 public class DAOClienteImpl implements DAOCliente {
 	private MySQLConnection connection;

@@ -1,10 +1,8 @@
 package struttureEventi.classes;
 
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import contabilità.Cliente;
+import contabilitï¿½.Cliente;
 
 public class PrenotazioneRistorante extends Prenotazione{
 
@@ -18,17 +16,10 @@ public class PrenotazioneRistorante extends Prenotazione{
 		return nTavolo;
 	}
 
-	public void setnTavolo(int nTavolo) {
-		this.nTavolo = nTavolo;
-	}
-
 	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(LocalDateTime data) {
-		this.data = data;
-	}
 
 	@Override
 	public String toString() {
@@ -38,4 +29,5 @@ public class PrenotazioneRistorante extends Prenotazione{
 
 	private int nTavolo;
 	private LocalDateTime data;
+	private Time ora;
 }

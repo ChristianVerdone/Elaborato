@@ -1,10 +1,8 @@
 package repository;
 
-import java.util.HashMap;
 
-import contabilità.Cliente;
 import contabilità.ContoTotale;
-import struttureEventi.classes.Abitazione;
+
 
 public interface DAOContoTotale {
 	public double doRetrieveContoAbitazioneByCf(String cf);
