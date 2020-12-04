@@ -17,7 +17,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
-import contabilit‡.Cliente;
 import repository.DAOFactory;
 import struttureEventi.classes.PrenotazioneRistorante;
 import util.GenerateRandom;
@@ -34,6 +33,8 @@ import javax.swing.JSpinner;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import com.toedter.calendar.JCalendar;
+
+import contabilita.Cliente;
 
 public class RistoranteUI extends JFrame implements ActionListener {
 	private ArrayList<Cliente> clienti;
@@ -209,7 +210,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Selezionare l'ora.");
 				break;}
 			
-			int d= disponibilit‡();
+			int d= disponibilita();
 			if(d==-1) {
 				JOptionPane.showMessageDialog(this, "Tavolo gi√† prenotato.");
 				break;
@@ -240,7 +241,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		
 		
 		}
-	public int disponibilit‡ () {
+	public int disponibilita () {
 		for(PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) {
 			p.getData();
 			if(p.getData().equals(dataPrenotazione) && p.getnTavolo()==(tavolo)) {

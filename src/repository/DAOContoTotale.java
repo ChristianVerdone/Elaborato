@@ -1,7 +1,7 @@
 package repository;
 
 
-import contabilità.ContoTotale;
+import contabilita.ContoTotale;
 
 
 public interface DAOContoTotale {

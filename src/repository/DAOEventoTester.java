@@ -2,7 +2,7 @@ package repository;
 
 import java.util.HashMap;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 import struttureEventi.classes.Evento;
 
 public class DAOEventoTester {

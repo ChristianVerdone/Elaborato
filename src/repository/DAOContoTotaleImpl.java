@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 
-import contabilità.ContoTotale;
+import contabilita.ContoTotale;
 
 public class DAOContoTotaleImpl implements DAOContoTotale{
 	private MySQLConnection connection;

@@ -1,4 +1,4 @@
-package contabilità;
+package contabilita;
 
 import java.awt.EventQueue;
 import java.awt.Image;

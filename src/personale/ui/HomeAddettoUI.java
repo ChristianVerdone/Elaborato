@@ -5,8 +5,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
-import contabilità.PagamentoUI;
+import contabilita.PagamentoUI;
 import personale.model.Account;
+import struttureEventi.ui.RegistrazioneEvento;
 
 public class HomeAddettoUI extends HomeUI {
 
@@ -57,7 +58,9 @@ public class HomeAddettoUI extends HomeUI {
 		super.actionPerformed(e);
 		switch(e.getActionCommand()) {
 		case "event":
-			/* To do */
+			RegistrazioneEvento re = new RegistrazioneEvento();
+			re.start();
+			this.dispose();
 			break;
 		case "pren":
 			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
