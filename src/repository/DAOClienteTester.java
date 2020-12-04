@@ -2,8 +2,7 @@ package repository;
 
 import java.util.HashMap;
 
-
-import contabilità.Cliente;
+import contabilita.Cliente;
 
 
 public class DAOClienteTester {

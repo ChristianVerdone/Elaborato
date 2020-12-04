@@ -1,6 +1,6 @@
 package struttureEventi.classes;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 
 public class PrenotazioneEvento extends Prenotazione {
 

@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 import repository.DAOFactory;
 import struttureEventi.classes.Biglietto;
 import struttureEventi.classes.Evento;

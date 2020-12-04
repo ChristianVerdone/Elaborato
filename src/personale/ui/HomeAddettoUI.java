@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
-import contabilità.PagamentoUI;
+import contabilita.PagamentoUI;
 import personale.model.Account;
 import struttureEventi.ui.RegistrazioneEvento;
 

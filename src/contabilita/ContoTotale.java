@@ -1,4 +1,4 @@
-package contabilità;
+package contabilita;
 
 import java.time.LocalDate;
 
