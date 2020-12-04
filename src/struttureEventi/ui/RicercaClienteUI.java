@@ -14,8 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import contabilita.Cliente;
 import repository.DAOFactory;
-import contabilità.Cliente;
 
 import javax.swing.JTable;
 

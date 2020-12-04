@@ -7,8 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.DefaultComboBoxModel;
 import com.toedter.calendar.JCalendar;
 
+import contabilita.Cliente;
 import repository.DAOFactory;
-import contabilità.Cliente;
 import struttureEventi.classes.PrenotazioneAbitazione;
 import util.GenerateRandom;
 

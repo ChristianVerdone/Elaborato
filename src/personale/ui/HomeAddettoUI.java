@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
+import contabilita.PagamentoUI;
 import personale.model.Account;
+import struttureEventi.ui.RegistrazioneEvento;
 
 public class HomeAddettoUI extends HomeUI {
 
@@ -16,7 +18,7 @@ public class HomeAddettoUI extends HomeUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomeAddettoUI window = new HomeAddettoUI(new Account("alessandram90", "ales90", Account.Permessi.REDUCED));
+					HomeAddettoUI window = new HomeAddettoUI(new Account("userAddetto", "psw02", Account.Permessi.REDUCED));
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,6 +39,12 @@ public class HomeAddettoUI extends HomeUI {
 		btn_events.addActionListener(this);
 		getContentPane().add(btn_events);
 		
+		JButton btn_amount = new JButton("Registra conto");
+		btn_amount.setBounds(10, 285, 205, 21);
+		btn_amount.setActionCommand("amount");
+		btn_amount.addActionListener(this);
+		getContentPane().add(btn_amount);
+		
 		JButton btn_prenotations = new JButton("Registra prenotazione");
 		btn_prenotations.setBounds(10, 260, 205, 21);
 		btn_prenotations.setActionCommand("pren");
@@ -50,13 +58,20 @@ public class HomeAddettoUI extends HomeUI {
 		super.actionPerformed(e);
 		switch(e.getActionCommand()) {
 		case "event":
-			/* To do */
+			RegistrazioneEvento re = new RegistrazioneEvento();
+			re.start();
+			this.dispose();
 			break;
 		case "pren":
 			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
 			p.start();
 			this.dispose();
-			break;	
+			break;
+		case "amount":
+			PagamentoUI pagamento=new PagamentoUI();
+			pagamento.start();
+			this.dispose();
+			break;
 		}
 	}
 

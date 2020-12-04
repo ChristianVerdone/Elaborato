@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 
-import contabilità.ContoTotale;
+import contabilita.ContoTotale;
 
 public class DAOContoTotaleImpl implements DAOContoTotale{
 	private MySQLConnection connection;
@@ -73,13 +73,14 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
-			ResultSet result = statement.executeQuery("select distinct contiristorante.ContoTotale\r\n"
+			ResultSet result = statement.executeQuery("select distinct sum(contiristorante.ContoTotale)\r\n"
 					+ "from contiristorante,prenotazioniristorante,tavoliristorante\r\n"
-					+ "where prenotazioniristorante.Cliente=(select clienti.CodiceFiscale from clienti where clienti.CodiceFiscale="+"'"+cf+"'"+") and\r\n"
-					+ "prenotazioniristorante.ContoRistorante=contiristorante.IdConto and prenotazioniristorante.TavoloRistorante=tavoliristorante.NumeroTavolo");
+					+ "where prenotazioniristorante.Cliente=(select clienti.CodiceFiscale from clienti where clienti.CodiceFiscale="+"'"+cf+"'"+")\r\n"
+					+ "and prenotazioniristorante.IDPrenotazioneRistorante=contiristorante.PrenotazioneRistorante\r\n"
+					+ "and prenotazioniristorante.Tavolo=tavoliristorante.NumeroTavolo");
 			double contoParziale=0;
 			while (result.next()) {
-				double contoLetto=result.getDouble("ContoTotale");
+				double contoLetto=result.getDouble("sum(contiristorante.ContoTotale)");
 				contoParziale=contoParziale+contoLetto;
 			}
 			contoRistorante=contoParziale;

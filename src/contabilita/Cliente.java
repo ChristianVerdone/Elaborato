@@ -1,4 +1,4 @@
-package contabilità;
+package contabilita;
 
 public class Cliente {
 	

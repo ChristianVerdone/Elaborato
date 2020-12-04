@@ -1,7 +1,8 @@
 package struttureEventi.classes;
 
 import java.time.LocalDate;
-import contabilità.Cliente;
+
+import contabilita.Cliente;
 
 public class PrenotazioneAbitazione extends Prenotazione{
 
