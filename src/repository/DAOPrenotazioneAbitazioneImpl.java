@@ -102,7 +102,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
-			preparedStmt.setString(1, pa.getId());
+			preparedStmt.setString(1, pa.getIdPrenotazione());
 			preparedStmt.setString(2, pa.getCliente().getCf());
 			preparedStmt.setString(3, pa.getAbitazione().getIdAbitazione());
 			LocalDate datai=pa.getDataInizio();
