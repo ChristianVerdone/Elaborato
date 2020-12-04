@@ -1,6 +1,6 @@
 package struttureEventi.classes;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 
 public class PrenotazioneSv extends Prenotazione {
 
@@ -14,15 +14,9 @@ public class PrenotazioneSv extends Prenotazione {
 	public Tessera getTessera() {
 		return tessera;
 	}
-	public void setTessera(Tessera tessera) {
-		this.tessera = tessera;
-	}
+	
 	public StrutturaVillaggio getStruttura() {
 		return struttura;
-	}
-
-	public void setStruttura(StrutturaVillaggio struttura) {
-		this.struttura = struttura;
 	}
 
 

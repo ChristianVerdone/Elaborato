@@ -3,34 +3,27 @@ package struttureEventi.ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 import repository.DAOFactory;
-import struttureEventi.classes.PrenotazioneEvento;
-import struttureEventi.classes.PrenotazioneRistorante;
 import struttureEventi.classes.PrenotazioneSv;
 import struttureEventi.classes.Tessera;
 import util.GenerateRandom;
 
-import java.awt.Component;
 
 public class StrutturaUI extends JFrame implements ActionListener {
 	

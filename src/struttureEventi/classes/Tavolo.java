@@ -11,15 +11,17 @@ public class Tavolo {
 	public int getnTavolo() {
 		return nTavolo;
 	}
-	public void setnTavolo(int nTavolo) {
-		this.nTavolo = nTavolo;
-	}
+	
 	public int getPosti() {
 		return posti;
 	}
-	public void setPosti(int posti) {
-		this.posti = posti;
+	
+	
+	@Override
+	public String toString() {
+		return "Tavolo [nTavolo=" + nTavolo + ", posti=" + posti + "]";
 	}
+
 
 	private int nTavolo;
 	private int posti;

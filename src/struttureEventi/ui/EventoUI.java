@@ -2,22 +2,19 @@ package struttureEventi.ui;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import contabilità.Cliente;
+import contabilita.Cliente;
 import repository.DAOFactory;
 import struttureEventi.classes.Biglietto;
 import struttureEventi.classes.Evento;
@@ -26,10 +23,6 @@ import util.GenerateRandom;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Component;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 public class EventoUI extends JFrame implements ActionListener{
 	
 	private ArrayList<Cliente> clienti;

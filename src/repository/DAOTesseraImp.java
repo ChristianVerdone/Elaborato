@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
-import struttureEventi.classes.Tavolo;
 import struttureEventi.classes.Tessera;
 
 public class DAOTesseraImp implements DAOTessera {

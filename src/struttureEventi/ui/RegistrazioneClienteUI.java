@@ -8,23 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
 
-import repository.DAOClienteImpl;
+import contabilita.Cliente;
 import repository.DAOFactory;
-import contabilità.Cliente;
-import personale.model.Account;
-import personale.ui.HomeAdminUI;
-import personale.ui.HomeUI;
 
 import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
+
 
 public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 
@@ -34,7 +24,6 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 	private JTextField textField_cf;
 	private Cliente cliente;
 	private ArrayList<Cliente> cl;
-	private String nome, cognome,cf;
 	/**
 	 * Launch the application.
 	 */

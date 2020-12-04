@@ -4,64 +4,47 @@ import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DateFormatter;
 
-import contabilità.Cliente;
 import repository.DAOFactory;
 import struttureEventi.classes.PrenotazioneRistorante;
-import struttureEventi.classes.Ristorante;
-import struttureEventi.classes.Tavolo;
 import util.GenerateRandom;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Component;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.components.JSpinField;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import java.beans.PropertyChangeListener;
-import java.sql.Time;
 import java.beans.PropertyChangeEvent;
 import com.toedter.calendar.JCalendar;
 
-public class RistoranteUI extends JFrame implements ActionListener {
+import contabilita.Cliente;
 
-	private Ristorante r;
+public class RistoranteUI extends JFrame implements ActionListener {
 	private ArrayList<Cliente> clienti;
 	private JFrame frame;
 	private Cliente cliente;
 	private int tavolo;
-	private String nTavolo;
-	private JTable table_1;
-	private Time ora;
 	private LocalDate data;
 	private LocalDateTime dataPrenotazione;
 	private JSpinner spr_startTime;
 	private JTable table;
-	private HashSet<PrenotazioneRistorante> prenotazioni;
 	/**
 	 * Launch the application.
 	 */
@@ -227,7 +210,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Selezionare l'ora.");
 				break;}
 			
-			int d= disponibilità();
+			int d= disponibilita();
 			if(d==-1) {
 				JOptionPane.showMessageDialog(this, "Tavolo già prenotato.");
 				break;
@@ -258,7 +241,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		
 		
 		}
-	public int disponibilità () {
+	public int disponibilita () {
 		for(PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) {
 			p.getData();
 			if(p.getData().equals(dataPrenotazione) && p.getnTavolo()==(tavolo)) {

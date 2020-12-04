@@ -6,8 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
-import contabilità.Cliente;
-import struttureEventi.classes.Abitazione;
+import contabilita.Cliente;
 
 public class DAOClienteImpl implements DAOCliente {
 	private MySQLConnection connection;

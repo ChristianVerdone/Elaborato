@@ -13,10 +13,6 @@ public class Lettore {
 		return idLettore;
 	}
 
-	public void setIdLettore(String idLettore) {
-		this.idLettore = idLettore;
-	}
-
 	public Movimento createMovimento(String idTessera) {
 		return new Movimento(idTessera, idLettore, 0, LocalDateTime.now());
 	}
