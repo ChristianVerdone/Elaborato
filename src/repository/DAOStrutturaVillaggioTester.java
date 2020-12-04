@@ -2,7 +2,6 @@ package repository;
 
 import java.util.HashMap;
 
-import struttureEventi.classes.Evento;
 import struttureEventi.classes.StrutturaVillaggio;
 
 public class DAOStrutturaVillaggioTester {

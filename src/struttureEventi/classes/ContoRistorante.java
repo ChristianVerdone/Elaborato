@@ -13,21 +13,15 @@ public class ContoRistorante {
 	public String getIdConto() {
 		return idConto;
 	}
-	public void setIdConto(String idConto) {
-		this.idConto = idConto;
-	}
+	
 	public float getCosto() {
 		return costo;
 	}
-	public void setCosto(float costo) {
-		this.costo = costo;
-	}
+	
 	public Prenotazione getPrenotazioneRistorante() {
 		return prenotazioneRistorante;
 	}
-	public void setPrenotazioneRistorante(Prenotazione prenotazioneRistorante) {
-		this.prenotazioneRistorante = prenotazioneRistorante;
-	}
+	
 
 
 	@Override

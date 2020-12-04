@@ -1,7 +1,5 @@
 package struttureEventi.classes;
 
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import contabilità.Cliente;
@@ -19,32 +17,9 @@ public class PrenotazioneRistorante extends Prenotazione{
 		return nTavolo;
 	}
 
-	public void setnTavolo(int nTavolo) {
-		this.nTavolo = nTavolo;
-	}
-
-
-	
-
-
 	public LocalDateTime getData() {
 		return data;
 	}
-
-	public void setData(LocalDateTime data) {
-		this.data = data;
-	}
-
-	public Time getOra() {
-		return ora;
-	}
-
-	public void setOra(Time ora) {
-		this.ora = ora;
-	}
-
-
-
 
 
 	@Override
@@ -53,11 +28,7 @@ public class PrenotazioneRistorante extends Prenotazione{
 				+ idPrenotazione + ", cliente=" + cliente + "]";
 	}
 
-
-
-
-
 	private int nTavolo;
 	private LocalDateTime data;
-	private Time ora;
+
 }

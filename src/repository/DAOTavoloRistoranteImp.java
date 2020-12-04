@@ -5,9 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.HashSet;
 
-import struttureEventi.classes.PrenotazioneEvento;
 import struttureEventi.classes.Tavolo;
 
 public class DAOTavoloRistoranteImp implements DAOTavoloRistorante {

@@ -6,14 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
-import contabilità.Cliente;
-import struttureEventi.classes.PrenotazioneEvento;
 import struttureEventi.classes.PrenotazioneRistorante;
 
 public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante {

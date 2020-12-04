@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.HashSet;
 
-import contabilità.Cliente;
-import struttureEventi.classes.Abitazione;
 import struttureEventi.classes.PrenotazioneAbitazione;
 
 public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione {
