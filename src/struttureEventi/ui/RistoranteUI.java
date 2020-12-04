@@ -20,7 +20,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DateFormatter;
 
-import contabilit√†.Cliente;
+import contabilit‡.Cliente;
 import repository.DAOFactory;
 import struttureEventi.classes.PrenotazioneRistorante;
 import struttureEventi.classes.Ristorante;
@@ -227,7 +227,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Selezionare l'ora.");
 				break;}
 			
-			int d= disponibilit√†();
+			int d= disponibilit‡();
 			if(d==-1) {
 				JOptionPane.showMessageDialog(this, "Tavolo gi√† prenotato.");
 				break;
@@ -258,7 +258,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		
 		
 		}
-	public int disponibilit√† () {
+	public int disponibilit‡ () {
 		for(PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) {
 			p.getData();
 			if(p.getData().equals(dataPrenotazione) && p.getnTavolo()==(tavolo)) {
