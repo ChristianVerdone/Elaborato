@@ -1,8 +1,9 @@
 package struttureEventi.classes;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
 
-import contabilitï¿½.Cliente;
+import contabilità.Cliente;
 
 public class PrenotazioneRistorante extends Prenotazione{
 
