@@ -58,18 +58,15 @@ public class HomeAddettoUI extends HomeUI {
 		super.actionPerformed(e);
 		switch(e.getActionCommand()) {
 		case "event":
-			RegistrazioneEvento re = new RegistrazioneEvento();
-			re.start();
+			new RegistrazioneEvento().start();
 			this.dispose();
 			break;
 		case "pren":
-			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
-			p.start();
+			new SceltaPrenotazioneUI().start();
 			this.dispose();
 			break;
 		case "amount":
-			PagamentoUI pagamento=new PagamentoUI();
-			pagamento.start();
+			new PagamentoUI().start();
 			this.dispose();
 			break;
 		}

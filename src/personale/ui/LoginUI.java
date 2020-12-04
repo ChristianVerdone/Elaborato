@@ -159,8 +159,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		}
 
 		/* Controllo su database MySQL */	
-		DAOAccount dao_account = DAOFactory.getDAOAccount();
-		Account curr_user = dao_account.doRetrieveByUsername(username);
+		Account curr_user = DAOFactory.getDAOAccount().doRetrieveByUsername(username);
 
 		if(curr_user == null) {
 			endLoginProcessing("Non esiste alcun utente: " + username, true, error_password);
