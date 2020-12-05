@@ -39,17 +39,17 @@ public class HomeAddettoUI extends HomeUI {
 		btn_events.addActionListener(this);
 		getContentPane().add(btn_events);
 		
-		JButton btn_amount = new JButton("Registra conto");
-		btn_amount.setBounds(10, 285, 205, 21);
-		btn_amount.setActionCommand("amount");
-		btn_amount.addActionListener(this);
-		getContentPane().add(btn_amount);
-		
 		JButton btn_prenotations = new JButton("Registra prenotazione");
 		btn_prenotations.setBounds(10, 260, 205, 21);
 		btn_prenotations.setActionCommand("pren");
 		btn_prenotations.addActionListener(this);
 		getContentPane().add(btn_prenotations);
+		
+		JButton btn_amount = new JButton("Registra conto");
+		btn_amount.setBounds(10, 285, 205, 21);
+		btn_amount.setActionCommand("amount");
+		btn_amount.addActionListener(this);
+		getContentPane().add(btn_amount);
 		
 	}
 	
@@ -58,18 +58,15 @@ public class HomeAddettoUI extends HomeUI {
 		super.actionPerformed(e);
 		switch(e.getActionCommand()) {
 		case "event":
-			RegistrazioneEvento re = new RegistrazioneEvento();
-			re.start();
+			new RegistrazioneEvento().start();
 			this.dispose();
 			break;
 		case "pren":
-			SceltaPrenotazioneUI p= new SceltaPrenotazioneUI();
-			p.start();
+			new SceltaPrenotazioneUI().start();
 			this.dispose();
 			break;
 		case "amount":
-			PagamentoUI pagamento=new PagamentoUI();
-			pagamento.start();
+			new PagamentoUI().start();
 			this.dispose();
 			break;
 		}

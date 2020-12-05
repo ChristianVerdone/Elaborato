@@ -36,13 +36,13 @@ public class HomeAdminUI extends HomeAddettoUI {
 	public HomeAdminUI(Account a) {
 		super(a);
 		btn_work_shift = new JButton("Assegna turno di lavoro");
-		btn_work_shift.setBounds(10, 285, 205, 21);
+		btn_work_shift.setBounds(10, 310, 205, 21);
 		btn_work_shift.setActionCommand("work");
 		btn_work_shift.addActionListener(this);
 		getContentPane().add(btn_work_shift);
 		
 		btn_new_dip = new JButton("Registra nuovo dipendente");
-		btn_new_dip.setBounds(10, 310, 205, 21);
+		btn_new_dip.setBounds(10, 335, 205, 21);
 		btn_new_dip.setActionCommand("dip");
 		btn_new_dip.addActionListener(this);
 		getContentPane().add(btn_new_dip);

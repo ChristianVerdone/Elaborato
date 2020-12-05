@@ -223,8 +223,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 			LocalDate inizioTurno = temp_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			TurnoLavoro tl = new TurnoLavoro(cf, inizioTurno, ser);
 			
-			DAOTurniLavoro dao_turni = DAOFactory.getDAOTurniLavoro();
-			if(dao_turni.update(tl) > 0) { 
+			if(DAOFactory.getDAOTurniLavoro().update(tl) > 0) { 
 				JOptionPane.showMessageDialog(this, "Registrazione turno avvenuta con successo");
 				this.dispose();
 			}
@@ -245,8 +244,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 	private void refresh() {
 		//setRowCount scarta le righe inferiori al parametro (in seguito ad un inserimento)
 		dtm.setRowCount(0);
-		DAODipendenti dao_dip = DAOFactory.getDAODipendenti();
-		Set<Dipendente> dip_set = dao_dip.doRetrieveAll();
+		Set<Dipendente> dip_set = DAOFactory.getDAODipendenti().doRetrieveAll();
 		if(dip_set.size() > 0) {
 			if(dtm.getColumnCount() < 4) dtm.setColumnIdentifiers(new String[]{"CF","Nome e Cognome","Mansione", "Stipendio"});
 			for(Dipendente dip : dip_set) {
