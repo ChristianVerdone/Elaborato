@@ -86,6 +86,7 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 		case "abitazione":
 			SceltaCliente sc= new SceltaCliente(e.getActionCommand());
 			sc.Scelta(e.getActionCommand());
+			this.dispose();
 			break;
 		case "struttura":
 			StrutturaUI s = new StrutturaUI();
@@ -103,5 +104,9 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 			this.dispose();
 			break;	  
 		}
+		
+		frame.dispose();
+		
+		
 	}
 }

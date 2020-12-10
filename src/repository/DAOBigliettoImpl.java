@@ -33,7 +33,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 				float costo=result.getFloat("Costo");
 				boolean disponibilità=result.getBoolean("Disponibilità");
 				String evento=result.getString("NomeEvento");
-				
+			
 				Biglietto b = new Biglietto(id, costo, disponibilità, evento);
 				bigliettiCollection.put(id, b);
 			}

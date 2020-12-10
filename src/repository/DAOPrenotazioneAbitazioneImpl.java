@@ -105,7 +105,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			LocalDate datai=pa.getDataInizio();
 			Date dataInizio = Date.valueOf(datai);
 			LocalDate dataf=pa.getDataFine();
-			Date dataFine = Date.valueOf(datai);
+			Date dataFine = Date.valueOf(dataf);
 			preparedStmt.setDate(4,  dataInizio);
 			preparedStmt.setDate(5,  dataFine);
 			return preparedStmt.executeUpdate();

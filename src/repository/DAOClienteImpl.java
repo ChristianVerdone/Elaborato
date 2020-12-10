@@ -66,6 +66,7 @@ public class DAOClienteImpl implements DAOCliente {
 	@Override
 	public void delete(String cf) {
 		try {
+			System.out.println(cf);
 			Statement statement = connection.getConnection().createStatement();
 			int result = statement.executeUpdate("DELETE FROM CLIENTI WHERE CodiceFiscale=\"" + cf + "\"");
 
