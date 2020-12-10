@@ -45,7 +45,6 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 				LocalDate tl_start = result.getDate("DataInizioTurno").toLocalDate();
 				set_turni.add(new TurnoLavoro(tl_dip, tl_start, new Servizio(ser_id, ser_desc, ser_start, ser_end)));
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -91,7 +90,6 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 				LocalDate tl_start = result.getDate("DataInizioTurno").toLocalDate();
 				set_turni.add(new TurnoLavoro(tl_dip, tl_start, new Servizio(ser_id, ser_desc, ser_start, ser_end)));
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -110,7 +108,6 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 
 			//Ritorna il numero di righe manipolate
 			return  prepStm_tl.executeUpdate();
-			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
@@ -137,16 +134,14 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 				LocalDate tl_start = result.getDate("DataInizioTurno").toLocalDate();
 				set_turni.add(new TurnoLavoro(tl_dip, tl_start, new Servizio(ser_id, ser_desc, ser_start, ser_end)));
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return set_turni;
 	}
-	
+
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
 	}
-
 }

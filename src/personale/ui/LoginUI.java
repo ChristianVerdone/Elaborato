@@ -14,7 +14,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import personale.model.Account;
-import repository.DAOAccount;
 import repository.DAOFactory;
 
 import javax.swing.JPasswordField;
@@ -127,7 +126,6 @@ public class LoginUI extends JFrame implements ActionListener {
 		btn_login.setBounds(165, 210, 85, 25);
 		btn_login.addActionListener(this);
 		this.getContentPane().add(btn_login);
-
 	}
 
 	private void endLoginProcessing(String msg, boolean usn, boolean pwd) {
@@ -159,8 +157,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		}
 
 		/* Controllo su database MySQL */	
-		DAOAccount dao_account = DAOFactory.getDAOAccount();
-		Account curr_user = dao_account.doRetrieveByUsername(username);
+		Account curr_user = DAOFactory.getDAOAccount().doRetrieveByUsername(username);
 
 		if(curr_user == null) {
 			endLoginProcessing("Non esiste alcun utente: " + username, true, error_password);

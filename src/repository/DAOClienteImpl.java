@@ -34,7 +34,6 @@ public class DAOClienteImpl implements DAOCliente {
 				Cliente c = new  Cliente(codf, nome, cognome);
 				clientiCollection.put(codf, c);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -54,9 +53,7 @@ public class DAOClienteImpl implements DAOCliente {
 				String nome=result.getString("nome");
 				String cognome=result.getString("cognome");
 				c= new Cliente(codF, nome, cognome); 
-			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,31 +63,26 @@ public class DAOClienteImpl implements DAOCliente {
 	@Override
 	public void delete(String cf) {
 		try {
+			System.out.println(cf);
 			Statement statement = connection.getConnection().createStatement();
 			int result = statement.executeUpdate("DELETE FROM CLIENTI WHERE CodiceFiscale=\"" + cf + "\"");
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-
-	
-	
-
 
 	@Override
 	public int updateCliente(Cliente c) {
 		try {
 			//delete(c.getCf());
-			
+
 			String query = " insert into clienti (CodiceFiscale, Nome, Cognome)"
 					+ " values (?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, c.getCf());
 			preparedStmt.setString(2, c.getNome());
 			preparedStmt.setString(3, c.getCognome());
-		
+
 			return preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -8,17 +8,19 @@ import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
+import personale.model.Account;
 import personale.model.Dipendente;
+import personale.model.Account.Permessi;
 
-public class DAODipendentiImpl implements DAODipendenti {
+public class ConcreteDAODipendenti implements DAODipendenti {
 
 	private MySQLConnection connection;
 
-	public DAODipendentiImpl() {
+	public ConcreteDAODipendenti() {
 		this.connection = new MySQLConnection();
 	}
 
-	public DAODipendentiImpl(MySQLConnection connection) {
+	public ConcreteDAODipendenti(MySQLConnection connection) {
 		super();
 		this.connection = connection;
 	}
@@ -68,21 +70,13 @@ public class DAODipendentiImpl implements DAODipendenti {
 	}
 
 	@Override
-	public int delete(String cf) {
-		try {
-			Statement statement = connection.getConnection().createStatement();
-			return statement.executeUpdate("DELETE FROM dipendenti WHERE CFiscale=" + cf);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public int delete(String tipo) {
 		return 0;
 	}
 
 	@Override
 	public int update(Dipendente dip) {
 		try {
-
 			String query = "INSERT INTO dipendenti (CFiscale, Nome, Cognome, Mansione, Stipendio)" + " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 
@@ -94,6 +88,13 @@ public class DAODipendentiImpl implements DAODipendenti {
 
 			//Ritorna il numero di righe manipolate
 			return preparedStmt.executeUpdate();
+			
+			/*Statement stm = connection.getConnection().createStatement();
+			stm.executeUpdate("INSERT INTO dipendenti VALUES" + 
+					"(\""+ dip.getCf() + "\", \"" + dip.getNome() + 
+					"\", \"" + dip.getCognome() + "\", \""+ dip.getMansione() +
+					"\", "+dip.getStipendio()+"),");*/
+
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
