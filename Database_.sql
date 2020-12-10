@@ -1,3 +1,6 @@
+drop database if exists sannioVillage;
+create database sannioVillage;
+use sannioVillage;
 
 create table CLIENTI(
 	CodiceFiscale char(16) PRIMARY KEY,
@@ -91,32 +94,36 @@ create table TURNIDILAVORO(
 
 create table PRENOTAZIONIABITAZIONI(
 	IdPrenotazioneAbitazione char(5) primary key,
-    Cliente char(16) references CLIENTI(CodiceFiscale),
+    Cliente char(16),
     Abitazione varchar(15) references ABITAZIONI(IdAbitazione),
     DataInizio date not null,
-    DataFine date not null
+    DataFine date not null,
+    foreign key (Cliente) references CLIENTI(CodiceFiscale) on delete cascade
 );
 
 create table PRENOTAZIONIRISTORANTE(
 	IDPrenotazioneRistorante char(5) primary key,
-    Cliente char(16) references CLIENTI(CodiceFiscale),
+    Cliente char(16),
     Tavolo numeric(2) references TAVOLI(NumeroTavolo),
     DataPrenotazione date,
-    OraPrenotazione time
+    OraPrenotazione time,
+    foreign key (Cliente) references CLIENTI(CodiceFiscale) on delete cascade
 );
 
 create table PRENOTAZIONIEVENTI(
 	IdPrenotazioneEvento char(5) primary key,
-    Cliente char(16) references CLIENTI(CodiceFiscale),
+    Cliente char(16),
     Biglietto char(5) references BIGLIETTI(IdBiglietto),
-    Evento char(5) references EVENTI(IdEvento)
+    Evento char(5) references EVENTI(IdEvento),
+    foreign key (Cliente) references CLIENTI(CodiceFiscale) on delete cascade
 );
 
 create table PRENOTAZIONISTRUTTURE(
 	IdPrenotazioneStruttura char(5) primary key,
-    Cliente char(16) references CLIENTI(CodiceFiscale),
+    Cliente char(16),
     Struttura varchar(15) references STRUTTUREVILLAGGIO(IdStruttura),
-    Tessera char(5) references TESSERE(IdTessera)
+    Tessera char(5) references TESSERE(IdTessera),
+    foreign key (Cliente) references CLIENTI(CodiceFiscale) on delete cascade
 );
 
 create table MOVIMENTI(
