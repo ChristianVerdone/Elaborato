@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 
 public class PagamentoUI implements ListSelectionListener {
 
-
 	private JFrame frame;
 	private JLabel lblPagamentoConContanti;
 	private JLabel lblPagamentoConCarta;
@@ -52,7 +51,6 @@ public class PagamentoUI implements ListSelectionListener {
 		});
 	}
 
-
 	/**
 	 * Create the application.
 	 */
@@ -64,7 +62,6 @@ public class PagamentoUI implements ListSelectionListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 700, 350);
@@ -81,7 +78,6 @@ public class PagamentoUI implements ListSelectionListener {
 		lblPagamentoConCarta.setBounds(458, 182, 169, 14);
 		frame.getContentPane().add(lblPagamentoConCarta);
 
-
 		JButton btnPage = new JButton("Pagamento Carta");
 
 		btnPage.setBounds(464, 262, 148, 23);
@@ -95,7 +91,6 @@ public class PagamentoUI implements ListSelectionListener {
 		lblRichiediConto.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblRichiediConto.setBounds(23, 15, 241, 14);
 		frame.getContentPane().add(lblRichiediConto);
-
 
 		//bottone per la richiesta del conto
 		JButton btnRichiedi = new JButton("Richiedi conto");
@@ -116,7 +111,6 @@ public class PagamentoUI implements ListSelectionListener {
 				double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura+contoTotaleRistorante;
 				String contoStringa=String.valueOf(contoTotale).toString();
 				fieldConto.setText(contoStringa);
-
 			}
 		});
 
@@ -127,7 +121,6 @@ public class PagamentoUI implements ListSelectionListener {
 		fieldContanti.setBounds(500, 55, 86, 20);
 		frame.getContentPane().add(fieldContanti);
 		fieldContanti.setColumns(10);
-
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -148,16 +141,12 @@ public class PagamentoUI implements ListSelectionListener {
 						JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
 					else if(check!=0) {
 						JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
-					DAOFactory.getDAOCliente().delete(textCodiceFiscale.getText());
-				}
+						DAOFactory.getDAOCliente().delete(textCodiceFiscale.getText());
+					}
 				}
 				frame.dispose();
-				
 			}
-
-
 		});
-
 
 		//Pagamento con la carta di credito passando il codice della carta
 		//Se il codice � presente in lista il pagamento va a buon fine altrimenti messaggio di errore
@@ -166,8 +155,6 @@ public class PagamentoUI implements ListSelectionListener {
 		fieldCodiceCarta.setBounds(500, 220, 86, 20);
 		frame.getContentPane().add(fieldCodiceCarta);
 		fieldCodiceCarta.setColumns(10);
-
-
 
 		fieldConto = new JTextField();
 		fieldConto.setBounds(297, 280, 86, 20);
@@ -201,7 +188,6 @@ public class PagamentoUI implements ListSelectionListener {
 		frame.getContentPane().add(textCodiceFiscale);
 		textCodiceFiscale.setColumns(10);
 
-
 		btnPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String codiceCarta=fieldCodiceCarta.getText();	//ottengo il codice della carta
@@ -221,7 +207,6 @@ public class PagamentoUI implements ListSelectionListener {
 						DAOFactory.getDAOCliente().delete(textCodiceFiscale.getText());
 					}	
 				}
-
 			}
 		});
 	}

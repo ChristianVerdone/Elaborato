@@ -103,9 +103,6 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 			this.dispose();
 			break;	  
 		}
-		
 		frame.dispose();
-		
-		
 	}
 }

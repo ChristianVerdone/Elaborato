@@ -61,11 +61,9 @@ public class HomeAddettoUI extends HomeUI {
 			break;
 		case "pren":
 			new SceltaPrenotazioneUI().start();
-		
 			break;
 		case "amount":
 			new PagamentoUI().start();
-			
 			break;
 		}
 	}

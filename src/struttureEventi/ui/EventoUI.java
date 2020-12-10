@@ -160,14 +160,14 @@ public class EventoUI extends JFrame implements ActionListener{
 		tableE.setBounds(344, 322, 314, -206);
 		tableE.setModel(dtmE);
 		tableE.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+
 		JScrollPane scrollPane_table_E = new JScrollPane((tableE));
-	
+
 		scrollPane_table_E.setBounds(45, 36, 319, 93);
 		frame.getContentPane().add(scrollPane_table_E);
 
 		/************BIGLIETTI****************/
-		
+
 		DefaultTableModel dtmB = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -176,7 +176,7 @@ public class EventoUI extends JFrame implements ActionListener{
 		};
 
 		dtmB.setColumnIdentifiers(new String[]{"ID" ,"Costo","Disponibilitï¿½","Nome Evento"});
-		
+
 		/**Da spostare in un controller
 		Set<Biglietto> itemsBiglietto = new HashSet<Biglietto>(); 
 		itemsBiglietto.addAll(biglietti);
@@ -184,7 +184,7 @@ public class EventoUI extends JFrame implements ActionListener{
 		for(Biglietto b : biglietti) {
 			dtmB.addRow(new Object[]{b.getIdBiglietto(), b.getCosto(), b.isDisponibilitï¿½(), b.getNomeEvento()});
 		}
-		*/
+		 */
 		tableB = new JTable();
 		tableB.setBounds(344, 322, 314, -206);
 		tableB.setModel(dtmB);
@@ -192,68 +192,66 @@ public class EventoUI extends JFrame implements ActionListener{
 		JScrollPane scrollPane_table_B = new JScrollPane((tableB));
 		scrollPane_table_B.setBounds(45, 180, 319, 93);
 		frame.getContentPane().add(scrollPane_table_B);
-		
+
 		tableE.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			
+
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				dtmB.setRowCount(0);
 
 				biglietti= new ArrayList<Biglietto>();
 				int i =tableE.getSelectedRow();
-				
+
 				if(i!=-1){
 					evento=eventi.get(i);
-				
-				for (Biglietto b : DAOFactory.getDAOBiglietto().doRetrieveAll().values()) {
-					if(b.getNomeEvento().equalsIgnoreCase(evento.getNome())) {
-					biglietti.add(b);
-				}}
-				for(Biglietto b : biglietti) {
-					dtmB.addRow(new Object[]{b.getIdBiglietto(), b.getCosto(), b.isDisponibilitï¿½(), b.getNomeEvento()});
+
+					for (Biglietto b : DAOFactory.getDAOBiglietto().doRetrieveAll().values()) {
+						if(b.getNomeEvento().equalsIgnoreCase(evento.getNome())) {
+							biglietti.add(b);
+						}}
+					for(Biglietto b : biglietti) {
+						dtmB.addRow(new Object[]{b.getIdBiglietto(), b.getCosto(), b.isDisponibilità(), b.getNomeEvento()});
+					}
 				}
-			}
-				
 			}
 		});	
 	}
 
 	public  void actionPerformed(ActionEvent e) {
-			String command=e.getActionCommand();
-			switch(command) {
-			case "prenota": 
-				int i =table.getSelectedRow();
-				if(i==-1) {
-					JOptionPane.showMessageDialog(null, "Seleziona un cliente.");
-					break;
-				}
-				cliente= clienti.get(i);
-				
-				int b =tableB.getSelectedRow();
-				if(b==-1) {
-					JOptionPane.showMessageDialog(null, "Seleziona un biglietto.");
-					break;
-				}
-				
-				biglietto=biglietti.get(b);
-				
-				
-				int ev =tableE.getSelectedRow();
-				if(ev==-1) {
-					JOptionPane.showMessageDialog(null, "Seleziona un evento.");
-					break;
-				}
-				evento=eventi.get(i);
-				
-				GenerateRandom g = new GenerateRandom();
-				String idPrenotazione = "PE" + g.GenerateRandom();
-				PrenotazioneEvento pe= new PrenotazioneEvento(idPrenotazione, cliente, evento, biglietto);
-				int check = DAOFactory.getDAOPrenotazioneEvento().updatePrenotazioneEvento(pe);
-				if(check!=0)
-					JOptionPane.showMessageDialog(null, "Prenotazione effettuata.");
+		String command=e.getActionCommand();
+		switch(command) {
+		case "prenota": 
+			int i =table.getSelectedRow();
+			if(i==-1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un cliente.");
+				break;
+			}
+			cliente= clienti.get(i);
+
+			int b =tableB.getSelectedRow();
+			if(b==-1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un biglietto.");
+				break;
+			}
+
+			biglietto=biglietti.get(b);
+
+
+			int ev =tableE.getSelectedRow();
+			if(ev==-1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un evento.");
+				break;
+			}
+			evento=eventi.get(i);
+
+			GenerateRandom g = new GenerateRandom();
+			String idPrenotazione = "PE" + g.GenerateRandom();
+			PrenotazioneEvento pe= new PrenotazioneEvento(idPrenotazione, cliente, evento, biglietto);
+			int check = DAOFactory.getDAOPrenotazioneEvento().updatePrenotazioneEvento(pe);
+			if(check!=0)
+				JOptionPane.showMessageDialog(null, "Prenotazione effettuata.");
 			this.dispose();
 			frame.dispose();
-			}
-			
+		}
 	}
 }

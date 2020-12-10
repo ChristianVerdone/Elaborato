@@ -70,12 +70,12 @@ public class DAOClienteImpl implements DAOCliente {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public int updateCliente(Cliente c) {
 		try {
 			//delete(c.getCf());
-			
+
 			String query = " insert into clienti (CodiceFiscale, Nome, Cognome)"
 					+ " values (?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);

@@ -27,6 +27,7 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 		super();
 		this.connection = connection;
 	}
+	
 	@Override
 	public double doRetrieveContoAbitazioneByCf(String cf) {
 		double contoAbitazione = 0;
@@ -44,7 +45,7 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				LocalDate datainizio = LocalDate.parse(datai, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				String dataf=result.getString("DataFine");
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				
+
 				long days= ChronoUnit.DAYS.between(datainizio, datafine);
 				System.out.println(days);
 				JOptionPane.showMessageDialog(null, days);
@@ -56,7 +57,7 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				//System.out.println(giorniSoggiorno);
 				contoAbitazione=days*contoLetto;
 				System.out.println(contoAbitazione);
-				
+
 				try {
 					if(datafine.isBefore(datainizio)) {
 						throw new DateTimeException("Errore nell'inserimento della data");

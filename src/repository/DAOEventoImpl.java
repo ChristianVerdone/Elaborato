@@ -18,7 +18,7 @@ public class DAOEventoImpl implements DAOEvento {
 		super();
 		this.connection = connection;
 	}
-	
+
 	@Override
 	public HashMap<String, Evento> doRetrieveAll() {
 		HashMap<String, Evento> eventiCollection = new HashMap<String, Evento>();
