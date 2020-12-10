@@ -46,7 +46,7 @@ public class DAOEventoImpl implements DAOEvento {
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM EVENTI WHERE IdBiglietto=\"" + id + "\"");
+			ResultSet result = statement.executeQuery("SELECT * FROM EVENTI WHERE IdEvento=\"" + id + "\"");
 
 			while (result.next()) {
 				String idEvento = result.getString("IdEvento");

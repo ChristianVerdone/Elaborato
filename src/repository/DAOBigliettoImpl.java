@@ -29,10 +29,10 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 			while (result.next()) {
 				String id = result.getString("IdBiglietto");
 				float costo=result.getFloat("Costo");
-				boolean disponibilità=result.getBoolean("Disponibilità");
+				boolean disponibilitï¿½=result.getBoolean("Disponibilitï¿½");
 				String evento=result.getString("NomeEvento");
-
-				Biglietto b = new Biglietto(id, costo, disponibilità, evento);
+			
+				Biglietto b = new Biglietto(id, costo, disponibilitï¿½, evento);
 				bigliettiCollection.put(id, b);
 			}
 		} catch (SQLException e) {
@@ -52,9 +52,9 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 			while (result.next()) {
 				String idBiglietto = result.getString("IdBiglietto");
 				float costo=result.getFloat("Costo");
-				boolean disponibilità=result.getBoolean("Disponibilità");
+				boolean disponibilitï¿½=result.getBoolean("Disponibilitï¿½");
 				String evento=result.getString("NomeEvento");
-				b= new Biglietto(idBiglietto, costo, disponibilità, evento);
+				b= new Biglietto(idBiglietto, costo, disponibilitï¿½, evento);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -77,12 +77,12 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 		try {
 			//delete(c.getCf());
 
-			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilità, NomeEvento)"
+			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilitï¿½, NomeEvento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, b.getIdBiglietto());
 			preparedStmt.setFloat(2, b.getCosto());
-			preparedStmt.setBoolean(3, b.isDisponibilità());
+			preparedStmt.setBoolean(3, b.isDisponibilitï¿½());
 			preparedStmt.setString(1, b.getNomeEvento());
 			return preparedStmt.executeUpdate();
 		} catch (SQLException e) {
