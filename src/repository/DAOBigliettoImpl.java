@@ -8,9 +8,7 @@ import java.util.HashMap;
 
 import struttureEventi.classes.Biglietto;
 
-
 public class DAOBigliettoImpl implements DAOBiglietto {
-	
 
 	private MySQLConnection connection;
 	public DAOBigliettoImpl() {
@@ -33,11 +31,10 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 				float costo=result.getFloat("Costo");
 				boolean disponibilità=result.getBoolean("Disponibilità");
 				String evento=result.getString("NomeEvento");
-				
+
 				Biglietto b = new Biglietto(id, costo, disponibilità, evento);
 				bigliettiCollection.put(id, b);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -58,9 +55,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 				boolean disponibilità=result.getBoolean("Disponibilità");
 				String evento=result.getString("NomeEvento");
 				b= new Biglietto(idBiglietto, costo, disponibilità, evento);
-			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -72,22 +67,16 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 		try {
 			Statement statement = connection.getConnection().createStatement();
 			int result = statement.executeUpdate("DELETE FROM BIGLIETTI WHERE IdBiglietto=\"" + id + "\"");
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-
-	
-	
-
 
 	@Override
 	public int updateBiglietto(Biglietto b) {
 		try {
 			//delete(c.getCf());
-			
+
 			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilità, NomeEvento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
@@ -101,4 +90,4 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 		}
 		return 0;
 	}
-	}
+}

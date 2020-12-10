@@ -1,6 +1,5 @@
 package repository;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +7,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 
 import struttureEventi.classes.Evento;
-
 
 public class DAOEventoImpl implements DAOEvento {
 	private MySQLConnection connection;
@@ -20,6 +18,7 @@ public class DAOEventoImpl implements DAOEvento {
 		super();
 		this.connection = connection;
 	}
+	
 	@Override
 	public HashMap<String, Evento> doRetrieveAll() {
 		HashMap<String, Evento> eventiCollection = new HashMap<String, Evento>();
@@ -35,13 +34,12 @@ public class DAOEventoImpl implements DAOEvento {
 				Evento e = new Evento(id, nome, tipo, descrizione);
 				eventiCollection.put(id, e);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return eventiCollection;
 	}
-	
+
 	@Override
 	public Evento doRetrieveById(String id) {
 		Evento ev = null;
@@ -56,9 +54,7 @@ public class DAOEventoImpl implements DAOEvento {
 				String tipo=result.getString("Tipo");
 				String descrizione=result.getString("Descrizione");
 				ev= new Evento(idEvento, nome, tipo, descrizione);
-			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -74,18 +70,13 @@ public class DAOEventoImpl implements DAOEvento {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-
-	
-	
-
 
 	@Override
 	public int updateEvento(Evento ev) {
 		try {
 			//delete(c.getCf());
-			
+
 			String query = " insert into eventi (IdEvento, Nome, Tipo, Descrizione)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);

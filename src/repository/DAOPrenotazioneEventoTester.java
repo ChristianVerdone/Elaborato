@@ -12,7 +12,5 @@ public class DAOPrenotazioneEventoTester {
 		if (!prenotazioneEventi.isEmpty())
 			for (PrenotazioneEvento pe : prenotazioneEventi)
 				System.out.println(pe.toString());
-
-
 	}
 }
