@@ -12,7 +12,5 @@ public class DAOTesseraTester {
 		if (!tessere.isEmpty())
 			for (Tessera t : tessere.values())
 				System.out.println(t.toString());
-
-
 	}
 }

@@ -1,19 +1,12 @@
 package contabilita;
 
 import java.awt.EventQueue;
-import java.awt.Image;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import repository.DAOClienteImpl;
-import repository.DAOContoTotale;
 import repository.DAOContoTotaleImpl;
 import repository.DAOFactory;
 import util.GenerateRandom;
@@ -27,17 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class PagamentoUI implements ListSelectionListener {
-
 
 	private JFrame frame;
 	private JLabel lblPagamentoConContanti;
@@ -64,7 +51,6 @@ public class PagamentoUI implements ListSelectionListener {
 		});
 	}
 
-
 	/**
 	 * Create the application.
 	 */
@@ -76,7 +62,6 @@ public class PagamentoUI implements ListSelectionListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 700, 350);
@@ -93,7 +78,6 @@ public class PagamentoUI implements ListSelectionListener {
 		lblPagamentoConCarta.setBounds(458, 182, 169, 14);
 		frame.getContentPane().add(lblPagamentoConCarta);
 
-
 		JButton btnPage = new JButton("Pagamento Carta");
 
 		btnPage.setBounds(464, 262, 148, 23);
@@ -107,7 +91,6 @@ public class PagamentoUI implements ListSelectionListener {
 		lblRichiediConto.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblRichiediConto.setBounds(23, 15, 241, 14);
 		frame.getContentPane().add(lblRichiediConto);
-
 
 		//bottone per la richiesta del conto
 		JButton btnRichiedi = new JButton("Richiedi conto");
@@ -128,7 +111,6 @@ public class PagamentoUI implements ListSelectionListener {
 				double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura+contoTotaleRistorante;
 				String contoStringa=String.valueOf(contoTotale).toString();
 				fieldConto.setText(contoStringa);
-
 			}
 		});
 
@@ -140,7 +122,6 @@ public class PagamentoUI implements ListSelectionListener {
 		frame.getContentPane().add(fieldContanti);
 		fieldContanti.setColumns(10);
 
-
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				double contanti=Double.parseDouble(fieldContanti.getText());	//contanti che ha inserito il cliente
@@ -150,9 +131,9 @@ public class PagamentoUI implements ListSelectionListener {
 				String id= "CT" + g.GenerateRandom();
 
 				if(contanti<contoTotale) {
-					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "L'importo inserito non ï¿½ valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
 				}else {
-					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
+					JOptionPane.showMessageDialog(null, "Il pagamento ï¿½ andato a buon fine");
 					ContoTotale ct= new ContoTotale(id,(Double.parseDouble(fieldConto.getText())),LocalDate.now(),textCodiceFiscale.getText()); 
 					System.out.println(ct.toString());	
 					int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
@@ -160,26 +141,20 @@ public class PagamentoUI implements ListSelectionListener {
 						JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
 					else if(check!=0) {
 						JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
-					DAOFactory.getDAOCliente().delete(textCodiceFiscale.getText());
-				}
+						DAOFactory.getDAOCliente().delete(textCodiceFiscale.getText());
+					}
 				}
 				frame.dispose();
-				
 			}
-
-
 		});
 
-
 		//Pagamento con la carta di credito passando il codice della carta
-		//Se il codice è presente in lista il pagamento va a buon fine altrimenti messaggio di errore
+		//Se il codice ï¿½ presente in lista il pagamento va a buon fine altrimenti messaggio di errore
 
 		fieldCodiceCarta = new JTextField();
 		fieldCodiceCarta.setBounds(500, 220, 86, 20);
 		frame.getContentPane().add(fieldCodiceCarta);
 		fieldCodiceCarta.setColumns(10);
-
-
 
 		fieldConto = new JTextField();
 		fieldConto.setBounds(297, 280, 86, 20);
@@ -213,16 +188,15 @@ public class PagamentoUI implements ListSelectionListener {
 		frame.getContentPane().add(textCodiceFiscale);
 		textCodiceFiscale.setColumns(10);
 
-
 		btnPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String codiceCarta=fieldCodiceCarta.getText();	//ottengo il codice della carta
 				GenerateRandom g= new GenerateRandom();
 				String id= "CT" + g.GenerateRandom();
 				if(codiceCarta.length()!=16) {
-					JOptionPane.showMessageDialog(null, "Il numero della carta è sbagliato riprova", "Errore",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Il numero della carta ï¿½ sbagliato riprova", "Errore",JOptionPane.ERROR_MESSAGE);
 				}else {
-					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
+					JOptionPane.showMessageDialog(null, "Il pagamento ï¿½ andato a buon fine");
 					ContoTotale ct= new ContoTotale(id,(Double.parseDouble(fieldConto.getText())),LocalDate.now(),textCodiceFiscale.getText()); 
 					System.out.println(ct.toString());	
 					int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
@@ -233,11 +207,9 @@ public class PagamentoUI implements ListSelectionListener {
 						DAOFactory.getDAOCliente().delete(textCodiceFiscale.getText());
 					}	
 				}
-
 			}
 		});
 	}
-
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {

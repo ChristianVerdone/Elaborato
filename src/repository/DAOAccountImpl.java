@@ -12,7 +12,7 @@ import personale.model.Account;
 import personale.model.Account.Permessi;
 
 public class DAOAccountImpl implements DAOAccount {
-	
+
 	private MySQLConnection connection;
 
 	public DAOAccountImpl() {
@@ -31,14 +31,13 @@ public class DAOAccountImpl implements DAOAccount {
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM accounts");
-			
+
 			while (result.next()) {
 				String usn = result.getString("Username");
 				String pwd = result.getString("PassDipendente");
 				Permessi prm = Account.getPermessiFromInt(result.getInt("Permessi"));			
 				accountSet.add(new Account(usn, pwd, prm));
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +79,7 @@ public class DAOAccountImpl implements DAOAccount {
 	@Override
 	public int update(String cf, Account account) {	
 		try {
-			
+
 			String query = "INSERT INTO accounts (Username, Dipendente, PassDipendente, Permessi)" + " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 
@@ -88,10 +87,10 @@ public class DAOAccountImpl implements DAOAccount {
 			preparedStmt.setString(2, cf);
 			preparedStmt.setString(3, account.getPassword());
 			preparedStmt.setInt(4, Account.getIntFromPermessi(account.getTipologiaPermessi()));
-			
+
 			//Ritorna il numero di righe manipolate
 			return preparedStmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}

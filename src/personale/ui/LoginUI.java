@@ -14,7 +14,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import personale.model.Account;
-import repository.DAOAccount;
 import repository.DAOFactory;
 
 import javax.swing.JPasswordField;
@@ -127,7 +126,6 @@ public class LoginUI extends JFrame implements ActionListener {
 		btn_login.setBounds(165, 210, 85, 25);
 		btn_login.addActionListener(this);
 		this.getContentPane().add(btn_login);
-
 	}
 
 	private void endLoginProcessing(String msg, boolean usn, boolean pwd) {

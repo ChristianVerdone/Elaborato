@@ -6,8 +6,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 import struttureEventi.classes.Abitazione;
 
-
-
 public class DAOAbitazioneImpl implements DAOAbitazione {
 	private MySQLConnection connection;
 
@@ -19,7 +17,7 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 		super();
 		this.connection = connection;
 	}
-	
+
 	@Override
 	public HashMap<String, Abitazione> doRetrieveAll() {
 		HashMap<String, Abitazione> abitazioniCollection = new HashMap<String, Abitazione>();
@@ -27,7 +25,7 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM ABITAZIONI");
-			
+
 			while (result.next()) {
 				String idAbitazione = result.getString("IdAbitazione");
 				int postiLetto=result.getInt("PostiLetto");
@@ -35,9 +33,8 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 				String descrizione=result.getString("Descrizione");
 				Abitazione a = new Abitazione(idAbitazione, postiLetto, tariffa, descrizione);
 				abitazioniCollection.put(idAbitazione, a);
-			
-
-		}} catch (SQLException e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return abitazioniCollection;
@@ -57,9 +54,7 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 				float tariffa=(float) result.getDouble("Tariffa");
 				String descrizione=result.getString("Descrizione");
 				a = new Abitazione(idAbitazione, postiLetto, tariffa, descrizione);
-			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -75,8 +70,5 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-
 }

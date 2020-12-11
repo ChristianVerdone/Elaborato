@@ -12,7 +12,7 @@ import java.util.HashSet;
 import struttureEventi.classes.PrenotazioneAbitazione;
 
 public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione {
-	
+
 	private MySQLConnection connection;
 
 	public DAOPrenotazioneAbitazioneImpl() {
@@ -23,7 +23,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		super();
 		this.connection = connection;
 	}
-	
+
 	@Override
 	public HashSet<PrenotazioneAbitazione> doRetrieveAll() {
 		HashSet<PrenotazioneAbitazione> paCollection = new HashSet<PrenotazioneAbitazione>();
@@ -31,7 +31,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIABITAZIONI");
-			
+
 			while (result.next()) {
 				String id=result.getString("IdPrenotazioneAbitazione");
 				String cliente=result.getString("Cliente");
@@ -46,9 +46,8 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				LocalDate dataFine = dataf.toLocalDate().parse(dataf.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				PrenotazioneAbitazione a = new PrenotazioneAbitazione( id,DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), dataInizio, dataFine);
 				paCollection.add(a);
-			
-
-		}} catch (SQLException e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return paCollection;
@@ -71,9 +70,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				String dataf=result.getString("dataFine");
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				pa = new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
-			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -85,17 +82,15 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		try {
 			Statement statement = connection.getConnection().createStatement();
 			int result = statement.executeUpdate("DELETE FROM PRENOTAZIONIABITAZIONI WHERE IDPrenotazioneAbitazione=\"" + id + "\"");
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
+
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa) {
 		try {
 			//delete(c.getCf());
-			
+
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
@@ -114,5 +109,4 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		}
 		return 0;
 	}
-	
 }

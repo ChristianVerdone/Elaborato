@@ -20,7 +20,7 @@ public class DAOStrutturaVillaggioImpl implements DAOStrutturraVillaggio {
 		super();
 		this.connection = connection;
 	}
-	
+
 	@Override
 	public HashMap<String, StrutturaVillaggio> doRetrieveAll() {
 		HashMap<String, StrutturaVillaggio> struttureCollection = new HashMap<>();
@@ -34,9 +34,8 @@ public class DAOStrutturaVillaggioImpl implements DAOStrutturraVillaggio {
 				float tariffa=result.getFloat("Tariffa");
 				StrutturaVillaggio s = new StrutturaVillaggio(id, tariffa, tipo);
 				struttureCollection.put(id, s);
-			
-
-		}} catch (SQLException e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return struttureCollection;
@@ -49,19 +48,19 @@ public class DAOStrutturaVillaggioImpl implements DAOStrutturraVillaggio {
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM STRUTTUREVILLAGGIO WHERE IdStruttura=\""+ id + "\"");
-			 
+
 			while (result.next()) {
 				String idStruttura=result.getString("IdStruttura");
 				String tipo=result.getString("Tipo");
 				float tariffa=result.getFloat("Tariffa");
 				s = new StrutturaVillaggio(idStruttura, tariffa, tipo);
-				
-
-		}} catch (SQLException e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return s;
 	}
+	
 	@Override
 	public void delete(String  id) {
 		try {
@@ -71,13 +70,10 @@ public class DAOStrutturaVillaggioImpl implements DAOStrutturraVillaggio {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
+
 	public int updateStruttura(StrutturaVillaggio s) {
 		try {
-			
-			
 			String query = " insert into Strutture ( IdStruttura, Tariffa, Tipo)"
 					+ " values (?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
