@@ -4,15 +4,14 @@ import java.time.LocalDateTime;
 
 public class Movimento {
 
-	
-	public Movimento(String idTessera, String idLettore, int tipo, LocalDateTime data) {
-		
+
+	public Movimento(String idTessera, String idLettore, boolean tipo) {
+
 		this.idTessera = idTessera;
 		this.idLettore = idLettore;
 		this.tipo = tipo;
-		this.data = data;
 	}
-	
+
 	public String getIdTessera() {
 		return idTessera;
 	}
@@ -20,18 +19,17 @@ public class Movimento {
 	public String getIdLettore() {
 		return idLettore;
 	}
-	
-	public int getTipo() {
+
+	public boolean getTipo() {
 		return tipo;
 	}
-	
-	public LocalDateTime getData() {
-		return data;
+
+	@Override
+	public String toString() {
+		return "Movimento [idTessera=" + idTessera + ", idLettore=" + idLettore + ", tipo=" + tipo + "]";
 	}
-	
 
 	private String idTessera;
 	private String idLettore;
-	private int tipo;
-	private LocalDateTime data;
+	private boolean tipo;
 }
