@@ -12,6 +12,5 @@ public class DAOStrutturaVillaggioTester {
 		if (!strutture.isEmpty())
 			for (StrutturaVillaggio s : strutture.values())
 				System.out.println(s.toString());
-
 	}
 }

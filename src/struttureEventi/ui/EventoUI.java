@@ -9,9 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import contabilita.Cliente;
@@ -23,8 +26,10 @@ import util.GenerateRandom;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 public class EventoUI extends JFrame implements ActionListener{
-	
+
 	private ArrayList<Cliente> clienti;
 	private ArrayList<Evento> eventi;
 	private ArrayList<Biglietto> biglietti;
@@ -49,7 +54,7 @@ public class EventoUI extends JFrame implements ActionListener{
 			}
 		});
 	}
-	
+
 	public void start() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -67,63 +72,58 @@ public class EventoUI extends JFrame implements ActionListener{
 	 * Create the application.
 	 */
 	public EventoUI() {
-	
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
+		/**
+		 * Initialize the contents of the frame.
+		 */
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 481);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Prenotazione Evento");
-		
+
 		JLabel lblNewLabel = new JLabel("Seleziona l'evento in programma:");
 		lblNewLabel.setBounds(10, 11, 165, 14);
 		frame.getContentPane().add(lblNewLabel);
-		
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Seleziona il biglietto:");
 		lblNewLabel_1.setBounds(10, 155, 165, 14);
 		frame.getContentPane().add(lblNewLabel_1);
-		
+
 		DefaultListModel<String> listmodelB = new DefaultListModel<String>();
-	
+
 		JLabel lblNewLabel_2 = new JLabel("Seleziona il cliente:");
 		lblNewLabel_2.setBounds(10, 284, 165, 14);
 		frame.getContentPane().add(lblNewLabel_2);
-		
-		
+
 		JButton btnNewButton = new JButton("Prenota");
 		btnNewButton.setBounds(0, 419, 434, 23);
+		btnNewButton.setActionCommand("prenota");
 		btnNewButton.addActionListener(this);
 		frame.getContentPane().add(btnNewButton);
-		
-		
+
 		/************CLIENTI****************/
-		
-	
+
 		clienti= new ArrayList<Cliente>();
 		for (Cliente cl : DAOFactory.getDAOCliente().doRetrieveAll().values()) {
 			clienti.add(cl);
 		}
 		DefaultTableModel dtm = new DefaultTableModel() {
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
 		dtm.setColumnIdentifiers(new String[]{"Nome","Cognome","CF"});
-		
+
 		//Da spostare in un controller
 		Set<Cliente> items = new HashSet<Cliente>(); 
 		items.addAll(clienti);
-		
+
 		for(Cliente cl : clienti) {
 			dtm.addRow(new Object[]{cl.getNome(), cl.getCognome(),  cl.getCf()});
 		}
-		
+
 		table = new JTable();
 		table.setBounds(344, 322, 314, -206);
 		table.setModel(dtm);
@@ -132,61 +132,59 @@ public class EventoUI extends JFrame implements ActionListener{
 		JScrollPane scrollPane_table = new JScrollPane(table);
 		scrollPane_table.setBounds(45, 309, 319, 99);
 		frame.getContentPane().add(scrollPane_table);
-		
+
 		/************EVENTI****************/
-		
+
 		eventi= new ArrayList<Evento>();
 		for (Evento e : DAOFactory.getDAOEvento().doRetrieveAll().values()) {
 			eventi.add(e);
 		}
 		DefaultTableModel dtmE = new DefaultTableModel() {
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
-		
+
 		dtmE.setColumnIdentifiers(new String[]{"ID" ,"Nome","Tipo","Descrizione"});
-		
+
 		//Da spostare in un controller
 		Set<Evento> itemsEventi = new HashSet<Evento>(); 
 		itemsEventi.addAll(eventi);
-		
+
 		for(Evento e : eventi) {
 			dtmE.addRow(new Object[]{e.getIdEvento(), e.getNome(), e.getTipo(), e.getDescrizione()});
 		}
-		
+
 		tableE = new JTable();
 		tableE.setBounds(344, 322, 314, -206);
 		tableE.setModel(dtmE);
 		tableE.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//table.getSelectionModel().addListSelectionListener(this);
+
 		JScrollPane scrollPane_table_E = new JScrollPane((tableE));
+
 		scrollPane_table_E.setBounds(45, 36, 319, 93);
 		frame.getContentPane().add(scrollPane_table_E);
-		
+
 		/************BIGLIETTI****************/
-		biglietti= new ArrayList<Biglietto>();
-		for (Biglietto b : DAOFactory.getDAOBiglietto().doRetrieveAll().values()) {
-			biglietti.add(b);
-		}
+
 		DefaultTableModel dtmB = new DefaultTableModel() {
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};
-		
-		dtmB.setColumnIdentifiers(new String[]{"ID" ,"Costo","Disponibilità","Nome Evento"});
-		
-		//Da spostare in un controller
+
+		dtmB.setColumnIdentifiers(new String[]{"ID" ,"Costo","Disponibilitï¿½","Nome Evento"});
+
+		/**Da spostare in un controller
 		Set<Biglietto> itemsBiglietto = new HashSet<Biglietto>(); 
 		itemsBiglietto.addAll(biglietti);
-		
+
 		for(Biglietto b : biglietti) {
-			dtmB.addRow(new Object[]{b.getIdBiglietto(), b.getCosto(), b.isDisponibilità(), b.getNomeEvento()});
+			dtmB.addRow(new Object[]{b.getIdBiglietto(), b.getCosto(), b.isDisponibilitï¿½(), b.getNomeEvento()});
 		}
-		
+		 */
 		tableB = new JTable();
 		tableB.setBounds(344, 322, 314, -206);
 		tableB.setModel(dtmB);
@@ -194,27 +192,66 @@ public class EventoUI extends JFrame implements ActionListener{
 		JScrollPane scrollPane_table_B = new JScrollPane((tableB));
 		scrollPane_table_B.setBounds(45, 180, 319, 93);
 		frame.getContentPane().add(scrollPane_table_B);
-		
-		
+
+		tableE.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				dtmB.setRowCount(0);
+
+				biglietti= new ArrayList<Biglietto>();
+				int i =tableE.getSelectedRow();
+
+				if(i!=-1){
+					evento=eventi.get(i);
+
+					for (Biglietto b : DAOFactory.getDAOBiglietto().doRetrieveAll().values()) {
+						if(b.getNomeEvento().equalsIgnoreCase(evento.getNome())) {
+							biglietti.add(b);
+						}}
+					for(Biglietto b : biglietti) {
+						dtmB.addRow(new Object[]{b.getIdBiglietto(), b.getCosto(), b.isDisponibilità(), b.getNomeEvento()});
+					}
+				}
+			}
+		});	
 	}
-		
-	
+
 	public  void actionPerformed(ActionEvent e) {
-			
+		String command=e.getActionCommand();
+		switch(command) {
+		case "prenota": 
 			int i =table.getSelectedRow();
+			if(i==-1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un cliente.");
+				break;
+			}
 			cliente= clienti.get(i);
-			System.out.println(cliente.toString());
+
 			int b =tableB.getSelectedRow();
+			if(b==-1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un biglietto.");
+				break;
+			}
+
 			biglietto=biglietti.get(b);
+
+
 			int ev =tableE.getSelectedRow();
+			if(ev==-1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un evento.");
+				break;
+			}
 			evento=eventi.get(i);
-			
+
 			GenerateRandom g = new GenerateRandom();
 			String idPrenotazione = "PE" + g.GenerateRandom();
 			PrenotazioneEvento pe= new PrenotazioneEvento(idPrenotazione, cliente, evento, biglietto);
-			DAOFactory.getDAOPrenotazioneEvento().updatePrenotazioneEvento(pe);
-		this.dispose();
-		frame.dispose();
+			int check = DAOFactory.getDAOPrenotazioneEvento().updatePrenotazioneEvento(pe);
+			if(check!=0)
+				JOptionPane.showMessageDialog(null, "Prenotazione effettuata.");
+			this.dispose();
+			frame.dispose();
+		}
 	}
 }
-		

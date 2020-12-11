@@ -15,7 +15,6 @@ import repository.DAOFactory;
 
 import javax.swing.JButton;
 
-
 public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 
 	private JFrame frame;
@@ -32,7 +31,6 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-
 					RegistrazioneClienteUI window = new RegistrazioneClienteUI();
 					window.frame.setVisible(true);
 
@@ -41,15 +39,12 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 				}
 			}
 		});
-
 	}
 
 	/**
 	 * Create the application.
 	 */
 	public   RegistrazioneClienteUI() {
-
-
 		/**
 		 * Initialize the contents of the frame.
 		 */
@@ -96,9 +91,7 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 		aggiungi.setBounds(96, 179, 89, 23);
 
 		frame.getContentPane().add(aggiungi);
-
 	}
-
 
 	public Cliente getCliente() {
 
@@ -113,15 +106,15 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 			String n = textField_nome.getText().toString();
 			if(n.length()==0) msg ="Inserisci un nome";
 			else if(n.length() > 30) msg = "Dimensione massima del nome: 30 caratteri\n";
-			
+
 			String c = textField_cognome.getText().toString();
 			if(c.length()==0) msg ="Inserisci un cognome";
 			else if(c.length() > 30) msg = "Dimensione massima del cognome: 30 caratteri\n";
-			
+
 			String cf = textField_cf.getText().toString();
 			if(cf.length() != 16) msg = "Il codice fiscale deve avere 16 caratteri\n";
 			else if(DAOFactory.getDAOCliente().doRetrieveByCf(cf)!= null) {
-				
+
 				JOptionPane.showMessageDialog(this, "Cliente con codice fiscale " + cf + " già registrato.");
 				break;
 			}
@@ -130,25 +123,20 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 				return;
 			}
 			
-			
 			cliente = new Cliente(cf,n,c); 
-			
+
 			int check = DAOFactory.getDAOCliente().updateCliente(cliente);
 			if(check==0) 
 				JOptionPane.showMessageDialog(this, "Errore nella registrazione del cliente!");
-			
+
 			else if(check!=0)
 				JOptionPane.showMessageDialog(this, "Cliente aggiunto!");
-			
+
 			AbitazioneUI a= new AbitazioneUI(cliente);
 			a.start(cliente);
 			this.dispose();
 			frame.dispose();
-
 			break;
 		}
-		
 	}
-
-	
 }

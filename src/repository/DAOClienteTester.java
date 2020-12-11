@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import contabilita.Cliente;
 
-
 public class DAOClienteTester {
 	public static void main(String[] args) {
 		DAOFactory df = new DAOFactory();
@@ -15,6 +14,5 @@ public class DAOClienteTester {
 				System.out.println(c.toString());
 
 		//df.getDAOCliente().delete("cnljsc98p60c525t");
-
 	}
 }

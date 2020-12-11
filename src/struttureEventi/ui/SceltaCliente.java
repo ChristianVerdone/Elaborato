@@ -50,6 +50,7 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		btnNewButton_1.setBounds(119, 144, 163, 23);
 		frame.getContentPane().add(btnNewButton_1);
 	}
+	
 	public  void actionPerformed(ActionEvent e) {
 		
 		switch(e.getActionCommand()) {
@@ -66,4 +67,3 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		this.dispose();
 		frame.dispose();
 	}}
-

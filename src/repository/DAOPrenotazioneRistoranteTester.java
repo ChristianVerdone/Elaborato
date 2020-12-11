@@ -12,7 +12,5 @@ public class DAOPrenotazioneRistoranteTester {
 		if (!prenotazioneRistorante.isEmpty())
 			for (PrenotazioneRistorante pr : prenotazioneRistorante)
 				System.out.println(pr.toString());
-
-
 	}
 }

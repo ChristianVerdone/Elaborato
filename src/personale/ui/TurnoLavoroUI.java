@@ -24,13 +24,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-
 import personale.model.Dipendente;
 import personale.model.Servizio;
 import personale.model.TurnoLavoro;
-import repository.DAODipendenti;
 import repository.DAOFactory;
-import repository.DAOTurniLavoro;
 
 import java.util.Date;
 import java.util.Map;
@@ -38,9 +35,6 @@ import java.util.Set;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-
-
-
 
 public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelectionListener{
 
@@ -52,7 +46,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 	private JTextPane tp_endTime;
 	private JSpinner spr_startDate;
 	private Map<String, Servizio> map_ser;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -99,27 +93,27 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		JLabel lbl_list = new JLabel("Dipendenti registrati:");
 		lbl_list.setBounds(310, 80, 227, 20);
 		this.getContentPane().add(lbl_list);
-		
+
 		table = new JTable();
 		table.setBounds(344, 322, 314, -206);
-		
+
 		dtm = new DefaultTableModel() {
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
 		};		
 		dtm.setColumnIdentifiers(new String[]{"CF","Nome e Cognome","Mansione", "Stipendio"});
 		refresh();
-		
-		
+
+
 		table.setModel(dtm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(this);
 		JScrollPane scrollPane_table = new JScrollPane(table);
 		scrollPane_table.setBounds(310, 105, 386, 207);
 		getContentPane().add(scrollPane_table);
-		
+
 		JButton btn_refresh = new JButton("Ricarica dati\r\n");
 		btn_refresh.setBounds(310, 318, 123, 21);
 		btn_refresh.setActionCommand("refresh");
@@ -149,25 +143,25 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		cb_service.setActionCommand("desc");
 		cb_service.setBounds(10, 169, 250, 21);
 		this.getContentPane().add(cb_service);
-		
+
 		JLabel lbl_startTime = new JLabel("Ora inizio:");
 		lbl_startTime.setBounds(10, 200, 60, 20);
 		getContentPane().add(lbl_startTime);
-		
+
 		tp_startTime = new JTextPane();
 		tp_startTime.setBounds(70, 200, 60, 20);
 		tp_startTime.setEditable(false);
 		getContentPane().add(tp_startTime);
-		
+
 		JLabel lbl_endTime = new JLabel("Ora fine:");
 		lbl_endTime.setBounds(150, 200, 50, 20);
 		getContentPane().add(lbl_endTime);
-		
+
 		tp_endTime = new JTextPane();
 		tp_endTime.setEditable(false);
 		tp_endTime.setBounds(200, 200, 60, 20);
 		getContentPane().add(tp_endTime);
-		
+
 		/* Inserimento data e orario di inizio */
 		JLabel lbl_start = new JLabel("Data di inizio turno (gg/mm/aaaa):");
 		lbl_start.setBounds(10, 230, 206, 20);
@@ -177,7 +171,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		spr_startDate.setBounds(10, 255, 85, 35);
 		spr_startDate.setEditor(new JSpinner.DateEditor(spr_startDate, "dd/MM/yyyy"));
 		this.getContentPane().add(spr_startDate);
-		
+
 		/* Separatore tra campi e bottone invio */
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 312, 206, 2);
@@ -197,7 +191,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		String key = cbm_service.getSelectedItem().toString();
 		key = key.substring(1, key.indexOf(")"));
 		Servizio ser = null;
-		
+
 		switch(command) {
 		case "refresh":
 			refresh();
@@ -217,19 +211,18 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 				JOptionPane.showMessageDialog(this, "Non è presente alcun dipendente con il codice fiscale inserito");
 				return;
 			}
-			
+
 			ser = map_ser.get(key);
 			Date temp_date = (Date) spr_startDate.getValue();
 			LocalDate inizioTurno = temp_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			TurnoLavoro tl = new TurnoLavoro(cf, inizioTurno, ser);
-			
-			DAOTurniLavoro dao_turni = DAOFactory.getDAOTurniLavoro();
-			if(dao_turni.update(tl) > 0) { 
+
+			if(DAOFactory.getDAOTurniLavoro().update(tl) > 0) { 
 				JOptionPane.showMessageDialog(this, "Registrazione turno avvenuta con successo");
 				this.dispose();
 			}
 			else JOptionPane.showMessageDialog(this, "Errore nella registrazione del turno");
-			
+
 			break;
 		}
 	}
@@ -241,12 +234,11 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		if(row == -1 || col == -1) return;
 		tf_cf.setText(dtm.getValueAt(row, col).toString());
 	}
-	
+
 	private void refresh() {
 		//setRowCount scarta le righe inferiori al parametro (in seguito ad un inserimento)
 		dtm.setRowCount(0);
-		DAODipendenti dao_dip = DAOFactory.getDAODipendenti();
-		Set<Dipendente> dip_set = dao_dip.doRetrieveAll();
+		Set<Dipendente> dip_set = DAOFactory.getDAODipendenti().doRetrieveAll();
 		if(dip_set.size() > 0) {
 			if(dtm.getColumnCount() < 4) dtm.setColumnIdentifiers(new String[]{"CF","Nome e Cognome","Mansione", "Stipendio"});
 			for(Dipendente dip : dip_set) {
@@ -258,7 +250,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 			dtm.addRow(new Object[] {"Nessun dipendente presente nel database"});
 		}
 	}
-	
+
 	private void getServizi() {
 		map_ser = DAOFactory.getDAOTurniLavoro().doRetrieveAllServizi();
 		for(String s : map_ser.keySet()) {
