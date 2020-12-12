@@ -238,7 +238,7 @@ insert into turnidilavoro values
 ("DMRGVS03C29A662P", "SE003", "2020-12-16");
 
 insert into prenotazioniabitazioni values
-("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", "2020-10-23"),
+("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", curdate()),
 ("PA02","FRNELN43B54D432N", "Standard",  "2020-12-13", "2020-12-23"),
 ("PA03", "CRSDNT73B24C634L", "Camera doppia", "2020-10-10", "2020-11-02"),
 ("PA04", "CGNPLO78H12N234D", "Appartamento", "2020-08-13", "2020-09-23"),
