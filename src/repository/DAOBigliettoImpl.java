@@ -77,7 +77,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 		try {
 			//delete(c.getCf());
 
-			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilitï¿½, NomeEvento)"
+			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilità, NomeEvento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, b.getIdBiglietto());

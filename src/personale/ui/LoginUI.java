@@ -55,7 +55,7 @@ public class LoginUI extends JFrame implements ActionListener {
 	 */
 	private void initialize() {
 		this.setResizable(false);
-		this.setBounds(100, 100, 450, 300);
+		this.setBounds(100, 100, 450, 330);
 		this.setTitle("Login");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,19 +63,18 @@ public class LoginUI extends JFrame implements ActionListener {
 
 		/* Logo */
 		JLabel lbl_logo = new JLabel();
-		lbl_logo.setLocation(68, 10);
-		lbl_logo.setSize(280, 50);
-		lbl_logo.setIcon(new ImageIcon("res/test-logo.png"));
-		lbl_logo.setBackground(Color.DARK_GRAY);
+		lbl_logo.setLocation(97, 10);
+		lbl_logo.setSize(231, 80);
+		lbl_logo.setIcon(new ImageIcon("res/logo.png"));
 		this.getContentPane().add(lbl_logo);
 
 		/* Username */
 		JLabel lbl_username = new JLabel("Username");
-		lbl_username.setBounds(113, 80, 60, 13);
+		lbl_username.setBounds(113, 110, 60, 13);
 		this.getContentPane().add(lbl_username);
 
 		tf_username = new JTextField();
-		tf_username.setBounds(113, 95, 200, 30);
+		tf_username.setBounds(113, 125, 200, 30);
 		tf_username.setColumns(32);
 		tf_username.getDocument().addDocumentListener(new DocumentListener() {
 			@Override public void removeUpdate(DocumentEvent e) { /* Do nothing */ }
@@ -88,18 +87,18 @@ public class LoginUI extends JFrame implements ActionListener {
 		this.getContentPane().add(tf_username);
 
 		lbl_error_username = new JLabel("");
-		lbl_error_username.setBounds(323, 95, 25, 25);
+		lbl_error_username.setBounds(323, 125, 25, 25);
 		lbl_error_username.setIcon(new ImageIcon("res/dialog-error.png"));
 		lbl_error_username.setVisible(false);
 		this.getContentPane().add(lbl_error_username);
 
 		/* Password */
 		JLabel lbl_password = new JLabel("Password");
-		lbl_password.setBounds(113, 135, 60, 13);
+		lbl_password.setBounds(113, 165, 60, 13);
 		this.getContentPane().add(lbl_password);
 
 		pf = new JPasswordField();
-		pf.setBounds(113, 150, 200, 30);
+		pf.setBounds(113, 180, 200, 30);
 		pf.getDocument().addDocumentListener(new DocumentListener() {
 			@Override public void removeUpdate(DocumentEvent e) { /* Do nothing */ }
 			@Override public void changedUpdate(DocumentEvent e) { /* Do nothing */ }
@@ -111,7 +110,7 @@ public class LoginUI extends JFrame implements ActionListener {
 		this.getContentPane().add(pf);
 
 		lbl_error_password = new JLabel();
-		lbl_error_password.setBounds(323, 150, 25, 25);
+		lbl_error_password.setBounds(323, 180, 25, 25);
 		//lbl_error_password.setIcon(new ImageIcon(new ImageIcon("dialog-error.png").getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT)));
 		lbl_error_password.setIcon(new ImageIcon("res/dialog-error.png"));
 		lbl_error_password.setVisible(false);
@@ -119,11 +118,11 @@ public class LoginUI extends JFrame implements ActionListener {
 
 		/* Send button */
 		JSeparator separator = new JSeparator();
-		separator.setBounds(113, 200, 200, 2);
+		separator.setBounds(113, 230, 200, 2);
 		this.getContentPane().add(separator);
 
 		btn_login = new JButton("Login");
-		btn_login.setBounds(165, 210, 85, 25);
+		btn_login.setBounds(165, 240, 85, 25);
 		btn_login.addActionListener(this);
 		this.getContentPane().add(btn_login);
 	}
