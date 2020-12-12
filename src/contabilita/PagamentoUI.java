@@ -41,7 +41,7 @@ import java.awt.event.ActionEvent;
 public class PagamentoUI implements ListSelectionListener {
 	
 	
-	private JFrame frame;
+	private JFrame frmPagamentoConto;
 	private JLabel lblPagamentoConContanti;
 	private JLabel lblPagamentoConCarta;
 	private JTextField fieldContanti;
@@ -59,7 +59,7 @@ public class PagamentoUI implements ListSelectionListener {
 			public void run() {
 				try {
 					PagamentoUI window = new PagamentoUI();
-					window.frame.setVisible(true);
+					window.frmPagamentoConto.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -81,35 +81,36 @@ public class PagamentoUI implements ListSelectionListener {
 	private void initialize() {
 		
 		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 724, 372);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmPagamentoConto = new JFrame();
+		frmPagamentoConto.setTitle("Pagamento conto");
+		frmPagamentoConto.setBounds(100, 100, 724, 372);
+		frmPagamentoConto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPagamentoConto.getContentPane().setLayout(null);
 		
 		lblPagamentoConContanti = new JLabel("Pagamento con contanti");
 		lblPagamentoConContanti.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblPagamentoConContanti.setBounds(502, 35, 184, 23);
-		frame.getContentPane().add(lblPagamentoConContanti);
+		frmPagamentoConto.getContentPane().add(lblPagamentoConContanti);
 		
 		lblPagamentoConCarta = new JLabel("Pagamento con carta");
 		lblPagamentoConCarta.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblPagamentoConCarta.setBounds(499, 211, 169, 14);
-		frame.getContentPane().add(lblPagamentoConCarta);
+		frmPagamentoConto.getContentPane().add(lblPagamentoConCarta);
 		
 		
 		JButton btnPage = new JButton("Pagamento Carta");
 		
 		btnPage.setBounds(511, 279, 163, 23);
-		frame.getContentPane().add(btnPage);
+		frmPagamentoConto.getContentPane().add(btnPage);
 		
 		JButton btnNewButton = new JButton("Pagamento Contanti");
 		btnNewButton.setBounds(511, 109, 163, 23);
-		frame.getContentPane().add(btnNewButton);
+		frmPagamentoConto.getContentPane().add(btnNewButton);
 		
 		JLabel lblRichiediConto = new JLabel("Richiedi conto totale di un cliente");
 		lblRichiediConto.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblRichiediConto.setBounds(23, 15, 241, 14);
-		frame.getContentPane().add(lblRichiediConto);
+		frmPagamentoConto.getContentPane().add(lblRichiediConto);
 		
 		
 		//bottone per la richiesta del conto
@@ -136,16 +137,16 @@ public class PagamentoUI implements ListSelectionListener {
 		});
 		
 		btnRichiedi.setBounds(10, 288, 126, 23);
-		frame.getContentPane().add(btnRichiedi);
+		frmPagamentoConto.getContentPane().add(btnRichiedi);
 		
 		fieldContanti = new JTextField();
 		fieldContanti.setBounds(545, 78, 86, 20);
-		frame.getContentPane().add(fieldContanti);
+		frmPagamentoConto.getContentPane().add(fieldContanti);
 		fieldContanti.setColumns(10);
 		
 		textFieldResto = new JTextField();
 		textFieldResto.setBounds(579, 143, 86, 20);
-		frame.getContentPane().add(textFieldResto);
+		frmPagamentoConto.getContentPane().add(textFieldResto);
 		textFieldResto.setColumns(10);
 		
 		btnNewButton.addActionListener(new ActionListener() {
@@ -181,19 +182,19 @@ public class PagamentoUI implements ListSelectionListener {
 				
 		fieldCodiceCarta = new JTextField();
 		fieldCodiceCarta.setBounds(520, 248, 148, 20);
-		frame.getContentPane().add(fieldCodiceCarta);
+		frmPagamentoConto.getContentPane().add(fieldCodiceCarta);
 		fieldCodiceCarta.setColumns(10);
 		
 		
 		
 		fieldConto = new JTextField();
 		fieldConto.setBounds(272, 289, 60, 20);
-		frame.getContentPane().add(fieldConto);
+		frmPagamentoConto.getContentPane().add(fieldConto);
 		fieldConto.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(23, 52, 295, 220);
-		frame.getContentPane().add(scrollPane);
+		frmPagamentoConto.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		
@@ -215,7 +216,7 @@ public class PagamentoUI implements ListSelectionListener {
 		
 		textCodiceFiscale = new JTextField();
 		textCodiceFiscale.setBounds(146, 289, 120, 20);
-		frame.getContentPane().add(textCodiceFiscale);
+		frmPagamentoConto.getContentPane().add(textCodiceFiscale);
 		textCodiceFiscale.setColumns(10);
 		
 		
@@ -224,7 +225,7 @@ public class PagamentoUI implements ListSelectionListener {
 		lbl_contanti.setSize(48, 48);
 		lbl_contanti.setIcon(new ImageIcon("images/PagamentoContanti.png"));
 		lbl_contanti.setBackground(Color.DARK_GRAY);
-		frame.getContentPane().add(lbl_contanti);
+		frmPagamentoConto.getContentPane().add(lbl_contanti);
 		
 		
 		JLabel lbl_carta = new JLabel();
@@ -232,34 +233,34 @@ public class PagamentoUI implements ListSelectionListener {
 		lbl_carta.setSize(48, 48);
 		lbl_carta.setIcon(new ImageIcon("images/PagamentoCarta.png"));
 		lbl_carta.setBackground(Color.DARK_GRAY);
-		frame.getContentPane().add(lbl_carta);
+		frmPagamentoConto.getContentPane().add(lbl_carta);
 		
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBounds(368, 35, 2, 250);
-		frame.getContentPane().add(separator);
+		frmPagamentoConto.getContentPane().add(separator);
 		
 		JSeparator separator2 = new JSeparator();
 		separator2.setOrientation(SwingConstants.HORIZONTAL);
 		separator2.setBounds(449, 184, 249, 2);
-		frame.getContentPane().add(separator2);
+		frmPagamentoConto.getContentPane().add(separator2);
 		
 		JLabel lblNewLabel = new JLabel("\u20AC");
 		lblNewLabel.setBounds(641, 84, 16, 14);
-		frame.getContentPane().add(lblNewLabel);
+		frmPagamentoConto.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_2 = new JLabel("\u20AC");
 		lblNewLabel_2.setBounds(338, 292, 16, 14);
-		frame.getContentPane().add(lblNewLabel_2);
+		frmPagamentoConto.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("Num:");
 		lblNewLabel_1.setBounds(471, 251, 33, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		frmPagamentoConto.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("Resto:");
 		lblNewLabel_3.setBounds(521, 146, 48, 14);
-		frame.getContentPane().add(lblNewLabel_3);
+		frmPagamentoConto.getContentPane().add(lblNewLabel_3);
 		
 		
 		
