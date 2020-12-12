@@ -3,6 +3,7 @@ package struttureEventi.ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -15,11 +16,11 @@ public class SceltaCliente extends JFrame implements ActionListener{
 	/**
 	 * Launch the application.
 	 */
-	public static void Scelta(String op) {
+	public static void Scelta() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SceltaCliente window = new SceltaCliente(op);
+					SceltaCliente window = new SceltaCliente();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,8 +32,8 @@ public class SceltaCliente extends JFrame implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public SceltaCliente(String op) {
-		operazione=op;
+	public SceltaCliente() {
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +51,6 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		btnNewButton_1.setBounds(119, 144, 163, 23);
 		frame.getContentPane().add(btnNewButton_1);
 	}
-	
 	public  void actionPerformed(ActionEvent e) {
 		
 		switch(e.getActionCommand()) {
@@ -60,10 +60,11 @@ public class SceltaCliente extends JFrame implements ActionListener{
 					break;
 		
 			case "registrato": 
-				RicercaClienteUI rc= new RicercaClienteUI(operazione);
-				rc.Ricerca(operazione);
+				RicercaClienteUI rc= new RicercaClienteUI();
+				rc.Ricerca();
 				break;
 	}
 		this.dispose();
 		frame.dispose();
 	}}
+
