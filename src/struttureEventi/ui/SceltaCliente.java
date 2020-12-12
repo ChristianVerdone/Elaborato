@@ -33,18 +33,18 @@ public class SceltaCliente extends JFrame implements ActionListener{
 	 * Create the application.
 	 */
 	public SceltaCliente() {
-		
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JButton btnNewButton = new JButton("Nuovo Cliente");
 		btnNewButton.addActionListener(this);
 		btnNewButton.setActionCommand("nuovocliente");
 		btnNewButton.setBounds(119, 69, 163, 23);
 		frame.getContentPane().add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("Cliente gia' registrato");
 		btnNewButton_1.addActionListener(this);
 		btnNewButton_1.setActionCommand("registrato");
@@ -52,19 +52,19 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		frame.getContentPane().add(btnNewButton_1);
 	}
 	public  void actionPerformed(ActionEvent e) {
-		
+
 		switch(e.getActionCommand()) {
-			case "nuovocliente":
-					RegistrazioneClienteUI reg = new RegistrazioneClienteUI();
-					reg.Registrazione();
-					break;
-		
-			case "registrato": 
-				RicercaClienteUI rc= new RicercaClienteUI();
-				rc.Ricerca();
-				break;
-	}
+		case "nuovocliente":
+			RegistrazioneClienteUI reg = new RegistrazioneClienteUI();
+			reg.Registrazione();
+			break;
+
+		case "registrato": 
+			RicercaClienteUI rc= new RicercaClienteUI();
+			rc.Ricerca();
+			break;
+		}
 		this.dispose();
 		frame.dispose();
-	}}
-
+	}
+}

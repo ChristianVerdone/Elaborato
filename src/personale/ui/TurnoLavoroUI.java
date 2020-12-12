@@ -2,6 +2,7 @@ package personale.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -91,6 +92,7 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		/* Lista dipendenti */
 		JLabel lbl_list = new JLabel("Dipendenti registrati:");
 		lbl_list.setBounds(310, 110, 227, 20);
+		lbl_list.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_list);
 
 		table = new JTable();
@@ -104,7 +106,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		};		
 		dtm.setColumnIdentifiers(new String[]{"CF","Nome e Cognome","Mansione", "Stipendio"});
 		refresh();
-
 
 		table.setModel(dtm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -121,17 +122,19 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 
 		/* Inserimento CF */
 		JLabel lbl_cf = new JLabel("Codice fiscale del dipendente:");
-		lbl_cf.setBounds(10, 110, 206, 20);
+		lbl_cf.setBounds(10, 110, 231, 20);
+		lbl_cf.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_cf);
 
 		tf_cf = new JTextField();
-		tf_cf.setBounds(10, 135, 250, 35);
+		tf_cf.setBounds(10, 135, 290, 35);
 		this.getContentPane().add(tf_cf);
 		tf_cf.setColumns(10);
 
 		/* Scelta descrizione */
 		JLabel lbl_service = new JLabel("Servizio:");
 		lbl_service.setBounds(10, 176, 206, 13);
+		lbl_service.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_service);
 
 		cbm_service = new DefaultComboBoxModel<String>();
@@ -140,30 +143,33 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		cb_service.setModel(cbm_service);
 		cb_service.addActionListener(this);
 		cb_service.setActionCommand("desc");
-		cb_service.setBounds(10, 199, 250, 21);
+		cb_service.setBounds(10, 199, 290, 21);
 		this.getContentPane().add(cb_service);
 
 		JLabel lbl_startTime = new JLabel("Ora inizio:");
-		lbl_startTime.setBounds(10, 230, 60, 20);
+		lbl_startTime.setBounds(10, 230, 74, 20);
+		lbl_startTime.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_startTime);
 
 		tp_startTime = new JTextPane();
-		tp_startTime.setBounds(70, 230, 60, 20);
+		tp_startTime.setBounds(91, 230, 60, 20);
 		tp_startTime.setEditable(false);
 		getContentPane().add(tp_startTime);
 
 		JLabel lbl_endTime = new JLabel("Ora fine:");
-		lbl_endTime.setBounds(150, 230, 50, 20);
+		lbl_endTime.setBounds(161, 230, 66, 20);
+		lbl_endTime.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_endTime);
 
 		tp_endTime = new JTextPane();
 		tp_endTime.setEditable(false);
-		tp_endTime.setBounds(200, 230, 60, 20);
+		tp_endTime.setBounds(240, 230, 60, 20);
 		getContentPane().add(tp_endTime);
 
 		/* Inserimento data e orario di inizio */
 		JLabel lbl_start = new JLabel("Data di inizio turno (gg/mm/aaaa):");
-		lbl_start.setBounds(10, 260, 206, 20);
+		lbl_start.setBounds(10, 260, 250, 20);
+		lbl_start.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_start);
 
 		spr_startDate = new JSpinner(new SpinnerDateModel());

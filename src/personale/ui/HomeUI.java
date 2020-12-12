@@ -71,6 +71,7 @@ public class HomeUI extends JFrame implements ActionListener{
 
 		JLabel lbl_list = new JLabel("I miei turni:");
 		lbl_list.setBounds(264, 110, 227, 19);
+		lbl_list.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_list);
 
 		/* Tabella turni */
@@ -108,11 +109,12 @@ public class HomeUI extends JFrame implements ActionListener{
 
 		/* Info account */
 		JLabel lbl_info = new JLabel("Informazioni account:");
-		lbl_info.setBounds(10, 110, 123, 13);
+		lbl_info.setBounds(10, 110, 176, 13);
+		lbl_info.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_info);
 
 		JLabel lbl_username = new JLabel("Utente:");
-		lbl_username.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbl_username.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		lbl_username.setBounds(10, 145, 56, 20);
 		getContentPane().add(lbl_username);
 
@@ -123,8 +125,8 @@ public class HomeUI extends JFrame implements ActionListener{
 		getContentPane().add(tp_username);
 
 		JLabel lbl_permissions = new JLabel("Permessi:");
-		lbl_permissions.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lbl_permissions.setBounds(10, 170, 56, 20);
+		lbl_permissions.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lbl_permissions.setBounds(10, 170, 82, 20);
 		getContentPane().add(lbl_permissions);
 
 		JTextPane tp_permissions = new JTextPane();
@@ -140,6 +142,7 @@ public class HomeUI extends JFrame implements ActionListener{
 		/* Operazioni */
 		JLabel lbl_operations = new JLabel("Operazioni disponibili:");
 		lbl_operations.setBounds(10, 215, 205, 25);
+		lbl_operations.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_operations);
 
 		JButton btn_logout = new JButton("Logout");

@@ -1,6 +1,7 @@
 package personale.ui;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -75,7 +76,8 @@ public class SceltaPrenotazioneUI implements ActionListener{
 		frame.getContentPane().add(btnEvento);
 
 		JLabel lblNewLabel = new JLabel("Scegliere la prenotazione che si desidera effettuare");
-		lblNewLabel.setBounds(85, 11, 253, 14);
+		lblNewLabel.setBounds(33, 11, 375, 36);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel);
 	}
 
