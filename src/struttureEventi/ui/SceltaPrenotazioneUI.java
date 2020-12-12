@@ -1,4 +1,4 @@
-package personale.ui;
+package struttureEventi.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
