@@ -17,6 +17,10 @@ import repository.DAOClienteImpl;
 import repository.DAOContoTotale;
 import repository.DAOContoTotaleImpl;
 import repository.DAOFactory;
+import repository.DAOPrenotazioneAbitazioneImpl;
+import repository.DAOPrenotazioneRistoranteImpl;
+import struttureEventi.classes.PrenotazioneAbitazione;
+import struttureEventi.classes.PrenotazioneRistorante;
 import util.GenerateRandom;
 
 import java.awt.Font;
@@ -35,7 +39,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.awt.event.ActionEvent;
 
 public class PagamentoUI implements ListSelectionListener {
@@ -119,6 +127,13 @@ public class PagamentoUI implements ListSelectionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String codCliente=textCodiceFiscale.getText();
+				
+				int check=checkPrenotazione(codCliente);
+				if(check==0) {
+					JOptionPane.showMessageDialog(null, "Errore! Non puoi calcolare il conto del seguente cliente poichè sta ancora soggiornando");
+					return;
+				}
+				
 				
 				DAOContoTotaleImpl contoEvento=new DAOContoTotaleImpl();
 				double contoTotaleEvento=contoEvento.doRetrieveContoEventoByCf(codCliente);
@@ -282,11 +297,9 @@ public class PagamentoUI implements ListSelectionListener {
 					else if(check!=0)
 						JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
 				    }
-				}
-				
-				
-		});
-		
+				}	
+		    }
+		);
 	}
 
 
@@ -294,4 +307,18 @@ public class PagamentoUI implements ListSelectionListener {
 	public void valueChanged(ListSelectionEvent arg0) {
 		textCodiceFiscale.setText(table.getValueAt(table.getSelectedRow(), 0).toString()); 
 	}
+	public int checkPrenotazione(String codiceFiscale) {
+		
+		HashSet<PrenotazioneAbitazione> prenotazioni=DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveAll();
+		for(PrenotazioneAbitazione p:prenotazioni) {
+			if(codiceFiscale.equalsIgnoreCase(p.getCliente().getCf())) {
+				LocalDate dataOggi=LocalDate.now();
+				if(p.getDataFine().isEqual(dataOggi)) {
+					return 1;
+				}
+			}
+		}
+		return 0;
+	}
+	
 }
