@@ -59,7 +59,7 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 		frmRegistrazioneCliente = new JFrame();
 		frmRegistrazioneCliente.setTitle("Registrazione Cliente");
 		frmRegistrazioneCliente.setBounds(100, 100, 583, 296);
-		frmRegistrazioneCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRegistrazioneCliente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRegistrazioneCliente.getContentPane().setLayout(null);
 		
 		JLabel lbl_logo = new JLabel();

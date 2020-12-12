@@ -68,7 +68,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		frmPrenotazioneAbitazione = new JFrame();
 		frmPrenotazioneAbitazione.setTitle("Prenotazione abitazione");
 		frmPrenotazioneAbitazione.setBounds(100, 100, 780, 424);
-		frmPrenotazioneAbitazione.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPrenotazioneAbitazione.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmPrenotazioneAbitazione.getContentPane().setLayout(null);
 		
 

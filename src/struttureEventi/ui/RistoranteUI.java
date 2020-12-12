@@ -83,7 +83,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 554);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Prenotazione Ristorante");
 		

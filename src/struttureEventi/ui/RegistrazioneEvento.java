@@ -56,7 +56,7 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 442);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Registrazione evento");
 		JLabel lbl_logo = new JLabel();

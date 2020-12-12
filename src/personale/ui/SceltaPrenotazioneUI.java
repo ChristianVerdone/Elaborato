@@ -50,7 +50,7 @@ public class SceltaPrenotazioneUI implements ActionListener{
 		frmSceltaTipologiaPrenotazione = new JFrame();
 		frmSceltaTipologiaPrenotazione.setTitle("Scelta tipologia prenotazione");
 		frmSceltaTipologiaPrenotazione.setBounds(100, 100, 536, 275);
-		frmSceltaTipologiaPrenotazione.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSceltaTipologiaPrenotazione.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSceltaTipologiaPrenotazione.getContentPane().setLayout(null);
 		
 		JLabel lbl_logo = new JLabel();

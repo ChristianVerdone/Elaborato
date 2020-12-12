@@ -63,7 +63,8 @@ public class RicercaClienteUI extends JFrame implements ActionListener {
 	 */
 		frame = new JFrame();
 		frame.setBounds(100, 100, 383, 417);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Ricerca cliente");
 		JLabel lbl_logo = new JLabel();

@@ -75,7 +75,7 @@ public class StrutturaUI extends JFrame implements ActionListener {
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 488, 446);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setTitle("Prenotazione Struttura");
 		
 		JLabel lbl_logo = new JLabel();

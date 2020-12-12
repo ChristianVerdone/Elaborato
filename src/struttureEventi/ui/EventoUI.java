@@ -82,7 +82,7 @@ public class EventoUI extends JFrame implements ActionListener{
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 804, 541);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Prenotazione Evento");
 		
