@@ -14,7 +14,7 @@ import struttureEventi.ui.StrutturaUI;
 
 import javax.swing.JButton;
 
-public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
+public class SceltaPrenotazioneUI implements ActionListener{
 
 	private JFrame frame;
 
@@ -85,22 +85,15 @@ public class SceltaPrenotazioneUI extends JFrame implements ActionListener{
 		case "abitazione":
 			SceltaCliente sc= new SceltaCliente(e.getActionCommand());
 			sc.Scelta(e.getActionCommand());
-			this.dispose();
 			break;
 		case "struttura":
-			StrutturaUI s = new StrutturaUI();
-			s.start();
-			this.dispose();
+			new StrutturaUI().start();
 			break;	
 		case "ristorante":
-			RistoranteUI r = new RistoranteUI();
-			r.start();
-			this.dispose();
+			new RistoranteUI().start();
 			break;
 		case "evento":
-			EventoUI ev = new EventoUI();
-			ev.start();
-			this.dispose();
+			new EventoUI().start();
 			break;	  
 		}
 		frame.dispose();

@@ -34,19 +34,19 @@ public class HomeAddettoUI extends HomeUI {
 		super(a);
 
 		JButton btn_events = new JButton("Registra evento");
-		btn_events.setBounds(10, 235, 205, 21);
+		btn_events.setBounds(10, 275, 205, 21);
 		btn_events.setActionCommand("event");
 		btn_events.addActionListener(this);
 		getContentPane().add(btn_events);
 
 		JButton btn_prenotations = new JButton("Registra prenotazione");
-		btn_prenotations.setBounds(10, 260, 205, 21);
+		btn_prenotations.setBounds(10, 300, 205, 21);
 		btn_prenotations.setActionCommand("pren");
 		btn_prenotations.addActionListener(this);
 		getContentPane().add(btn_prenotations);
 
 		JButton btn_amount = new JButton("Registra conto");
-		btn_amount.setBounds(10, 285, 205, 21);
+		btn_amount.setBounds(10, 325, 205, 21);
 		btn_amount.setActionCommand("amount");
 		btn_amount.addActionListener(this);
 		getContentPane().add(btn_amount);
