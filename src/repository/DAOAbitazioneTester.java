@@ -11,5 +11,7 @@ public class DAOAbitazioneTester {
 		if (!abitazioni.isEmpty())
 			for (Abitazione a : abitazioni.values())
 				System.out.println(a.toString());
+
+	
 	}
 }

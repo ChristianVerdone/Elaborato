@@ -1,6 +1,8 @@
 package repository;
 
+
 import contabilita.ContoTotale;
+
 
 public interface DAOContoTotale {
 	public double doRetrieveContoAbitazioneByCf(String cf);

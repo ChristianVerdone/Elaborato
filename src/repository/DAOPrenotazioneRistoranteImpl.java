@@ -23,7 +23,7 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		super();
 		this.connection = connection;
 	}
-
+	
 	@Override
 	public HashSet<PrenotazioneRistorante> doRetrieveAll() {
 		HashSet<PrenotazioneRistorante> prCollection = new HashSet<PrenotazioneRistorante>();
@@ -31,7 +31,7 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIRISTORANTE");
-
+			
 			while (result.next()) {
 				String idPrenotazione=result.getString("IdPrenotazioneRistorante");
 				String cliente=result.getString("Cliente");
@@ -42,48 +42,58 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 				LocalDateTime dt=LocalDateTime.parse(data+" " + ora, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 				PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo, dt);
 				prCollection.add(pr);
-			}
-		} catch (SQLException e) {
+		}} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return prCollection;
 	}
 
+
 	public PrenotazioneRistorante doRetrieveById(String id) {
-		PrenotazioneRistorante pr=null;;
+		PrenotazioneRistorante pr=null;
 		Statement statement = null;
+		
 		try {
 			statement = connection.getConnection().createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIRISTORANTE WHERE IDPRENOTAZIONERISTORANTE\"" + id + "\"");
-
+			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIRISTORANTE WHERE IDPRENOTAZIONERISTORANTE=\"" +  id + "\"");
+			
 			while (result.next()) {
 				String idPrenotazione=result.getString("IdPrenotazioneRistorante");
+				
 				String cliente=result.getString("Cliente");
+				
 				int tavolo=result.getInt("Tavolo");
+				
 				String data=result.getString("dataPrenotazione");
 				//LocalDate dataPrenotazione = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				String ora=result.getString("oraPrenotazione");
-				LocalDateTime dt=LocalDateTime.parse(data+ora, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+				LocalDateTime dt=LocalDateTime.parse(data+" " +ora, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			
 				pr = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo, dt);
-			}
-		} catch (SQLException e) {
+				
+			
+
+		}} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return pr;
 	}
-	
 	@Override
 	public void delete(String id) {
 		try {
 			Statement statement = connection.getConnection().createStatement();
 			int result = statement.executeUpdate("DELETE FROM PRENOTAZIONIRISTORANTE WHERE IDPrenotazioneRistorante=\"" + id + "\"");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 	public int updatePrenotazioneRistorante(PrenotazioneRistorante pr) {
 		try {
+			
+			
 			String query = " insert into PrenotazioniRistorante ( IdPrenotazioneRistorante, Cliente, Tavolo, DataPrenotazione, OraPrenotazione)"
 					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
@@ -100,10 +110,16 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 			String str= d.getHour()+":"+d.getMinute()+":" + d.getSecond();
 			Time a = Time.valueOf(str);
 			preparedStmt.setTime(5, a);
+			
+
 			return preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
+	
 }
+
+
+
