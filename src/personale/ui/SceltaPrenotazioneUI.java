@@ -83,8 +83,8 @@ public class SceltaPrenotazioneUI implements ActionListener{
 
 		switch(e.getActionCommand()) {
 		case "abitazione":
-			SceltaCliente sc= new SceltaCliente(e.getActionCommand());
-			sc.Scelta(e.getActionCommand());
+			SceltaCliente sc= new SceltaCliente();
+			sc.Scelta();
 			break;
 		case "struttura":
 			new StrutturaUI().start();
