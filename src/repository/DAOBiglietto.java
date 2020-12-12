@@ -1,7 +1,9 @@
 package repository;
 
 import java.util.HashMap;
+
 import struttureEventi.classes.Biglietto;
+
 
 public interface DAOBiglietto {
 	public HashMap<String, Biglietto> doRetrieveAll();

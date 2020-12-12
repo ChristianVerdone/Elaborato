@@ -12,5 +12,7 @@ public class DAOBigliettoTester {
 		if (!biglietti.isEmpty())
 			for (Biglietto b : biglietti.values())
 				System.out.println(b.toString());
+
+	
 	}
 }
