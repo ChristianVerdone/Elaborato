@@ -46,6 +46,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 
 	@Override
 	public Biglietto doRetrieveById(String id) {
+	
 		Biglietto b = null;
 		Statement statement = null;
 		try {
@@ -54,6 +55,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 
 			while (result.next()) {
 				String idBiglietto = result.getString("IdBiglietto");
+				
 				float costo=result.getFloat("Costo");
 				boolean disponibilità=result.getBoolean("Disponibilita");
 				String evento=result.getString("NomeEvento");
@@ -87,14 +89,14 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 	public int updateBiglietto(Biglietto b) {
 		try {
 			//delete(c.getCf());
-			
+			System.out.println(b);
 			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilità, NomeEvento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, b.getIdBiglietto());
 			preparedStmt.setFloat(2, b.getCosto());
 			preparedStmt.setBoolean(3, b.isDisponibilità());
-			preparedStmt.setString(1, b.getNomeEvento());
+			preparedStmt.setString(4, b.getNomeEvento());
 			return preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
