@@ -68,7 +68,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		frmPrenotazioneAbitazione = new JFrame();
 		frmPrenotazioneAbitazione.setTitle("Prenotazione abitazione");
 		frmPrenotazioneAbitazione.setBounds(100, 100, 780, 424);
-		frmPrenotazioneAbitazione.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPrenotazioneAbitazione.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmPrenotazioneAbitazione.getContentPane().setLayout(null);
 		
 
@@ -84,11 +84,13 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		frmPrenotazioneAbitazione.getContentPane().add(cb_abitazione);
 		
 		JLabel lblSeleziona = new JLabel("Seleziona l'abitazione");
-		lblSeleziona.setBounds(23, 277, 140, 14);
+		lblSeleziona.setBounds(23, 277, 209, 14);
+		lblSeleziona.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmPrenotazioneAbitazione.getContentPane().add(lblSeleziona);
 		
 		JLabel lblDataInizio = new JLabel("Data di inizio");
 		lblDataInizio.setBounds(329, 145, 97, 14);
+		lblDataInizio.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmPrenotazioneAbitazione.getContentPane().add(lblDataInizio);
 		
 		JCalendar inizio = new JCalendar();
@@ -102,7 +104,8 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		    }
 		}); 
 		JLabel lblDataFine = new JLabel("Data di fine");
-		lblDataFine.setBounds(523, 145, 71, 14);
+		lblDataFine.setBounds(523, 145, 124, 14);
+		lblDataFine.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmPrenotazioneAbitazione.getContentPane().add(lblDataFine);
 		
 		JCalendar fine = new JCalendar();
@@ -133,11 +136,12 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		frmPrenotazioneAbitazione.getContentPane().add(lbl_logo);
 	
 		JLabel lbl_info = new JLabel("Informazioni cliente");
-		lbl_info.setBounds(23, 146, 123, 13);
+		lbl_info.setBounds(23, 146, 197, 13);
+		lbl_info.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmPrenotazioneAbitazione.getContentPane().add(lbl_info);
 		
 		JLabel lbl_cliente = new JLabel("Codice Fiscale:");
-		lbl_cliente.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbl_cliente.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lbl_cliente.setBounds(23, 170, 108, 20);
 		frmPrenotazioneAbitazione.getContentPane().add(lbl_cliente);
 
@@ -148,7 +152,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		frmPrenotazioneAbitazione.getContentPane().add(tp_cf);
 		
 		JLabel lbl_nome = new JLabel("Nome:");
-		lbl_nome.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbl_nome.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lbl_nome.setBounds(23, 195, 56, 20);
 		frmPrenotazioneAbitazione.getContentPane().add(lbl_nome);
 	
@@ -159,7 +163,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		frmPrenotazioneAbitazione.getContentPane().add(tp_nome);
 		
 		JLabel lbl_cognome = new JLabel("Cognome:");
-		lbl_cognome.setFont(new Font("Verdana", Font.PLAIN, 10));
+		lbl_cognome.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lbl_cognome.setBounds(23, 220, 89, 20);
 		frmPrenotazioneAbitazione.getContentPane().add(lbl_cognome);
 		

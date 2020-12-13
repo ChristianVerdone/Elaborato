@@ -12,13 +12,15 @@ create table EVENTI(
 	IdEvento char(5) PRIMARY KEY,
     Nome varchar(30) NOT NULL,
     Tipo varchar(20) NOT NULL,
-    Descrizione varchar(200) NOT NULL
+    Descrizione varchar(200) NOT NULL,
+    DataEvento date NOT NULL,
+    oraEvento time NOT NULL
 );
 
 create table BIGLIETTI(
 	IdBiglietto char(5) PRIMARY KEY,
     Costo decimal(4,2) NOT NULL,
-    Disponibilità boolean NOT NULL,
+    Disponibilita boolean NOT NULL,
     NomeEvento varchar(30) not null
 );
 
@@ -140,23 +142,22 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria è tappa del percorso in questione."),
-("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini."),
-("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrir� al suo pubblico ancora una volta la grande musica interpretata dai pi� grandi artisti del veneziano"),
-("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio"),
-("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i pi� grandi pezzi dell'illustre Ludwig van Beethoven "),
-("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino");
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria è tappa del percorso in questione.", "2020-10-18", "19:00"),
+("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini.", "2020-12-30", "20:00"),
+("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrir� al suo pubblico ancora una volta la grande musica interpretata dai pi� grandi artisti del veneziano", "2020-11-15", "20:30"),
+("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio", "2020-09-16", "21:00"),
+("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i pi� grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-01-24", "21:30"),
+("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2020-12-25", "19:00");
 
-#ho impostato la disponibilit� a true per semplicit�, secondo me potremmo anche toglierla
 
 insert into BIGLIETTI values
-("BI001", "12.50", true, "Portaria"),
-("BI002", "12.50", true, "La Cerreta"),
-("BI003", "15.50", true, "La Fenice in live"),
-("BI004", "17.50", true,  "Campionato di pallavolo"),
-("BI005", "12.50", true, "Le mille note di Beethoven "),
-("BI006", "17.50", true, "Once upon a time"),
-("BI007", "17.50", true, "Once upon a time"),
+("BI001", "12.50", false, "Portaria"),
+("BI002", "12.50", false, "La Cerreta"),
+("BI003", "15.50", false, "La Fenice in live"),
+("BI004", "17.50", false,  "Campionato di pallavolo"),
+("BI005", "12.50", false, "Le mille note di Beethoven "),
+("BI006", "17.50", false, "Once upon a time"),
+("BI007", "17.50", false, "Once upon a time"),
 ("BI008", "13.50", true, "Campionato di pallavolo"),
 ("BI009", "18.50", true, "La Cerreta"),
 ("BI010", "12.50", true, "Portaria");
@@ -238,7 +239,7 @@ insert into turnidilavoro values
 ("DMRGVS03C29A662P", "SE003", "2020-12-16");
 
 insert into prenotazioniabitazioni values
-("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", "2020-10-23"),
+("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", curdate()),
 ("PA02","FRNELN43B54D432N", "Standard",  "2020-12-13", "2020-12-23"),
 ("PA03", "CRSDNT73B24C634L", "Camera doppia", "2020-10-10", "2020-11-02"),
 ("PA04", "CGNPLO78H12N234D", "Appartamento", "2020-08-13", "2020-09-23"),
@@ -276,4 +277,3 @@ insert into movimenti values
 ("TS003", "L01", true),
 ("TS002", "L02", true),
 ("TS005", "L02", true);
-

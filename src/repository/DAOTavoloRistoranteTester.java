@@ -12,5 +12,8 @@ public class DAOTavoloRistoranteTester {
 		if (!tavoli.isEmpty())
 			for (Tavolo  t : tavoli.values())
 				System.out.println(t.toString());
+
+	
+
 	}
 }

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import contabilita.PagamentoUI;
 import personale.model.Account;
 import struttureEventi.ui.RegistrazioneEvento;
+import struttureEventi.ui.SceltaPrenotazioneUI;
 
 public class HomeAddettoUI extends HomeUI {
 
@@ -45,11 +46,17 @@ public class HomeAddettoUI extends HomeUI {
 		btn_prenotations.addActionListener(this);
 		getContentPane().add(btn_prenotations);
 
-		JButton btn_amount = new JButton("Registra conto");
+		JButton btn_amount = new JButton("Registra pagamento");
 		btn_amount.setBounds(10, 325, 205, 21);
 		btn_amount.setActionCommand("amount");
 		btn_amount.addActionListener(this);
 		getContentPane().add(btn_amount);
+		
+		JButton btn_restaurant = new JButton("Registra conto ristorante");
+		btn_restaurant.setBounds(10, 350, 205, 21);
+		btn_restaurant.setActionCommand("risto");
+		btn_restaurant.addActionListener(this);
+		getContentPane().add(btn_restaurant);
 	}
 
 	@Override
@@ -65,6 +72,9 @@ public class HomeAddettoUI extends HomeUI {
 		case "amount":
 			new PagamentoUI().start();
 			break;
+			
+		case "risto":
+			new ContoRistoranteUI().start();
 		}
 	}
 }

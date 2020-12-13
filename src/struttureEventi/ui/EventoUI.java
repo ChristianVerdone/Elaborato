@@ -2,6 +2,7 @@ package struttureEventi.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -82,7 +83,7 @@ public class EventoUI extends JFrame implements ActionListener{
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 804, 541);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Prenotazione Evento");
 		
@@ -94,18 +95,21 @@ public class EventoUI extends JFrame implements ActionListener{
 		frame.getContentPane().add(lbl_logo);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona l'evento in programma:");
-		lblNewLabel.setBounds(25, 159, 165, 14);
+		lblNewLabel.setBounds(25, 159, 250, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel);
 		
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona il biglietto:");
 		lblNewLabel_1.setBounds(424, 159, 165, 14);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		DefaultListModel<String> listmodelB = new DefaultListModel<String>();
 	
 		JLabel lblNewLabel_2 = new JLabel("Seleziona il cliente:");
 		lblNewLabel_2.setBounds(198, 323, 165, 14);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		

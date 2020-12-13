@@ -1,6 +1,7 @@
 package struttureEventi.ui;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import java.util.HashSet;
@@ -63,7 +64,8 @@ public class RicercaClienteUI extends JFrame implements ActionListener {
 	 */
 		frame = new JFrame();
 		frame.setBounds(100, 100, 383, 417);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Ricerca cliente");
 		JLabel lbl_logo = new JLabel();
@@ -80,7 +82,6 @@ public class RicercaClienteUI extends JFrame implements ActionListener {
 		for (Cliente c : DAOFactory.getDAOCliente().doRetrieveAll().values()) {
 			clienti.add(c);
 		}
-		
 		
 		DefaultTableModel dtm = new DefaultTableModel() {
 		    @Override
@@ -108,7 +109,6 @@ public class RicercaClienteUI extends JFrame implements ActionListener {
 		scrollPane_table.setBounds(24, 157, 319, 176);
 		frame.getContentPane().add(scrollPane_table);
 		
-	
 		btnNewButton = new JButton("Conferma");
 		btnNewButton.setActionCommand("seleziona");
 		btnNewButton.addActionListener(this);
@@ -116,9 +116,9 @@ public class RicercaClienteUI extends JFrame implements ActionListener {
 		frame.getContentPane().add(btnNewButton);
 		
 		lblNewLabel = new JLabel("Scegli il cliente");
-		lblNewLabel.setBounds(24, 136, 103, 14);
+		lblNewLabel.setBounds(24, 136, 153, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel);
-		
 	}
 	
 	public  void actionPerformed(ActionEvent e) {

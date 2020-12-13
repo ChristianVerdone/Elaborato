@@ -12,5 +12,8 @@ public class DAOPrenotazioneStrutturaTester {
 		if (!ps.isEmpty())
 			for (PrenotazioneSv p : ps)
 				System.out.println(p.toString());
+
+	
+
 	}
 }

@@ -92,7 +92,7 @@ public class PagamentoUI implements ListSelectionListener {
 		frmPagamentoConto = new JFrame();
 		frmPagamentoConto.setTitle("Pagamento conto");
 		frmPagamentoConto.setBounds(100, 100, 724, 372);
-		frmPagamentoConto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPagamentoConto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmPagamentoConto.getContentPane().setLayout(null);
 		
 		lblPagamentoConContanti = new JLabel("Pagamento con contanti");

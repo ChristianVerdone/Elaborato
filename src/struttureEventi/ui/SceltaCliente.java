@@ -40,7 +40,7 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		frmSceltaTipologiaCliente = new JFrame();
 		frmSceltaTipologiaCliente.setTitle("Scelta tipologia cliente");
 		frmSceltaTipologiaCliente.setBounds(100, 100, 450, 225);
-		frmSceltaTipologiaCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSceltaTipologiaCliente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSceltaTipologiaCliente.getContentPane().setLayout(null);
 		
 		JLabel lbl_logo = new JLabel();
@@ -63,19 +63,19 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		frmSceltaTipologiaCliente.getContentPane().add(btnNewButton_1);
 	}
 	public  void actionPerformed(ActionEvent e) {
-		
+
 		switch(e.getActionCommand()) {
-			case "nuovocliente":
-					RegistrazioneClienteUI reg = new RegistrazioneClienteUI();
-					reg.Registrazione();
-					break;
-		
-			case "registrato": 
-				RicercaClienteUI rc= new RicercaClienteUI();
-				rc.Ricerca();
-				break;
-	}
+		case "nuovocliente":
+			RegistrazioneClienteUI reg = new RegistrazioneClienteUI();
+			reg.Registrazione();
+			break;
+
+		case "registrato": 
+			RicercaClienteUI rc= new RicercaClienteUI();
+			rc.Ricerca();
+			break;
+		}
 		this.dispose();
 		frmSceltaTipologiaCliente.dispose();
-	}}
-
+	}
+}

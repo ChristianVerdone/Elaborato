@@ -18,16 +18,15 @@ import contabilita.ContoTotale;
 
 public class DAOContoTotaleImpl implements DAOContoTotale{
 	private MySQLConnection connection;
-
+	
 	public DAOContoTotaleImpl() {
 		this.connection = new MySQLConnection();
 	}
-
+	
 	public DAOContoTotaleImpl(MySQLConnection connection) {
 		super();
 		this.connection = connection;
 	}
-	
 	@Override
 	public double doRetrieveContoAbitazioneByCf(String cf) {
 		double contoAbitazione = 0;
@@ -38,17 +37,17 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 					+ "from abitazioni,prenotazioniabitazioni,clienti\r\n"
 					+ "where prenotazioniabitazioni.Cliente=(select clienti.CodiceFiscale from clienti where clienti.CodiceFiscale="+"'"+cf+"'"+")"
 					+ "and prenotazioniabitazioni.Abitazione=abitazioni.IdAbitazione");
-
+			
 			while (result.next()) {
 				double contoLetto=result.getDouble("Tariffa");
 				String datai=result.getString("DataInizio");
 				LocalDate datainizio = LocalDate.parse(datai, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				String dataf=result.getString("DataFine");
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+				
 				long days= ChronoUnit.DAYS.between(datainizio, datafine);
-				System.out.println(days);
-				JOptionPane.showMessageDialog(null, days);
+			
+			
 				//GregorianCalendar initialDate = new GregorianCalendar(datainizio.getYear(),datainizio.getMonthValue(),datainizio.getDayOfMonth());
 				//GregorianCalendar finalDate = new GregorianCalendar(datafine.getYear(),datafine.getMonthValue(),datafine.getDayOfMonth());
 				//long  giorniInMillisecondi=finalDate.getTimeInMillis()-initialDate.getTimeInMillis();
@@ -56,8 +55,8 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				//int giorniSoggiorno=(int) giorniSoggiornoDouble;
 				//System.out.println(giorniSoggiorno);
 				contoAbitazione=days*contoLetto;
-				System.out.println(contoAbitazione);
-
+			
+				
 				try {
 					if(datafine.isBefore(datainizio)) {
 						throw new DateTimeException("Errore nell'inserimento della data");
@@ -65,12 +64,16 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				}catch(DateTimeException e) {
 					e.getMessage();
 				}
+				
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return contoAbitazione;
 	}
+	
+	
 
 	@Override
 	public double doRetrieveContoRistoranteCf(String cf) {
@@ -89,6 +92,7 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				contoParziale=contoParziale+contoLetto;
 			}
 			contoRistorante=contoParziale;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -110,6 +114,8 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				contoParziale=contoParziale+contoLetto;
 			}
 			contoEvento=contoParziale;
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -134,6 +140,8 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				contoParziale=contoParziale+contoLetto;
 			}
 			contoStruttura=contoParziale;
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -143,22 +151,23 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 	@Override
 	public int updateContiTotali(ContoTotale conto) {
 		try {
-
+			
 			String numeroConto=conto.getNumeroConto();
 			double importo=conto.getImporto();
 			LocalDate data=conto.getDataPagamento();
 			Date dataPagamento = Date.valueOf(data);
 			String codiceFiscale=conto.getCliente();
-
+			
 			String query = " insert into contitotali ( NumeroConto, Importo, DataPagamento, Cliente)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement pstmt = connection.getConnection().prepareStatement(query);
-
-			pstmt.setString(1, numeroConto);
-			pstmt.setDouble(2, importo);
-			pstmt.setDate(3, dataPagamento);
-			pstmt.setString(4, codiceFiscale);
-			return pstmt.executeUpdate();
+			
+            pstmt.setString(1, numeroConto);
+            pstmt.setDouble(2, importo);
+            pstmt.setDate(3, dataPagamento);
+            pstmt.setString(4, codiceFiscale);
+            return pstmt.executeUpdate();
+            
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

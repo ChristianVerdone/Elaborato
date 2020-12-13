@@ -22,7 +22,7 @@ public class DAODipendentiImpl implements DAODipendenti {
 		super();
 		this.connection = connection;
 	}
-
+	
 	@Override
 	public HashSet<Dipendente> doRetrieveAll() {
 		HashSet<Dipendente> dipendentiSet = new HashSet<Dipendente>();
@@ -30,7 +30,7 @@ public class DAODipendentiImpl implements DAODipendenti {
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM dipendenti");
-
+			
 			while (result.next()) {
 				String cf = result.getString("CFiscale");
 				String nome = result.getString("Nome");
@@ -39,6 +39,7 @@ public class DAODipendentiImpl implements DAODipendenti {
 				Integer stipendio = result.getInt("Stipendio");
 				dipendentiSet.add(new Dipendente(cf, nome, cognome, mansione, stipendio));
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +83,7 @@ public class DAODipendentiImpl implements DAODipendenti {
 	@Override
 	public int update(Dipendente dip) {
 		try {
-
+			
 			String query = "INSERT INTO dipendenti (CFiscale, Nome, Cognome, Mansione, Stipendio)" + " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 
@@ -91,9 +92,10 @@ public class DAODipendentiImpl implements DAODipendenti {
 			preparedStmt.setString(3, dip.getCognome());
 			preparedStmt.setString(4, dip.getMansione());
 			preparedStmt.setInt(5, dip.getStipendio());
-
+			
 			//Ritorna il numero di righe manipolate
 			return preparedStmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
