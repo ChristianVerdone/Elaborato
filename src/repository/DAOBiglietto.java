@@ -10,5 +10,5 @@ public interface DAOBiglietto {
 	public Biglietto doRetrieveById(String id);
 	public void delete(String id);
 	public int updateBiglietto(Biglietto b);
-	
+	public void updateDisponibilita(String id);
 }
