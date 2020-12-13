@@ -2,7 +2,6 @@ package struttureEventi.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -82,24 +81,24 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 		frame.getContentPane().add(lbl_logo);
 		
 		JLabel lblNewLabel = new JLabel("Descrizione");
-		lblNewLabel.setBounds(36, 235, 114, 14);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewLabel.setBounds(36, 216, 114, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nome evento");
 		lblNewLabel_1.setBounds(36, 150, 140, 14);
-		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tipologia evento");
-		lblNewLabel_2.setBounds(247, 150, 140, 14);
-		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewLabel_2.setBounds(247, 150, 95, 14);
 		frame.getContentPane().add(lblNewLabel_2);
+		
 		
 		tfdescrizione = new JTextField();
 		tfdescrizione.setBounds(36, 231, 351, 56);
 		frame.getContentPane().add(tfdescrizione);
 		tfdescrizione.setColumns(10);
+		
+		
 		
 		tfnome = new JTextField();
 		tfnome.setBounds(34, 175, 142, 20);
@@ -145,8 +144,8 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 		frame.getContentPane().add(tfCosto);
 		tfCosto.setColumns(10);
 		
-		JLabel lblNewLabel_4 = new JLabel("Costo");
-		lblNewLabel_4.setBounds(424, 216, 46, 14);
+		JLabel lblNewLabel_4 = new JLabel("Costo biglietto");
+		lblNewLabel_4.setBounds(424, 216, 106, 14);
 		frame.getContentPane().add(lblNewLabel_4);
 		btnNewButton.addActionListener(this);
 		
@@ -198,7 +197,7 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 		   JOptionPane.showMessageDialog(this, "Dimensione massima superata.");
 	   		break;}
 	   if(DAOFactory.getDAOEvento().doRetrieveById(id)!=null) {
-			JOptionPane.showMessageDialog(this, "Evento con identificativo " + id + "giï¿½ registrato");
+			JOptionPane.showMessageDialog(this, "Evento con identificativo " + id + "già registrato");
 			break;}
 	   Evento ev = new Evento(id, nome, tipo, descrizione, dataEvento );
 	   int check=DAOFactory.getDAOEvento().updateEvento(ev);
@@ -219,8 +218,7 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 		   b++;
 	   }
 	   
-	   
-	  this.dispose();
+	   this.dispose();
 	  frame.dispose();
 	}
 }

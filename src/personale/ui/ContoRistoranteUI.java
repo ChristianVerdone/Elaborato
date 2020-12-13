@@ -114,10 +114,11 @@ public class ContoRistoranteUI extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Il numero del conto deve contenere 5 caratteri.");
 				break;
 			}
-			else if(DAOFactory.getDAOContoRistorante().doRetrieveById(idcontoristorante)== null) {
+			else if(DAOFactory.getDAOContoRistorante().doRetrieveById(idcontoristorante)!= null) {
 				JOptionPane.showMessageDialog(null, "Il conto numero " + idcontoristorante + "è già stato registrato.");
 				break;
 			}
+			
 			String costoS=importo.getText();
 			float costo=Float.parseFloat(costoS);
 			
@@ -146,7 +147,7 @@ public class ContoRistoranteUI extends JFrame implements ActionListener{
 			int check= DAOFactory.getDAOContoRistorante().updateContoRistorante(cr);
 			if(check!=0) {
 				JOptionPane.showMessageDialog(null, "Registrazione effettuata");
-				System.out.println(cr.toString());
+				
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Errore durante la registrazione del conto.");
