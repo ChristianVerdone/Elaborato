@@ -227,10 +227,10 @@ insert into dipendenti values
 ("DMRGVS03C29A662P", "Gervaso", "Demarco", "Tecnico spettacoli", 1400.00);
 
 insert into accounts values
-("ryanp12", "PNDRYN08R25A662F", "ryan12", 1),
+("ryanp12", "PNDRYN08R25A662F", "ryan12", 3),
 ("alessandram90", "MRALSN08C52F205P", "ales90",2),
-("matteog40", "GRNMTT08T29L219Z", "matt40", 3),
-("gervasod99", "DMRGVS03C29A662P", "gerva99", 2);
+("matteog40", "GRNMTT08T29L219Z", "matt40", 1),
+("gervasod99", "DMRGVS03C29A662P", "gerva99", 1);
 
 insert into turnidilavoro values
 ("MRALSN08C52F205P", "SE004", "2020-12-14"),
