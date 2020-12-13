@@ -90,7 +90,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 		try {
 			//delete(c.getCf());
 			System.out.println(b);
-			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilità, NomeEvento)"
+			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilita, NomeEvento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, b.getIdBiglietto());
@@ -102,5 +102,19 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	
+	public void updateDisponibilita(String id) {
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			String query = "UPDATE biglietti SET disponibilita = false WHERE IDBIGLIETTO=\"" + id + "\"";
+			statement.executeUpdate(query);
+					
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	}
