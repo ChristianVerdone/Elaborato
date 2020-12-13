@@ -2,7 +2,6 @@ package struttureEventi.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +23,7 @@ import contabilita.Cliente;
 import repository.DAOFactory;
 import struttureEventi.classes.Biglietto;
 import struttureEventi.classes.Evento;
+import struttureEventi.classes.PrenotazioneAbitazione;
 import struttureEventi.classes.PrenotazioneEvento;
 import util.GenerateRandom;
 
@@ -95,21 +95,18 @@ public class EventoUI extends JFrame implements ActionListener{
 		frame.getContentPane().add(lbl_logo);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona l'evento in programma:");
-		lblNewLabel.setBounds(25, 159, 250, 14);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewLabel.setBounds(25, 321, 165, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona il biglietto:");
-		lblNewLabel_1.setBounds(424, 159, 165, 14);
-		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(425, 321, 165, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		DefaultListModel<String> listmodelB = new DefaultListModel<String>();
 	
 		JLabel lblNewLabel_2 = new JLabel("Seleziona il cliente:");
-		lblNewLabel_2.setBounds(198, 323, 165, 14);
-		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+		lblNewLabel_2.setBounds(203, 175, 165, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		
@@ -149,15 +146,13 @@ public class EventoUI extends JFrame implements ActionListener{
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//table.getSelectionModel().addListSelectionListener(this);
 		JScrollPane scrollPane_table = new JScrollPane(table);
-		scrollPane_table.setBounds(233, 348, 319, 99);
+		scrollPane_table.setBounds(234, 200, 319, 99);
 		frame.getContentPane().add(scrollPane_table);
+		
 		
 		/************EVENTI****************/
 		
-		eventi= new ArrayList<Evento>();
-		for (Evento e : DAOFactory.getDAOEvento().doRetrieveAll().values()) {
-			eventi.add(e);
-		}
+		
 		DefaultTableModel dtmE = new DefaultTableModel() {
 		    @Override
 		    public boolean isCellEditable(int row, int column) {
@@ -167,14 +162,6 @@ public class EventoUI extends JFrame implements ActionListener{
 		
 		dtmE.setColumnIdentifiers(new String[]{"ID" ,"Nome","Tipo","Descrizione"});
 		
-		//Da spostare in un controller
-		Set<Evento> itemsEventi = new HashSet<Evento>(); 
-		itemsEventi.addAll(eventi);
-		
-		for(Evento e : eventi) {
-			dtmE.addRow(new Object[]{e.getIdEvento(), e.getNome(), e.getTipo(), e.getDescrizione()});
-		}
-		
 		tableE = new JTable();
 		tableE.setBounds(344, 322, 314, -206);
 		tableE.setModel(dtmE);
@@ -182,8 +169,40 @@ public class EventoUI extends JFrame implements ActionListener{
 		
 		JScrollPane scrollPane_table_E = new JScrollPane((tableE));
 	
-		scrollPane_table_E.setBounds(57, 184, 319, 93);
+		scrollPane_table_E.setBounds(60, 346, 319, 93);
 		frame.getContentPane().add(scrollPane_table_E);
+		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				dtmE.setRowCount(0);
+				int i = table.getSelectedRow();
+				eventi = new ArrayList<Evento>();
+				if(i!=-1) {
+				cliente = clienti.get(i);
+				for (PrenotazioneAbitazione pa: DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveAll()) {
+						
+						if(pa.getCliente().getCf().equalsIgnoreCase(cliente.getCf())) {
+			
+							for (Evento e : DAOFactory.getDAOEvento().doRetrieveAll().values()) {
+							if(e.getDataEvento().toLocalDate().isAfter(pa.getDataInizio()) && e.getDataEvento().toLocalDate().isBefore(pa.getDataFine())) {
+								eventi.add(e);
+							}
+					}}}
+					
+				}
+				for(Evento ev : eventi) {
+					dtmE.addRow(new Object[]{ev.getIdEvento(), ev.getNome(), ev.getTipo(), ev.getDescrizione()});
+				}
+			}
+				
+		});	
+		//Da spostare in un controller
+		
+		
+	
+		
 		
 		/************BIGLIETTI****************/
 		
@@ -209,7 +228,7 @@ public class EventoUI extends JFrame implements ActionListener{
 		tableB.setModel(dtmB);
 		tableB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane_table_B = new JScrollPane((tableB));
-		scrollPane_table_B.setBounds(459, 184, 319, 93);
+		scrollPane_table_B.setBounds(459, 346, 319, 93);
 		frame.getContentPane().add(scrollPane_table_B);
 		
 		tableE.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -225,7 +244,7 @@ public class EventoUI extends JFrame implements ActionListener{
 					evento=eventi.get(i);
 				
 				for (Biglietto b : DAOFactory.getDAOBiglietto().doRetrieveAll().values()) {
-					if(b.getNomeEvento().equalsIgnoreCase(evento.getNome())) {
+					if(b.getNomeEvento().equalsIgnoreCase(evento.getNome()) && b.isDisponibilità()==true) {
 					biglietti.add(b);
 				}}
 				for(Biglietto b : biglietti) {
@@ -235,19 +254,19 @@ public class EventoUI extends JFrame implements ActionListener{
 				
 			}
 		});	
-	}
-		
+	}	
+	
 	
 	public  void actionPerformed(ActionEvent e) {
 			String command=e.getActionCommand();
 			switch(command) {
 			case "prenota": 
-				int i =table.getSelectedRow();
-				if(i==-1) {
-					JOptionPane.showMessageDialog(null, "Seleziona un cliente.");
-					break;
-				}
-				cliente= clienti.get(i);
+				//int i =table.getSelectedRow();
+				//if(i==-1) {
+				//	JOptionPane.showMessageDialog(null, "Seleziona un cliente.");
+				//	break;
+				//}
+				//cliente= clienti.get(i);
 				
 				int b =tableB.getSelectedRow();
 				if(b==-1) {
@@ -263,14 +282,21 @@ public class EventoUI extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(null, "Seleziona un evento.");
 					break;
 				}
-				evento=eventi.get(i);
+				evento=eventi.get(ev);
 				
 				GenerateRandom g = new GenerateRandom();
 				String idPrenotazione = "PE" + g.GenerateRandom();
 				PrenotazioneEvento pe= new PrenotazioneEvento(idPrenotazione, cliente, evento, biglietto);
 				int check = DAOFactory.getDAOPrenotazioneEvento().updatePrenotazioneEvento(pe);
-				if(check!=0)
+				if(check!=0) {
 					JOptionPane.showMessageDialog(null, "Prenotazione effettuata.");
+					DAOFactory.getDAOBiglietto().updateDisponibilita(biglietto.getIdBiglietto());
+					System.out.println(DAOFactory.getDAOBiglietto().doRetrieveById(biglietto.getIdBiglietto()));
+					
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Errore durante la registrazionee della prenotazione.");
+				}
 			this.dispose();
 			frame.dispose();
 			}
