@@ -63,19 +63,19 @@ public class SceltaCliente extends JFrame implements ActionListener{
 		frmSceltaTipologiaCliente.getContentPane().add(btnNewButton_1);
 	}
 	public  void actionPerformed(ActionEvent e) {
-		
+
 		switch(e.getActionCommand()) {
-			case "nuovocliente":
-					RegistrazioneClienteUI reg = new RegistrazioneClienteUI();
-					reg.Registrazione();
-					break;
-		
-			case "registrato": 
-				RicercaClienteUI rc= new RicercaClienteUI();
-				rc.Ricerca();
-				break;
-	}
+		case "nuovocliente":
+			RegistrazioneClienteUI reg = new RegistrazioneClienteUI();
+			reg.Registrazione();
+			break;
+
+		case "registrato": 
+			RicercaClienteUI rc= new RicercaClienteUI();
+			rc.Ricerca();
+			break;
+		}
 		this.dispose();
 		frmSceltaTipologiaCliente.dispose();
-	}}
-
+	}
+}

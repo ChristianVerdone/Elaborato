@@ -20,7 +20,7 @@ create table EVENTI(
 create table BIGLIETTI(
 	IdBiglietto char(5) PRIMARY KEY,
     Costo decimal(4,2) NOT NULL,
-    Disponibilità boolean NOT NULL,
+    Disponibilita boolean NOT NULL,
     NomeEvento varchar(30) not null
 );
 
@@ -149,16 +149,15 @@ insert into EVENTI values
 ("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i pi� grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-01-24", "21:30"),
 ("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2020-12-25", "19:00");
 
-#ho impostato la disponibilit� a true per semplicit�, secondo me potremmo anche toglierla
 
 insert into BIGLIETTI values
-("BI001", "12.50", true, "Portaria"),
-("BI002", "12.50", true, "La Cerreta"),
-("BI003", "15.50", true, "La Fenice in live"),
-("BI004", "17.50", true,  "Campionato di pallavolo"),
-("BI005", "12.50", true, "Le mille note di Beethoven "),
-("BI006", "17.50", true, "Once upon a time"),
-("BI007", "17.50", true, "Once upon a time"),
+("BI001", "12.50", false, "Portaria"),
+("BI002", "12.50", false, "La Cerreta"),
+("BI003", "15.50", false, "La Fenice in live"),
+("BI004", "17.50", false,  "Campionato di pallavolo"),
+("BI005", "12.50", false, "Le mille note di Beethoven "),
+("BI006", "17.50", false, "Once upon a time"),
+("BI007", "17.50", false, "Once upon a time"),
 ("BI008", "13.50", true, "Campionato di pallavolo"),
 ("BI009", "18.50", true, "La Cerreta"),
 ("BI010", "12.50", true, "Portaria");
@@ -278,4 +277,3 @@ insert into movimenti values
 ("TS003", "L01", true),
 ("TS002", "L02", true),
 ("TS005", "L02", true);
-

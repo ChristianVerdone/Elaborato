@@ -1,6 +1,7 @@
 package struttureEventi.ui;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setBounds(10, 160, 46, 14);
+		lblNome.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmRegistrazioneCliente.getContentPane().add(lblNome);
 
 		textField_nome = new JTextField();
@@ -80,6 +82,7 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 
 		JLabel lblCognome = new JLabel("Cognome");
 		lblCognome.setBounds(201, 160, 85, 14);
+		lblCognome.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmRegistrazioneCliente.getContentPane().add(lblCognome);
 
 		textField_cognome = new JTextField();
@@ -89,6 +92,7 @@ public class RegistrazioneClienteUI  extends JFrame implements ActionListener{
 
 		JLabel lblCF = new JLabel("Codice Fiscale");
 		lblCF.setBounds(390, 160, 106, 14);
+		lblCF.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frmRegistrazioneCliente.getContentPane().add(lblCF);
 
 		textField_cf = new JTextField();

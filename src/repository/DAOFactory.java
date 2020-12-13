@@ -63,6 +63,14 @@ public class DAOFactory {
 		return new DAOContoTotaleImpl();
 	}
 	
+	public static DAOMovimento getDAOMovimento() {
+		return new DAOMovimentoImpl();
+	}
+	
+	public static DAOLettore getDAOLettore() {
+		return new DAOLettoreImpl();
+	}
+	
 	public static DAOContoRistorante getDAOContoRistorante() {
 		return new DAOContoRistoranteImpl();
 	}

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import contabilita.PagamentoUI;
 import personale.model.Account;
 import struttureEventi.ui.RegistrazioneEvento;
+import struttureEventi.ui.SceltaPrenotazioneUI;
 
 public class HomeAddettoUI extends HomeUI {
 
