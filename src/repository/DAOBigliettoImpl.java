@@ -31,7 +31,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 			while (result.next()) {
 				String id = result.getString("IdBiglietto");
 				float costo=result.getFloat("Costo");
-				boolean disponibilità=result.getBoolean("Disponibilità");
+				boolean disponibilità=result.getBoolean("Disponibilita");
 				String evento=result.getString("NomeEvento");
 			
 				Biglietto b = new Biglietto(id, costo, disponibilità, evento);
@@ -55,7 +55,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 			while (result.next()) {
 				String idBiglietto = result.getString("IdBiglietto");
 				float costo=result.getFloat("Costo");
-				boolean disponibilità=result.getBoolean("Disponibilità");
+				boolean disponibilità=result.getBoolean("Disponibilita");
 				String evento=result.getString("NomeEvento");
 				b= new Biglietto(idBiglietto, costo, disponibilità, evento);
 			
