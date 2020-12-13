@@ -2,6 +2,7 @@ package repository;
 
 import java.util.HashMap;
 
+import contabilita.Cliente;
 import struttureEventi.classes.Evento;
 
 public class DAOEventoTester {
@@ -13,5 +14,7 @@ public class DAOEventoTester {
 		if (!eventi.isEmpty())
 			for (Evento e : eventi.values())
 				System.out.println(e.toString());
+
 	}
 }
+

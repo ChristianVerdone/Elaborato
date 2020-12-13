@@ -2,6 +2,7 @@ package personale.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -56,7 +57,7 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 	 */
 	public RegistrazioneUI() {
 		this.setResizable(false);
-		this.setBounds(100, 100, 450, 450);
+		this.setBounds(100, 100, 450, 480);
 		this.setTitle("Registra un nuovo dipendente");
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -64,51 +65,54 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 
 		/* Logo */
 		JLabel lbl_logo = new JLabel();
-		lbl_logo.setLocation(68, 10);
-		lbl_logo.setSize(280, 50);
-		lbl_logo.setIcon(new ImageIcon("res/test-logo.png"));
-		lbl_logo.setBackground(Color.DARK_GRAY);
+		lbl_logo.setLocation(100, 10);
+		lbl_logo.setSize(231, 80);
+		lbl_logo.setIcon(new ImageIcon("res/logo.png"));
 		this.getContentPane().add(lbl_logo);
 
 		/* CF */
 		JLabel lbl_cf = new JLabel("Codice fiscale:");
-		lbl_cf.setBounds(113, 80, 200, 13);
+		lbl_cf.setBounds(110, 110, 200, 13);
+		lbl_cf.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_cf);
 
 		tf_cf = new JTextField();
-		tf_cf.setBounds(113, 95, 200, 30);
+		tf_cf.setBounds(110, 125, 200, 30);
 		tf_cf.setColumns(32);
 		this.getContentPane().add(tf_cf);
 
 		lbl_error_cf = new JLabel();
-		lbl_error_cf.setBounds(323, 95, 25, 25);
+		lbl_error_cf.setBounds(320, 125, 25, 25);
 		lbl_error_cf.setIcon(new ImageIcon("res/dialog-error.png"));
 		lbl_error_cf.setVisible(false);
 		this.getContentPane().add(lbl_error_cf);
 
 		/* Name */
 		JLabel lbl_name = new JLabel("Nome:");
-		lbl_name.setBounds(113, 130, 90, 13);
+		lbl_name.setBounds(110, 160, 90, 13);
+		lbl_name.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_name);
 
 		tf_name = new JTextField();
 		tf_name.setColumns(32);
-		tf_name.setBounds(113, 145, 90, 30);
+		tf_name.setBounds(110, 175, 90, 30);
 		getContentPane().add(tf_name);
 
 		/* Surname */
 		JLabel lbl_surname = new JLabel("Cognome:");
-		lbl_surname.setBounds(223, 130, 90, 13);
+		lbl_surname.setBounds(220, 160, 90, 13);
+		lbl_surname.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_surname);
 
 		tf_surname = new JTextField();
 		tf_surname.setColumns(32);
-		tf_surname.setBounds(223, 145, 90, 30);
+		tf_surname.setBounds(220, 175, 90, 30);
 		getContentPane().add(tf_surname);
 
 		/* Task */
 		JLabel lbl_task = new JLabel("Mansione:");
-		lbl_task.setBounds(113, 183, 137, 13);
+		lbl_task.setBounds(110, 213, 137, 13);
+		lbl_task.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_task);
 
 		String[] choices = {"Addetto reception", "Pulizia camere", "Cuoco", "Cameriere", "Guida escursione", "Responsabile evento", "Amministratore"};
@@ -116,45 +120,48 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 		cbm_description = new DefaultComboBoxModel<String>(choices);
 		JComboBox<String> cb_task = new JComboBox<String>();
 		cb_task.setModel(cbm_description);
-		cb_task.setBounds(113, 200, 128, 21);
+		cb_task.setBounds(110, 230, 128, 21);
 		this.getContentPane().add(cb_task);	
 
 		/* Salary */
 		JLabel lbl_salary = new JLabel("Stipendio:");
-		lbl_salary.setBounds(251, 183, 69, 13);
+		lbl_salary.setBounds(227, 213, 83, 13);
+		lbl_salary.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_salary);
 
 		spinner = new JSpinner();
-		spinner.setBounds(251, 201, 62, 20);
+		spinner.setBounds(248, 231, 62, 20);
 		spinner.setValue(1400);
 		getContentPane().add(spinner);
 
 		/* Username */
 		JLabel lbl_username = new JLabel("Username:");
-		lbl_username.setBounds(113, 232, 200, 13);
+		lbl_username.setBounds(110, 262, 200, 13);
+		lbl_username.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_username);
 
 		tf_username = new JTextField();
 		tf_username.setColumns(32);
-		tf_username.setBounds(113, 247, 200, 30);
+		tf_username.setBounds(110, 277, 200, 30);
 		getContentPane().add(tf_username);
 
 		/* Password */
 		JLabel lbl_password = new JLabel("Password:");
-		lbl_password.setBounds(113, 284, 200, 13);
+		lbl_password.setBounds(110, 314, 200, 13);
+		lbl_password.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_password);
 
 		pf = new JPasswordField();
-		pf.setBounds(113, 299, 200, 30);
+		pf.setBounds(110, 329, 200, 30);
 		this.getContentPane().add(pf);
 
 		/* Sign up button */
 		JSeparator separator = new JSeparator();
-		separator.setBounds(113, 339, 200, 2);
+		separator.setBounds(110, 369, 200, 2);
 		this.getContentPane().add(separator);
 
 		JButton btn_signup = new JButton("Registra");
-		btn_signup.setBounds(174, 360, 85, 25);
+		btn_signup.setBounds(167, 390, 85, 25);
 		btn_signup.addActionListener(this);
 		this.getContentPane().add(btn_signup);
 	}

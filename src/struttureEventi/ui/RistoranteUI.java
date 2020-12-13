@@ -1,6 +1,8 @@
 package struttureEventi.ui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +31,7 @@ import java.time.ZoneId;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JSpinner;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -80,20 +83,28 @@ public class RistoranteUI extends JFrame implements ActionListener {
 	public RistoranteUI() {
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 526);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 450, 554);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Prenotazione Ristorante");
-		
-		JLabel lblNewLabel = new JLabel("Selezionare il tavolo:");
-		lblNewLabel.setBounds(10, 46, 118, 14);
+
+		JLabel lbl_logo = new JLabel();
+		lbl_logo.setLocation(101, 28);
+		lbl_logo.setSize(231, 80);
+		lbl_logo.setIcon(new ImageIcon("res/logo.png"));
+		lbl_logo.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(lbl_logo);
+
+		JLabel lblNewLabel = new JLabel("Selezionare il tavolo");
+		lblNewLabel.setBounds(44, 157, 144, 14);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel);
 
 		JComboBox comboBox_tavoli = new JComboBox();
 
 		Set<Integer> keys = (DAOFactory.getDAOTavoloRistorante().doRetrieveAll()).keySet();
 		comboBox_tavoli.setModel(new DefaultComboBoxModel(keys.toArray()));
-		comboBox_tavoli.setBounds(10, 71, 81, 22);
+		comboBox_tavoli.setBounds(44, 188, 81, 22);
 		frame.getContentPane().add(comboBox_tavoli);
 		comboBox_tavoli.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -101,8 +112,9 @@ public class RistoranteUI extends JFrame implements ActionListener {
 			}
 		});
 
-		JLabel lblNewLabel_1 = new JLabel("Selezionare il cliente:");
-		lblNewLabel_1.setBounds(10, 248, 118, 14);
+		JLabel lblNewLabel_1 = new JLabel("Selezionare il cliente");
+		lblNewLabel_1.setBounds(44, 339, 167, 14);
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_1);
 
 		clienti = new ArrayList<Cliente>();
@@ -132,30 +144,32 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//table.getSelectionModel().addListSelectionListener(this);
 		JScrollPane scrollPane_table = new JScrollPane(table);
-		scrollPane_table.setBounds(44, 273, 319, 176);
+		scrollPane_table.setBounds(44, 355, 319, 109);
 		frame.getContentPane().add(scrollPane_table);
 
 		JButton btnNewButton = new JButton("Prenota");
 		btnNewButton.addActionListener(this);
 		btnNewButton.setActionCommand("prenota");
-		btnNewButton.setBounds(0, 464, 434, 23);
+		btnNewButton.setBounds(171, 481, 91, 23);
 		frame.getContentPane().add(btnNewButton);
 
 		spr_startTime = new JSpinner(new SpinnerDateModel());
 		spr_startTime.setEditor(new JSpinner.DateEditor(spr_startTime, "HH:mm"));
-		spr_startTime.setBounds(10, 159, 74, 35);
+		spr_startTime.setBounds(44, 263, 74, 35);
 		frame.getContentPane().add(spr_startTime);
 
 		JCalendar inizio = new JCalendar();
-		inizio.setBounds(235, 71, 184, 153);
+		inizio.setBounds(210, 176, 184, 153);
 		frame.getContentPane().add(inizio);
 
-		JLabel lblNewLabel_2 = new JLabel("Seleziona la data");
-		lblNewLabel_2.setBounds(235, 46, 128, 14);
+		JLabel lblNewLabel_2 = new JLabel("Selezionare la data");
+		lblNewLabel_2.setBounds(210, 157, 153, 14);
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_2);
 
-		JLabel lblNewLabel_3 = new JLabel("Seleziona l'ora");
-		lblNewLabel_3.setBounds(10, 134, 105, 14);
+		JLabel lblNewLabel_3 = new JLabel("Selezionare l'ora");
+		lblNewLabel_3.setBounds(44, 248, 118, 14);
+		lblNewLabel_3.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_3);
 		inizio.addPropertyChangeListener("calendar", new PropertyChangeListener() {
 			@Override
@@ -227,7 +241,6 @@ public class RistoranteUI extends JFrame implements ActionListener {
 			break;
 		}
 	}
-	
 	public int disponibilita () {
 		for(PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) {
 			p.getData();

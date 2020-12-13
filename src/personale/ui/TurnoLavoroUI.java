@@ -2,6 +2,7 @@ package personale.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -83,15 +84,15 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 
 		/* Logo */
 		JLabel lbl_logo = new JLabel();
-		lbl_logo.setLocation(203, 10);
-		lbl_logo.setSize(280, 50);
-		lbl_logo.setIcon(new ImageIcon("res/test-logo.png"));
-		lbl_logo.setBackground(Color.DARK_GRAY);
+		lbl_logo.setLocation(237, 10);
+		lbl_logo.setSize(231, 80);
+		lbl_logo.setIcon(new ImageIcon("res/logo.png"));
 		this.getContentPane().add(lbl_logo);
 
 		/* Lista dipendenti */
 		JLabel lbl_list = new JLabel("Dipendenti registrati:");
-		lbl_list.setBounds(310, 80, 227, 20);
+		lbl_list.setBounds(310, 110, 227, 20);
+		lbl_list.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_list);
 
 		table = new JTable();
@@ -106,33 +107,34 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		dtm.setColumnIdentifiers(new String[]{"CF","Nome e Cognome","Mansione", "Stipendio"});
 		refresh();
 
-
 		table.setModel(dtm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(this);
 		JScrollPane scrollPane_table = new JScrollPane(table);
-		scrollPane_table.setBounds(310, 105, 386, 207);
+		scrollPane_table.setBounds(310, 135, 386, 207);
 		getContentPane().add(scrollPane_table);
 
 		JButton btn_refresh = new JButton("Ricarica dati\r\n");
-		btn_refresh.setBounds(310, 318, 123, 21);
+		btn_refresh.setBounds(310, 348, 123, 21);
 		btn_refresh.setActionCommand("refresh");
 		btn_refresh.addActionListener(this);
 		this.getContentPane().add(btn_refresh);
 
 		/* Inserimento CF */
 		JLabel lbl_cf = new JLabel("Codice fiscale del dipendente:");
-		lbl_cf.setBounds(10, 80, 206, 20);
+		lbl_cf.setBounds(10, 110, 231, 20);
+		lbl_cf.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_cf);
 
 		tf_cf = new JTextField();
-		tf_cf.setBounds(10, 105, 250, 35);
+		tf_cf.setBounds(10, 135, 290, 35);
 		this.getContentPane().add(tf_cf);
 		tf_cf.setColumns(10);
 
 		/* Scelta descrizione */
 		JLabel lbl_service = new JLabel("Servizio:");
-		lbl_service.setBounds(10, 146, 206, 13);
+		lbl_service.setBounds(10, 176, 206, 13);
+		lbl_service.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_service);
 
 		cbm_service = new DefaultComboBoxModel<String>();
@@ -141,45 +143,48 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		cb_service.setModel(cbm_service);
 		cb_service.addActionListener(this);
 		cb_service.setActionCommand("desc");
-		cb_service.setBounds(10, 169, 250, 21);
+		cb_service.setBounds(10, 199, 290, 21);
 		this.getContentPane().add(cb_service);
 
 		JLabel lbl_startTime = new JLabel("Ora inizio:");
-		lbl_startTime.setBounds(10, 200, 60, 20);
+		lbl_startTime.setBounds(10, 230, 74, 20);
+		lbl_startTime.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_startTime);
 
 		tp_startTime = new JTextPane();
-		tp_startTime.setBounds(70, 200, 60, 20);
+		tp_startTime.setBounds(91, 230, 60, 20);
 		tp_startTime.setEditable(false);
 		getContentPane().add(tp_startTime);
 
 		JLabel lbl_endTime = new JLabel("Ora fine:");
-		lbl_endTime.setBounds(150, 200, 50, 20);
+		lbl_endTime.setBounds(161, 230, 66, 20);
+		lbl_endTime.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_endTime);
 
 		tp_endTime = new JTextPane();
 		tp_endTime.setEditable(false);
-		tp_endTime.setBounds(200, 200, 60, 20);
+		tp_endTime.setBounds(240, 230, 60, 20);
 		getContentPane().add(tp_endTime);
 
 		/* Inserimento data e orario di inizio */
 		JLabel lbl_start = new JLabel("Data di inizio turno (gg/mm/aaaa):");
-		lbl_start.setBounds(10, 230, 206, 20);
+		lbl_start.setBounds(10, 260, 250, 20);
+		lbl_start.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_start);
 
 		spr_startDate = new JSpinner(new SpinnerDateModel());
-		spr_startDate.setBounds(10, 255, 85, 35);
+		spr_startDate.setBounds(10, 285, 85, 35);
 		spr_startDate.setEditor(new JSpinner.DateEditor(spr_startDate, "dd/MM/yyyy"));
 		this.getContentPane().add(spr_startDate);
 
 		/* Separatore tra campi e bottone invio */
 		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 312, 206, 2);
+		separator.setBounds(10, 342, 206, 2);
 		this.getContentPane().add(separator);
 
 		/* Bottone invio */
 		JButton btn_send = new JButton("Invia");
-		btn_send.setBounds(10, 318, 85, 21);
+		btn_send.setBounds(10, 348, 85, 21);
 		btn_send.setActionCommand("send");
 		btn_send.addActionListener(this);
 		this.getContentPane().add(btn_send);

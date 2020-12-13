@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import struttureEventi.classes.StrutturaVillaggio;
 
+
 public interface DAOStrutturraVillaggio {
 	public HashMap<String, StrutturaVillaggio> doRetrieveAll();
 	public StrutturaVillaggio doRetrieveById(String id);

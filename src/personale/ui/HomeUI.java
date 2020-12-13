@@ -63,14 +63,15 @@ public class HomeUI extends JFrame implements ActionListener{
 
 		/* Logo */
 		JLabel lbl_logo = new JLabel();
-		lbl_logo.setLocation(203, 10);
-		lbl_logo.setSize(280, 50);
-		lbl_logo.setIcon(new ImageIcon("res/test-logo.png"));
+		lbl_logo.setLocation(237, 10);
+		lbl_logo.setSize(231, 80);
+		lbl_logo.setIcon(new ImageIcon("res/logo.png"));
 		lbl_logo.setBackground(Color.DARK_GRAY);
 		this.getContentPane().add(lbl_logo);
 
 		JLabel lbl_list = new JLabel("I miei turni:");
-		lbl_list.setBounds(264, 70, 227, 19);
+		lbl_list.setBounds(264, 110, 227, 19);
+		lbl_list.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_list);
 
 		/* Tabella turni */
@@ -91,11 +92,11 @@ public class HomeUI extends JFrame implements ActionListener{
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//table.getSelectionModel().addListSelectionListener(this);
 		JScrollPane scrollPane_table = new JScrollPane(table);
-		scrollPane_table.setBounds(264, 105, 432, 207);
+		scrollPane_table.setBounds(264, 145, 432, 217);
 		getContentPane().add(scrollPane_table);
 
 		JButton btn_refresh = new JButton("Ricarica turni");
-		btn_refresh.setBounds(406, 322, 123, 21);
+		btn_refresh.setBounds(406, 375, 123, 21);
 		btn_refresh.setActionCommand("refresh");
 		btn_refresh.addActionListener(this);
 		this.getContentPane().add(btn_refresh);
@@ -103,28 +104,29 @@ public class HomeUI extends JFrame implements ActionListener{
 		/* Separatore verticale */
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(240, 90, 1, 250);
+		separator.setBounds(240, 115, 1, 281);
 		getContentPane().add(separator);
 
 		/* Info account */
 		JLabel lbl_info = new JLabel("Informazioni account:");
-		lbl_info.setBounds(10, 70, 123, 13);
+		lbl_info.setBounds(10, 110, 176, 13);
+		lbl_info.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_info);
 
 		JLabel lbl_username = new JLabel("Utente:");
-		lbl_username.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lbl_username.setBounds(10, 105, 56, 20);
+		lbl_username.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lbl_username.setBounds(10, 145, 56, 20);
 		getContentPane().add(lbl_username);
 
 		JTextPane tp_username = new JTextPane();
-		tp_username.setBounds(75, 105, 140, 20);
+		tp_username.setBounds(75, 145, 140, 20);
 		tp_username.setText(acc.getUsername());
 		tp_username.setEditable(false);
 		getContentPane().add(tp_username);
 
 		JLabel lbl_permissions = new JLabel("Permessi:");
-		lbl_permissions.setFont(new Font("Verdana", Font.PLAIN, 10));
-		lbl_permissions.setBounds(10, 130, 56, 20);
+		lbl_permissions.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lbl_permissions.setBounds(10, 170, 82, 20);
 		getContentPane().add(lbl_permissions);
 
 		JTextPane tp_permissions = new JTextPane();
@@ -134,16 +136,17 @@ public class HomeUI extends JFrame implements ActionListener{
 		if(acc.getTipologiaPermessi() == Account.Permessi.ALL) p = "Completi";
 		else if (acc.getTipologiaPermessi() == Account.Permessi.REDUCED) p = "Ridotti";
 		tp_permissions.setText(p);
-		tp_permissions.setBounds(75, 130, 140, 20);
+		tp_permissions.setBounds(75, 170, 140, 20);
 		getContentPane().add(tp_permissions);
 
 		/* Operazioni */
 		JLabel lbl_operations = new JLabel("Operazioni disponibili:");
-		lbl_operations.setBounds(10, 175, 205, 25);
+		lbl_operations.setBounds(10, 215, 205, 25);
+		lbl_operations.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_operations);
 
 		JButton btn_logout = new JButton("Logout");
-		btn_logout.setBounds(10, 210, 205, 21);
+		btn_logout.setBounds(10, 250, 205, 21);
 		btn_logout.setActionCommand("logout");
 		btn_logout.addActionListener(this);
 		getContentPane().add(btn_logout);
@@ -163,7 +166,7 @@ public class HomeUI extends JFrame implements ActionListener{
 		}
 		else {
 			dtm.setColumnIdentifiers(new String[]{"Risultato:"});
-			dtm.addRow(new Object[] {"Nessun turno di lavoro presente nel database"});
+			dtm.addRow(new Object[] {"Non ti è stato assegnato alcun turno di lavoro."});
 		}
 	}
 

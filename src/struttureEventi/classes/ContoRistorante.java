@@ -3,7 +3,7 @@ package struttureEventi.classes;
 public class ContoRistorante {
 
 
-	public ContoRistorante(String idConto, float costo, Prenotazione prenotazioneRistorante) {
+	public ContoRistorante(String idConto, float costo, PrenotazioneRistorante prenotazioneRistorante) {
 		this.idConto = idConto;
 		this.costo = costo;
 		this.prenotazioneRistorante = prenotazioneRistorante;
@@ -18,7 +18,7 @@ public class ContoRistorante {
 		return costo;
 	}
 	
-	public Prenotazione getPrenotazioneRistorante() {
+	public PrenotazioneRistorante getPrenotazioneRistorante() {
 		return prenotazioneRistorante;
 	}
 	
@@ -33,5 +33,5 @@ public class ContoRistorante {
 
 	private String idConto;
 	private float costo;
-	private Prenotazione prenotazioneRistorante;
+	private PrenotazioneRistorante prenotazioneRistorante;
 }
