@@ -13,7 +13,6 @@ public class PrenotazioneAbitazione extends Prenotazione{
 		this.dataFine=dataFine;
 	}
 	
-	
 	public Abitazione getAbitazione() {
 		return abitazione;
 	}
