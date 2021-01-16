@@ -125,6 +125,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		btn_Prenota.addActionListener(this);
 		btn_Prenota.setBounds(337, 351, 89, 23);
 		frmPrenotazioneAbitazione.getContentPane().add(btn_Prenota);
+		btn_Prenota.setActionCommand("prenota");
 
 		JLabel lbl_logo = new JLabel();
 		lbl_logo.setLocation(266, 34);
@@ -175,30 +176,39 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 	public  void actionPerformed(ActionEvent e) {
 		GenerateRandom g= new GenerateRandom();
 		String id= "PA" + g.GenerateRandom();
-		if (abitazione==null) {
-			JOptionPane.showMessageDialog(this, "Scegliere il tipo di abitazione.");
-
-		}
-		if (dataInizio==null || dataFine==null) 
-			JOptionPane.showMessageDialog(this, "Scegliere il periodo della prenotazione.");
-
-		int count=0;
-		for(PrenotazioneAbitazione prenotazione: DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveAll()) {
-			if(prenotazione.getAbitazione().getIdAbitazione().equals(abitazione)) {
-				if( !dataInizio.isAfter(prenotazione.getDataFine()) || !dataFine.isBefore(prenotazione.getDataInizio())) {
-					count=count+1;
-				}
-
-			}
-		}
+		switch (e.getActionCommand()) {
 		
-		if((DAOFactory.getDAOAbitazione().doRetrieveById(abitazione).getAbitazioniDisponibili()-count)!=0) {
-			pa= new PrenotazioneAbitazione( id, cliente, DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), dataInizio, dataFine);
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Abitazione non disponibile.");
+		case "prenota": 
+			if (abitazione==null) {
+				JOptionPane.showMessageDialog(this, "Scegliere il tipo di abitazione.");
+				break;
+			}
+			if (dataInizio==null || dataFine==null ) {
+				JOptionPane.showMessageDialog(this, "Scegliere il periodo della prenotazione.");
+				break;
+			}
+			if (dataInizio.isBefore(LocalDate.now()) || dataFine.isBefore(LocalDate.now()) ) {
+				JOptionPane.showMessageDialog(this, "Date non valide.");
+			break;	
+			}
+			int count=0;
+			for(PrenotazioneAbitazione prenotazione: DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveAll()) {
+				if(prenotazione.getAbitazione().getIdAbitazione().equals(abitazione)) {
+					if( !dataInizio.isAfter(prenotazione.getDataFine()) || !dataFine.isBefore(prenotazione.getDataInizio())) {
+						count=count+1;
+					}
+	
+				}
+			}
 			
-		}
+			if((DAOFactory.getDAOAbitazione().doRetrieveById(abitazione).getAbitazioniDisponibili()-count)!=0) {
+				pa= new PrenotazioneAbitazione( id, cliente, DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), dataInizio, dataFine);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Abitazione non disponibile.");
+				break;
+				
+			}
 
 		System.out.println(pa.toString());	
 		int check = DAOFactory.getDAOPrenotazioneAbitazione().updatePrenotazioneAbitazione(pa);
@@ -209,6 +219,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 		this.dispose();
 		frmPrenotazioneAbitazione.dispose();
 	}
+		}
 }
 
 
