@@ -77,8 +77,5 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-
 }

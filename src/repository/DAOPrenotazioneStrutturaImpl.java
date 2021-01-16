@@ -95,4 +95,14 @@ public class DAOPrenotazioneStrutturaImpl implements DAOPrenotazioneStruttura {
 		return 0;
 	}
 	
+	@Override
+	public void deleteByCliente(String cf) {
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			int result = statement.executeUpdate("DELETE FROM PRENOTAZIONISTRUTTURE WHERE Cliente=\"" + cf + "\"");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
 }
