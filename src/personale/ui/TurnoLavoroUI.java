@@ -220,7 +220,18 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 			ser = map_ser.get(key);
 			Date temp_date = (Date) spr_startDate.getValue();
 			LocalDate inizioTurno = temp_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			
+			if(inizioTurno.isBefore(LocalDate.now())) {
+				JOptionPane.showMessageDialog(this, "Errore inserimento data");
+				return;
+			}
+				
 			TurnoLavoro tl = new TurnoLavoro(cf, inizioTurno, ser);
+			
+			 if(DAOFactory.getDAOTurniLavoro().checkConflicts(tl)) {
+					JOptionPane.showMessageDialog(null, "Dipendente già impegnato con un turno di lavoro nella data selezionata");
+					return;
+				}
 
 			if(DAOFactory.getDAOTurniLavoro().update(tl) > 0) { 
 				JOptionPane.showMessageDialog(this, "Registrazione turno avvenuta con successo");
