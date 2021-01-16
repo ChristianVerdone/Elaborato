@@ -13,4 +13,5 @@ public interface DAOTurniLavoro {
 	public HashSet<TurnoLavoro> doRetrieveByUsername(String cf);
 	public int update(TurnoLavoro tl);
 	public void delete(String id);
+	boolean checkConflicts(TurnoLavoro tl);
 }

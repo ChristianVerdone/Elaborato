@@ -9,4 +9,5 @@ public interface DAOPrenotazioneStruttura {
 	public PrenotazioneSv doRetrieveById(String id);
 	public void delete(String id);
 	public int updatePrenotazioneStruttura(PrenotazioneSv pr);
+	public void deleteByCliente(String cf);
 }

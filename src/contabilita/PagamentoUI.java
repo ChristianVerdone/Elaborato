@@ -48,7 +48,6 @@ import java.awt.event.ActionEvent;
 
 public class PagamentoUI implements ListSelectionListener {
 	
-	
 	private JFrame frmPagamentoConto;
 	private JLabel lblPagamentoConContanti;
 	private JLabel lblPagamentoConCarta;
@@ -59,6 +58,9 @@ public class PagamentoUI implements ListSelectionListener {
 	private JTable table;
 	private JTextField textCodiceFiscale;
 	private JTextField textFieldResto;
+	double contanti;
+	double contoTotale;
+	String codCliente;
 	/**
 	 * Launch the application.
 	 */
@@ -74,8 +76,6 @@ public class PagamentoUI implements ListSelectionListener {
 			}
 		});
 	}
-	
-   
 	/**
 	 * Create the application.
 	 */
@@ -104,8 +104,7 @@ public class PagamentoUI implements ListSelectionListener {
 		lblPagamentoConCarta.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblPagamentoConCarta.setBounds(499, 211, 169, 14);
 		frmPagamentoConto.getContentPane().add(lblPagamentoConCarta);
-		
-		
+
 		JButton btnPage = new JButton("Pagamento Carta");
 		
 		btnPage.setBounds(511, 279, 163, 23);
@@ -126,7 +125,7 @@ public class PagamentoUI implements ListSelectionListener {
 		btnRichiedi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String codCliente=textCodiceFiscale.getText();
+				codCliente=textCodiceFiscale.getText();
 				
 				int check=checkPrenotazione(codCliente);
 				if(check==0) {
@@ -138,8 +137,6 @@ public class PagamentoUI implements ListSelectionListener {
 				double contoTotale=conto.getContoTotale(codCliente);
 				String contoStringa=String.valueOf(contoTotale).toString();
 				fieldConto.setText(contoStringa);
-				
-					
 			}
 		});
 		
@@ -158,13 +155,18 @@ public class PagamentoUI implements ListSelectionListener {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double contanti=Double.parseDouble(fieldContanti.getText());	//contanti che ha inserito il cliente
-				double contoTotale=Double.parseDouble(fieldConto.getText());
+				
+				if(fieldContanti.getText().length()==0)
+					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
+					
+				else {
+					 contanti=Double.parseDouble(fieldContanti.getText());	//contanti che ha inserito il cliente
+					 contoTotale=Double.parseDouble(fieldConto.getText());
 				
 				GenerateRandom g= new GenerateRandom();
 				String id= "CT" + g.GenerateRandom();
 				
-				if(contanti<contoTotale) {
+				if(contanti<contoTotale ) {
 					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
@@ -177,12 +179,18 @@ public class PagamentoUI implements ListSelectionListener {
 					textFieldResto.setText(restoString);
 					if(check==0) 
 						JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
-					else if(check!=0)
+					else if(check!=0) {
 						JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
+						//DAOFactory.getDAOCliente().delete(codCliente);
+						DAOFactory.getDAOPrenotazioneAbitazione().deleteByCliente(codCliente);
+						//DAOFactory.getDAOPrenotazioneEvento().deleteByCliente(codCliente);
+						//DAOFactory.getDAOPrenotazioneRistorante().deleteByCliente(codCliente);
+						//DAOFactory.getDAOPrenotazioneStruttura().deleteByCliente(codCliente);
+					}
+					frmPagamentoConto.dispose();
 				}
-			}
+			}}
 		});
-		
 		
 		//Pagamento con la carta di credito passando il codice della carta
 		//Se il codice è presente in lista il pagamento va a buon fine altrimenti messaggio di errore
@@ -191,8 +199,6 @@ public class PagamentoUI implements ListSelectionListener {
 		fieldCodiceCarta.setBounds(520, 248, 148, 20);
 		frmPagamentoConto.getContentPane().add(fieldCodiceCarta);
 		fieldCodiceCarta.setColumns(10);
-		
-		
 		
 		fieldConto = new JTextField();
 		fieldConto.setBounds(272, 289, 60, 20);
@@ -294,7 +300,6 @@ public class PagamentoUI implements ListSelectionListener {
 		);
 	}
 
-
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
 		textCodiceFiscale.setText(table.getValueAt(table.getSelectedRow(), 0).toString()); 
@@ -312,5 +317,4 @@ public class PagamentoUI implements ListSelectionListener {
 		}
 		return 0;
 	}
-	
 }

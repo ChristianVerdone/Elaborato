@@ -196,6 +196,11 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 	   if(descrizione.length()>200) {
 		   JOptionPane.showMessageDialog(this, "Dimensione massima superata.");
 	   		break;}
+	   float costoBiglietto=Float.parseFloat(tfCosto.getText());
+	   if(costoBiglietto<0) {
+		   JOptionPane.showMessageDialog(this, "Costo biglietto non valido.");
+		   break;
+	   }
 	   if(DAOFactory.getDAOEvento().doRetrieveById(id)!=null) {
 			JOptionPane.showMessageDialog(this, "Evento con identificativo " + id + "già registrato");
 			break;}
@@ -205,8 +210,7 @@ public class RegistrazioneEvento extends JFrame implements ActionListener{
 		   JOptionPane.showMessageDialog(this, "Evento registrato!");
 	   }
 	   
-	   float costoBiglietto=Float.parseFloat(tfCosto.getText());
-	   
+	 
 	   int b=0;
 	   while (b<15) {
 		   

@@ -119,7 +119,15 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		return 0;
 	}
 	
+	@Override
+	public void deleteByCliente(String cf) {
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			int result = statement.executeUpdate("DELETE FROM PRENOTAZIONIRISTORANTE WHERE Cliente=\"" + cf + "\"");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
-
-
-

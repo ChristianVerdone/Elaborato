@@ -115,4 +115,15 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		return 0;
 	}
 	
+	@Override
+	public void deleteByCliente(String cf) {
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			int result = statement.executeUpdate("DELETE FROM PRENOTAZIONIABITAZIONI WHERE Cliente=\"" + cf + "\"");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
