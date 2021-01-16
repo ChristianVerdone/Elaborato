@@ -134,19 +134,11 @@ public class PagamentoUI implements ListSelectionListener {
 					return;
 				}
 				
-				
-				DAOContoTotaleImpl contoEvento=new DAOContoTotaleImpl();
-				double contoTotaleEvento=contoEvento.doRetrieveContoEventoByCf(codCliente);
-				DAOContoTotaleImpl contoAbitazione=new DAOContoTotaleImpl();
-				double contoTotaleAbitazione=contoAbitazione.doRetrieveContoAbitazioneByCf(codCliente);
-				DAOContoTotaleImpl contoStruttura=new DAOContoTotaleImpl();
-				double contoTotaleStruttura=contoStruttura.doRetrieveContoStrutturaCf(codCliente);
-				DAOContoTotaleImpl contoRistorante=new DAOContoTotaleImpl();
-				double contoTotaleRistorante=contoRistorante.doRetrieveContoRistoranteCf(codCliente);
-				
-				double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura+contoTotaleRistorante;
+				DAOContoTotaleImpl conto=new DAOContoTotaleImpl();
+				double contoTotale=conto.getContoTotale(codCliente);
 				String contoStringa=String.valueOf(contoTotale).toString();
 				fieldConto.setText(contoStringa);
+				
 					
 			}
 		});
