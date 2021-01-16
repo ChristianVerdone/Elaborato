@@ -97,9 +97,29 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 		}
 		return set_turni;
 	}
+	
+	@Override
+	public boolean checkConflicts(TurnoLavoro tl) {
+	
+	Statement statement = null;
+	try {
+		statement = connection.getConnection().createStatement();
+		ResultSet result = statement.executeQuery("select * from turnidilavoro where dipendente = '" + tl.getDip() + "'");
+
+		while (result.next()) {
+			LocalDate tl_start = result.getDate("DataInizioTurno").toLocalDate();
+			if(tl.getInizio().isEqual(tl_start)) return true;
+		}
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return false;
+	}
 
 	@Override
 	public int update(TurnoLavoro tl) {
+		
 		try {
 			String query_tl = "INSERT INTO turnidilavoro (Dipendente, Servizio, DataInizioTurno)" + " values (?, ?, ?)";
 			PreparedStatement prepStm_tl = connection.getConnection().prepareStatement(query_tl);
@@ -109,7 +129,7 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 			prepStm_tl.setDate(3, java.sql.Date.valueOf(tl.getInizio()));
 
 			//Ritorna il numero di righe manipolate
-			return  prepStm_tl.executeUpdate();
+			return prepStm_tl.executeUpdate();
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

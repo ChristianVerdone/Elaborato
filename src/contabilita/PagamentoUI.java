@@ -59,6 +59,8 @@ public class PagamentoUI implements ListSelectionListener {
 	private JTable table;
 	private JTextField textCodiceFiscale;
 	private JTextField textFieldResto;
+	double contanti;
+	double contoTotale;
 	/**
 	 * Launch the application.
 	 */
@@ -158,13 +160,18 @@ public class PagamentoUI implements ListSelectionListener {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double contanti=Double.parseDouble(fieldContanti.getText());	//contanti che ha inserito il cliente
-				double contoTotale=Double.parseDouble(fieldConto.getText());
+				
+				if(fieldContanti.getText().length()==0)
+					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
+					
+				else {
+					 contanti=Double.parseDouble(fieldContanti.getText());	//contanti che ha inserito il cliente
+					 contoTotale=Double.parseDouble(fieldConto.getText());
 				
 				GenerateRandom g= new GenerateRandom();
 				String id= "CT" + g.GenerateRandom();
 				
-				if(contanti<contoTotale) {
+				if(contanti<contoTotale ) {
 					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",JOptionPane.ERROR_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
@@ -179,8 +186,10 @@ public class PagamentoUI implements ListSelectionListener {
 						JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
 					else if(check!=0)
 						JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
+					
+					frmPagamentoConto.dispose();
 				}
-			}
+			}}
 		});
 		
 		
