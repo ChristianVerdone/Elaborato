@@ -147,6 +147,23 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 		}
 		return contoStruttura;
 	}
+	
+	public double getContoTotale(String codCliente) {
+		
+		
+		DAOContoTotaleImpl contoEvento=new DAOContoTotaleImpl();
+		double contoTotaleEvento=contoEvento.doRetrieveContoEventoByCf(codCliente);
+		DAOContoTotaleImpl contoAbitazione=new DAOContoTotaleImpl();
+		double contoTotaleAbitazione=contoAbitazione.doRetrieveContoAbitazioneByCf(codCliente);
+		DAOContoTotaleImpl contoStruttura=new DAOContoTotaleImpl();
+		double contoTotaleStruttura=contoStruttura.doRetrieveContoStrutturaCf(codCliente);
+		DAOContoTotaleImpl contoRistorante=new DAOContoTotaleImpl();
+		double contoTotaleRistorante=contoRistorante.doRetrieveContoRistoranteCf(codCliente);
+		
+		double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura+contoTotaleRistorante;
+		
+		return contoTotale;
+	}
 
 	@Override
 	public int updateContiTotali(ContoTotale conto) {

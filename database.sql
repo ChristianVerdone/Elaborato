@@ -52,7 +52,8 @@ create table ABITAZIONI(
 	IdAbitazione varchar(15) PRIMARY KEY,
     PostiLetto decimal(2) NOT NULL,
     Tariffa decimal(5,2) NOT NULL,
-    Descrizione varchar(100) NOT NULL
+    Descrizione varchar(100) NOT NULL,
+    AbitazioniDisponibili decimal(2) NOT NULL
 );
 
 create table CONTIRISTORANTE(
@@ -134,7 +135,7 @@ create table MOVIMENTI(
     Tipo boolean NOT NULL
 );
 insert into CLIENTI values 
-("AMNNCC66G32N523K", "Niccolò", "Ammaniti"),
+("AMNNCC66G32N523K", "NiccolÃ²", "Ammaniti"),
 ("FRNELN43B54D432N", "Elena", "Ferrante"),
 ("CRSDNT73B24C634L", "Donato", "Carrisi"),
 ("CGNPLO78H12N234D", "Paolo", "Cognetti"),
@@ -142,11 +143,11 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria è tappa del percorso in questione.", "2020-10-18", "19:00"),
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria Ã¨ tappa del percorso in questione.", "2020-10-18", "19:00"),
 ("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini.", "2020-12-30", "20:00"),
-("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrir� al suo pubblico ancora una volta la grande musica interpretata dai pi� grandi artisti del veneziano", "2020-11-15", "20:30"),
+("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirï¿½ al suo pubblico ancora una volta la grande musica interpretata dai piï¿½ grandi artisti del veneziano", "2020-11-15", "20:30"),
 ("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio", "2020-09-16", "21:00"),
-("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i pi� grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-01-24", "21:30"),
+("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i piï¿½ grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-01-24", "21:30"),
 ("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2020-12-25", "19:00");
 
 
@@ -188,12 +189,12 @@ insert into tessere values
 ("TS007", "Tessera per il campo da calcio");
 
 insert into abitazioni values
-("Deluxe", 4, 80.00, "Abitazione sita nel centro del nostro splendido villaggio"),
-("Standard", 4, 60.00, "Abitazione sita nel centro del nostro splendido villaggio"),
-("Camera doppia", 2, 30.00, "Abitazione con una doppia"),
-("Camera singola", 1, 20.00, "Abitazione con stanza singola"),
-("Appartamento", 6, 100.00, "Abitazione per comitiva di sei persone"),
-("Suite", 2, 30.00, "Abitazione con stanza doppia perfetta per coppie");
+("Deluxe", 4, 80.00, "Abitazione sita nel centro del nostro splendido villaggio", 2),
+("Standard", 4, 60.00, "Abitazione sita nel centro del nostro splendido villaggio", 3),
+("Camera doppia", 2, 30.00, "Abitazione con una doppia", 1),
+("Camera singola", 1, 20.00, "Abitazione con stanza singola",5),
+("Appartamento", 6, 100.00, "Abitazione per comitiva di sei persone", 6),
+("Suite", 2, 30.00, "Abitazione con stanza doppia perfetta per coppie", 4);
 
 insert into contiristorante values
 ("CR001","PR002", 80.00),

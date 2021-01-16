@@ -1,6 +1,7 @@
 package contabilita;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class ContoTotale {
 
@@ -11,14 +12,19 @@ public class ContoTotale {
 		this.codCliente = codCliente;
 	}
 
-	public String getNumeroConto() {
-		return numeroConto;
-	}
-
 	@Override
 	public String toString() {
 		return "ContoTotale [numeroConto=" + numeroConto + ", importo=" + importo + ", dataPagamento=" + dataPagamento
 				+ ", codCliente=" + codCliente + "]";
+	}
+
+	public String getNumeroConto() {
+		return numeroConto;
+	}
+
+	
+	public String getCodCliente() {
+		return codCliente;
 	}
 
 	public double getImporto() {
@@ -33,8 +39,10 @@ public class ContoTotale {
 		return codCliente;
 	}
 
+
 	private String numeroConto;
 	private double importo;
 	private LocalDate dataPagamento;
 	private String codCliente;
+	
 }
