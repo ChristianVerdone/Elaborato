@@ -55,7 +55,7 @@ public class SceltaPrenotazioneUI implements ActionListener{
 		frmSceltaTipologiaPrenotazione.getContentPane().setLayout(null);
 		
 		JLabel lbl_logo = new JLabel();
-		lbl_logo.setLocation(144, 28);
+		lbl_logo.setLocation(143, 58);
 		lbl_logo.setSize(231, 80);
 		lbl_logo.setIcon(new ImageIcon("res/logo.png"));
 		lbl_logo.setBackground(Color.DARK_GRAY);

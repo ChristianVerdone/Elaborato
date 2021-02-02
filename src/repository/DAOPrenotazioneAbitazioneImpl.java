@@ -31,7 +31,6 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIABITAZIONI");
-			
 			while (result.next()) {
 				String id=result.getString("IdPrenotazioneAbitazione");
 				String cliente=result.getString("Cliente");
@@ -46,9 +45,8 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				LocalDate dataFine = dataf.toLocalDate().parse(dataf.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				PrenotazioneAbitazione a = new PrenotazioneAbitazione( id,DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), dataInizio, dataFine);
 				paCollection.add(a);
-			
-
-		}} catch (SQLException e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return paCollection;
@@ -61,7 +59,6 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENoTAZIONIABITAZIONI WHERE IDPrenotazioneAbitazione=\"" + id + "\"");
-
 			while (result.next()) {
 				String idPrenotazioneAbitazione = result.getString("IdAbitazione");
 				String cliente=result.getString("Cliente");
@@ -73,7 +70,6 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				pa = new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
 			
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -89,13 +85,10 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa) {
 		try {
-			//delete(c.getCf());
-			
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
@@ -125,5 +118,4 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			e.printStackTrace();
 		}
 	}
-	
 }
