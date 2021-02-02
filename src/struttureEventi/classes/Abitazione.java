@@ -28,13 +28,9 @@ public class Abitazione {
 		return descrizione;
 	}
 	
-
-	
 	public int getAbitazioniDisponibili() {
 		return abitazioniDisponibili;
 	}
-
-
 
 	private String idAbitazione;
 	private int postiletto;
