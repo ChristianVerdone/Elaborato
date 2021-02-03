@@ -9,10 +9,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
+
 import struttureEventi.classes.PrenotazioneAbitazione;
 
 public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione {
-	
+
 	private MySQLConnection connection;
 
 	public DAOPrenotazioneAbitazioneImpl() {
@@ -23,7 +25,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		super();
 		this.connection = connection;
 	}
-	
+
 	@Override
 	public HashSet<PrenotazioneAbitazione> doRetrieveAll() {
 		HashSet<PrenotazioneAbitazione> paCollection = new HashSet<PrenotazioneAbitazione>();
@@ -60,7 +62,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENoTAZIONIABITAZIONI WHERE IDPrenotazioneAbitazione=\"" + id + "\"");
 			while (result.next()) {
-				String idPrenotazioneAbitazione = result.getString("IdAbitazione");
+				String idPrenotazioneAbitazione = result.getString("IdPrenotazioneAbitazione");
 				String cliente=result.getString("Cliente");
 				String abitazione=result.getString("Abitazione");
 				String datai=result.getString("dataInizio");
@@ -68,12 +70,65 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				String dataf=result.getString("dataFine");
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				pa = new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
-			
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return pa;
+	}
+
+	/* Controlla se il cliente ha ancora una prenotazione ad una struttura valida. Se s�, non ne pu� fare altre.
+	 * return null = non ci sono prenotazioni valide per quel cliente, sono tutte scadute o non ce n'� neanche una registrata in passato.
+	 * return object = c'� gi� una prenotazione valida */
+	@Override
+	public PrenotazioneAbitazione doRetrivePrenotazioneValidaCliente(String cf) {
+		PrenotazioneAbitazione pa = null;
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select * from PRENOTAZIONIABITAZIONI where Cliente =\"" + cf + "\"");
+
+			while (result.next()) {
+				String idPrenotazioneAbitazione = result.getString("IdPrenotazioneAbitazione");
+				String cliente=result.getString("Cliente");
+				String abitazione=result.getString("Abitazione");
+				String datai=result.getString("dataInizio");
+				LocalDate datainizio = LocalDate.parse(datai, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String dataf=result.getString("dataFine");
+				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+
+				//(fine <= oggi)   ==   not (fine > oggi) 
+				//(oggi >= inizio) ==   not (oggi < inizio)
+				if(!datafine.isAfter(LocalDate.now()) && !datafine.isBefore(LocalDate.now()))
+					return new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), 
+							DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/* Da usare per registrare altre prenotazioni (ristorante, eventi, ...). 
+	 * Controlla se il cliente ha ancora una prenotazione valida e se la prenotazione dell'evento cade nella prenotazione della struttura.
+	 * return true = la prenotazione dell'evento pu� essere registrata
+	 * return false = la prenotazione dell'evento non pu� essere registrata */
+	@Override
+	public boolean isPrenotazioneGenericaPossibile(String cf, LocalDate dataEvento) {
+		PrenotazioneAbitazione pa = this.doRetrivePrenotazioneValidaCliente(cf);
+		if(pa == null) return false;
+
+		LocalDate datainizio = pa.getDataInizio();
+		LocalDate datafine = pa.getDataFine();
+		
+		//(fine <= evento)   ==   not (fine > evento) 
+		//(evento >= inizio) ==   not (evento < inizio)
+		if(!datafine.isAfter(dataEvento) && !datafine.isBefore(dataEvento))
+			return true;
+		return false;
 	}
 
 	@Override
@@ -86,9 +141,14 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			e.printStackTrace();
 		}
 	}
-	
+
+	/* Codici di errore:
+	 * -1: Cliente ha gi� una prenotazione valida registrata, non pu� effettuarne altre. 
+	 *  0: Errore generico */
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa) {
 		try {
+			if(this.doRetrivePrenotazioneValidaCliente(pa.getCliente().getCf()) != null) return -1;
+
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
@@ -107,7 +167,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public void deleteByCliente(String cf) {
 		try {
