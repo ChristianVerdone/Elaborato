@@ -103,9 +103,8 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
 
-				//(fine <= oggi)   ==   not (fine > oggi) 
-				//(oggi >= inizio) ==   not (oggi < inizio)
-				if(!datafine.isAfter(LocalDate.now()) && !datafine.isBefore(LocalDate.now()))
+				//(oggi <= fine) == not (oggi > fine)
+				if(!LocalDate.now().isAfter(datafine))
 					return new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), 
 							DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
 			}
@@ -127,14 +126,14 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 
 		LocalDate datainizio = pa.getDataInizio();
 		LocalDate datafine = pa.getDataFine();
-		
-		//(fine <= evento)   ==   not (fine > evento) 
-		//(evento >= inizio) ==   not (evento < inizio)
-		if(!datafine.isAfter(dataEvento) && !datafine.isBefore(dataEvento))
+
+		//(evento <= fine)   ==   not (evento > fine)       --> Data evento sta prima della fine del soggiorno
+		//(evento >= inizio) ==   not (evento < inizio)     --> Data evento sta dopo l'inizio del soggiorno
+		if(!dataEvento.isAfter(datafine) && !dataEvento.isBefore(datainizio))
 			return true;
 		return false;
 	}
-	
+
 	/*
 	 * Serve a controllare se una struttura ha un numero di disponibilità > 0 per un certo intervallo di date.
 	 * Ho usato questo controllo: (start_vecchia_pren <= end_nuova_pren) 
@@ -151,13 +150,13 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("select count(IdPrenotazioneAbitazione) from PRENOTAZIONIABITAZIONI "
-					                                + "where abitazione =\"" + pa.getAbitazione().getIdAbitazione() + "\""
-					                                + "and ((datainizio <= '"+ pa.getDataFine().format(dtf) +"') "
-					                                + "and  (datafine >= '" + pa.getDataInizio() .format(dtf)+ "'))");
+					+ "where abitazione =\"" + pa.getAbitazione().getIdAbitazione() + "\""
+					+ "and ((datainizio <= '"+ pa.getDataFine().format(dtf) +"') "
+					+ "and  (datafine >= '" + pa.getDataInizio() .format(dtf)+ "'))");
 			if(!result.next()) return false;
 			int count = result.getInt(1);
 			int dispo = pa.getAbitazione().getAbitazioniDisponibili();
-			
+
 			if((dispo - count) > 0) return true;
 
 		} catch (SQLException e) {

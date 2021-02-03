@@ -217,7 +217,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 
 			int d= disponibilita();
 			if(d==-1) {
-				JOptionPane.showMessageDialog(this, "Tavolo gi√† prenotato.");
+				JOptionPane.showMessageDialog(this, "Tavolo gi‡ prenotato.");
 				break;
 			}
 			cliente=clienti.get(i);
@@ -234,7 +234,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Errore durante la registrazione della prenotazione!");
 
 			else if(DAOFactory.getDAOPrenotazioneRistorante().doRetrieveById(idPrenotazione)!= null) {
-				JOptionPane.showMessageDialog(this, "Non √® possibile registrare la prenotazione.\nE' gi√† presente una prenotazione con identificativo " + idPrenotazione);
+				JOptionPane.showMessageDialog(this, "Non Ë possibile registrare la prenotazione.\n» gi‡ presente una prenotazione con identificativo " + idPrenotazione);
 			}
 			this.dispose();
 			frame.dispose();
