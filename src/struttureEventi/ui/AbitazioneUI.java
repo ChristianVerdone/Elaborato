@@ -202,7 +202,7 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 			}
 			
 			/*
-			 * Ho spostato il controllo della disponibilità di una struttura in: 
+			 * Ho spostato il controllo della disponibilità di una abitazione in: 
 			 * DAOPrenotazioneAbitazioneImpl --> isPrenotazioneStrutturaPossibile()
 			 * 
 			int count=0;

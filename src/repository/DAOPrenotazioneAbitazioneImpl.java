@@ -82,7 +82,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		return pa;
 	}
 
-	/* Controlla se il cliente ha ancora una prenotazione ad una struttura valida. Se sì, non ne può fare altre.
+	/* Controlla se il cliente ha ancora una prenotazione ad una abitazione valida. Se sì, non ne può fare altre.
 	 * return null = non ci sono prenotazioni valide per quel cliente, sono tutte scadute o non ce n'è neanche una registrata in passato.
 	 * return object = c'è già una prenotazione valida */
 	@Override
@@ -117,7 +117,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 	}
 
 	/* Da usare per registrare altre prenotazioni (ristorante, eventi, ...). 
-	 * Controlla se il cliente ha ancora una prenotazione valida e se la prenotazione dell'evento cade nella prenotazione della struttura.
+	 * Controlla se il cliente ha ancora una prenotazione valida e se la prenotazione dell'evento cade nella prenotazione dell'abitazione.
 	 * return true = la prenotazione dell'evento può essere registrata
 	 * return false = la prenotazione dell'evento non può essere registrata */
 	@Override
@@ -145,7 +145,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 	 * return false --> Quella struttura non ha disponibilità in quell'intervallo di date
 	 * */
 	@Override
-	public boolean isPrenotazioneStrutturaPossibile(PrenotazioneAbitazione pa) {
+	public boolean isPrenotazioneAbitazionePossibile(PrenotazioneAbitazione pa) {
 		Statement statement = null;
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try {
@@ -179,13 +179,13 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 	}
 
 	/* Codici di errore:
-	 * -2: Tipologia struttura al completo in quel periodo di tempo
+	 * -2: Tipologia abitazione al completo in quel periodo di tempo
 	 * -1: Cliente ha già una prenotazione valida registrata, non può effettuarne altre. 
 	 *  0: Errore generico */
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa) {
 		try {
 			if(this.doRetrivePrenotazioneValidaCliente(pa.getCliente().getCf()) != null) return -1;
-			if(!this.isPrenotazioneStrutturaPossibile(pa)) return -2;
+			if(!this.isPrenotazioneAbitazionePossibile(pa)) return -2;
 
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
