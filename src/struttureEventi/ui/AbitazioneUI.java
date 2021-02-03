@@ -45,10 +45,12 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 
 
 	public static void main(String[] args) {
+		/* Solo per il testing */
 		Cliente c = new Cliente("AMNNCC66G32N523K", "v", "a");
 		AbitazioneUI a = new AbitazioneUI(c);
 		a.start(c);
 	}
+	
 	public void start(Cliente c) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -198,6 +200,11 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Date non valide.");
 				break;	
 			}
+			
+			/*
+			 * Ho spostato il controllo della disponibilità di una struttura in: 
+			 * DAOPrenotazioneAbitazioneImpl --> isPrenotazioneStrutturaPossibile()
+			 * 
 			int count=0;
 			for(PrenotazioneAbitazione prenotazione: DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveAll()) {
 				if(prenotazione.getAbitazione().getIdAbitazione().equals(abitazione)) {
@@ -215,23 +222,20 @@ public class AbitazioneUI   extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Abitazione non disponibile.");
 				break;
 
-			}
+			}*/
 
+			pa = new PrenotazioneAbitazione(id, cliente, DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), dataInizio, dataFine);
 
 			System.out.println(pa.toString());	
 			int check = DAOFactory.getDAOPrenotazioneAbitazione().updatePrenotazioneAbitazione(pa);
-			if(check == 0)  {
-				JOptionPane.showMessageDialog(this, "Errore nella registrazione della prenotazione!");
-				return;
-			}
-			else if(check == -1) {
-				JOptionPane.showMessageDialog(null, "Il cliente ha ancora una prenotazione al villaggio non scaduta.");
-				return;
-			}
-			else 
+			if(check == 0) JOptionPane.showMessageDialog(this, "Errore nella registrazione della prenotazione!");
+			else if(check == -1) JOptionPane.showMessageDialog(null, "Il cliente ha ancora una prenotazione al villaggio non scaduta.");
+			else if(check == -2) JOptionPane.showMessageDialog(null, "Tipologia struttura al completo in quel periodo di tempo.");
+			else {
 				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
-			this.dispose();
-			frmPrenotazioneAbitazione.dispose();
+				this.dispose();
+				frmPrenotazioneAbitazione.dispose();
+			}
 		}
 	}
 }

@@ -134,6 +134,37 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			return true;
 		return false;
 	}
+	
+	/*
+	 * Serve a controllare se una struttura ha un numero di disponibilità > 0 per un certo intervallo di date.
+	 * Ho usato questo controllo: (start_vecchia_pren <= end_nuova_pren) 
+	 *                             and 
+	 *                            (end_vecchia_pren >= start_nuova_pren)
+	 *                            
+	 * return true --> Se si può prenotare quella struttura ad un cliente in quella data (quindi se non c'è un numero di overlap uguale alle disponibilità)
+	 * return false --> Quella struttura non ha disponibilità in quell'intervallo di date
+	 * */
+	@Override
+	public boolean isPrenotazioneStrutturaPossibile(PrenotazioneAbitazione pa) {
+		Statement statement = null;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select count(IdPrenotazioneAbitazione) from PRENOTAZIONIABITAZIONI "
+					                                + "where abitazione =\"" + pa.getAbitazione().getIdAbitazione() + "\""
+					                                + "and ((datainizio <= '"+ pa.getDataFine().format(dtf) +"') "
+					                                + "and  (datafine >= '" + pa.getDataInizio() .format(dtf)+ "'))");
+			if(!result.next()) return false;
+			int count = result.getInt(1);
+			int dispo = pa.getAbitazione().getAbitazioniDisponibili();
+			
+			if((dispo - count) > 0) return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	@Override
 	public void delete(String id) {
@@ -148,11 +179,13 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 	}
 
 	/* Codici di errore:
+	 * -2: Tipologia struttura al completo in quel periodo di tempo
 	 * -1: Cliente ha già una prenotazione valida registrata, non può effettuarne altre. 
 	 *  0: Errore generico */
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa) {
 		try {
 			if(this.doRetrivePrenotazioneValidaCliente(pa.getCliente().getCf()) != null) return -1;
+			if(!this.isPrenotazioneStrutturaPossibile(pa)) return -2;
 
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";
@@ -183,5 +216,4 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 			e.printStackTrace();
 		}
 	}
-
 }
