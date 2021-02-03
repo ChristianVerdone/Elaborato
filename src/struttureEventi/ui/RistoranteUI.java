@@ -25,8 +25,10 @@ import util.GenerateRandom;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -45,7 +47,6 @@ public class RistoranteUI extends JFrame implements ActionListener {
 	private Cliente cliente;
 	private int tavolo;
 	private LocalDate data;
-	private LocalDateTime dataPrenotazione;
 	private JSpinner spr_startTime;
 	private JTable table;
 	/**
@@ -118,7 +119,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		frame.getContentPane().add(lblNewLabel_1);
 
 		clienti = new ArrayList<Cliente>();
-		for (Cliente cl : DAOFactory.getDAOCliente().doRetrieveAll().values()) {
+		for (Cliente cl : DAOFactory.getDAOCliente().doRetrieveClientiPrenotati().values()) {
 			clienti.add(cl);
 		}
 		DefaultTableModel dtm = new DefaultTableModel() {
@@ -129,10 +130,6 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		};
 
 		dtm.setColumnIdentifiers(new String[]{"Nome","Cognome","CF"});
-
-		//Da spostare in un controller
-		Set<Cliente> items = new HashSet<Cliente>(); 
-		items.addAll(clienti);
 
 		for(Cliente cl : clienti) {
 			dtm.addRow(new Object[]{cl.getNome(), cl.getCognome(),  cl.getCf()});
@@ -195,36 +192,53 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		switch (command) {
 		case "prenota":
 			Date oraSpinner=  (Date) spr_startTime.getValue();
-			dataPrenotazione= LocalDateTime.of(data.getYear(), data.getMonth(), data.getDayOfMonth(), oraSpinner.getHours(), oraSpinner.getMinutes());
-			//String ora= oraSpinner. + ":" + oraSpinner.getMinutes() + ":" + oraSpinner.getSeconds();
-			System.out.println(dataPrenotazione);
+			System.out.println(data);
 			//dataPrenotazione=LocalDateTime.parse(data.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-			int i=table.getSelectedRow();
 
 			if (tavolo==0) { 
 				JOptionPane.showMessageDialog(this, "Selezionare il numero del tavolo.");
-				break;}
+				break;
+			}
+			int i=table.getSelectedRow();
 			if(i==-1) {
 				JOptionPane.showMessageDialog(this, "Selezionare un cliente.");
-				break;}
-			if (dataPrenotazione== null) { 
+				break;
+			}
+			cliente=clienti.get(i);
+			if (data.isBefore(LocalDate.now())) {
+				JOptionPane.showMessageDialog(this, "Selezionare una data successiva.");
+				break;
+			}
+			if (data.isAfter(DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveByCF(cliente.getCf()).getDataFine())) {
+				JOptionPane.showMessageDialog(this, "Selezionare una data nel periodo di soggiorno precedente a "+
+						DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveByCF(cliente.getCf()).getDataFine());
+				break;
+			}
+			if (data== null) { 
 				JOptionPane.showMessageDialog(this, "Selezionare una data.");
-				break;}
+				break;
+			}
 			if (oraSpinner==null) { 
 				JOptionPane.showMessageDialog(this, "Selezionare l'ora.");
-				break;}
-
+				break;
+			}
+			if ((oraSpinner.getHours() < 12 || oraSpinner.getHours() > 14) && ( oraSpinner.getHours() < 19 || oraSpinner.getHours() > 22)) {
+				JOptionPane.showMessageDialog(this, "Selezionare l'orario dei Pasti(12-14 per il pranzo, 19-22 per la cena).");
+				break;
+			}
+			
+			String ora= oraSpinner.getHours() + ":" + oraSpinner.getMinutes() + ":" + oraSpinner.getSeconds()+"0";
+			LocalTime t = LocalTime.parse(ora);
 			int d= disponibilita();
 			if(d==-1) {
 				JOptionPane.showMessageDialog(this, "Tavolo già prenotato.");
 				break;
 			}
-			cliente=clienti.get(i);
+			
 			GenerateRandom g = new GenerateRandom();
 			String idPrenotazione= "PR" + g.GenerateRandom();
 
-			PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, cliente, tavolo, dataPrenotazione);
+			PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, cliente, tavolo, data, t);
 
 			int prenotazione = DAOFactory.getDAOPrenotazioneRistorante().updatePrenotazioneRistorante(pr);
 
@@ -244,7 +258,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 	public int disponibilita () {
 		for(PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) {
 			p.getData();
-			if(p.getData().equals(dataPrenotazione) && p.getnTavolo()==(tavolo)) {
+			if(p.getData().equals(data) && p.getnTavolo()==(tavolo)) {
 				return -1;
 			}
 		} return 0;}

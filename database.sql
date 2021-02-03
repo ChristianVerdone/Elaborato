@@ -143,12 +143,12 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria Ã¨ tappa del percorso in questione.", "2020-10-18", "19:00"),
-("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini.", "2020-12-30", "20:00"),
-("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirï¿½ al suo pubblico ancora una volta la grande musica interpretata dai piï¿½ grandi artisti del veneziano", "2020-11-15", "20:30"),
-("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio", "2020-09-16", "21:00"),
-("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i piï¿½ grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-01-24", "21:30"),
-("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2020-12-25", "19:00");
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria Ã¨ tappa del percorso in questione.", "2021-10-18", "19:00"),
+("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini.", "2021-12-30", "20:00"),
+("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirï¿½ al suo pubblico ancora una volta la grande musica interpretata dai piï¿½ grandi artisti del veneziano", "2021-11-15", "20:30"),
+("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio", "2021-09-16", "21:00"),
+("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i piï¿½ grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-04-24", "21:30"),
+("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2021-12-25", "19:00");
 
 
 insert into BIGLIETTI values
@@ -241,20 +241,20 @@ insert into turnidilavoro values
 
 insert into prenotazioniabitazioni values
 ("PA01","AMNNCC66G32N523K", "Deluxe", "2020-10-13", curdate()),
-("PA02","FRNELN43B54D432N", "Standard",  "2020-12-13", "2020-12-23"),
-("PA03", "CRSDNT73B24C634L", "Camera doppia", "2020-10-10", "2020-11-02"),
-("PA04", "CGNPLO78H12N234D", "Appartamento", "2020-08-13", "2020-09-23"),
+("PA02","FRNELN43B54D432N", "Standard",  "2021-12-13", "2021-12-23"),
+("PA03", "CRSDNT73B24C634L", "Camera doppia", "2021-10-10", "2021-11-02"),
+("PA04", "CGNPLO78H12N234D", "Appartamento", "2021-08-13", "2021-09-23"),
 ("PA05","PSTRSL78F34D519C", "Camera singola", "2021-01-13", "2021-02-13"),
-("PA06", "FRNSLV98B43G645F", "Suite", "2020-12-22", "2021-01-23");
+("PA06", "FRNSLV98B43G645F", "Suite", "2021-01-22", "2021-02-23");
 
 
 insert into prenotazioniristorante values
 ("PR001","AMNNCC66G32N523K", "01", "2020-10-14","20:00"),
-("PR002","FRNELN43B54D432N", "02", "2020-12-15","21:00"),
-("PR003","AMNNCC66G32N523K", "03", "2020-10-30","21:30"),
-("PR004","CGNPLO78H12N234D", "04", "2020-08-15","20:30"),
+("PR002","FRNELN43B54D432N", "02", "2021-12-15","21:00"),
+("PR003","AMNNCC66G32N523K", "03", "2021-10-30","21:30"),
+("PR004","CGNPLO78H12N234D", "04", "2021-08-15","20:30"),
 ("PR005","PSTRSL78F34D519C", "05", "2021-01-16","21:30"),
-("PR006","CRSDNT73B24C634L", "06", "2020-12-24","21:30");
+("PR006","CRSDNT73B24C634L", "06", "2021-12-24","21:30");
 
 
 insert into prenotazionieventi values
