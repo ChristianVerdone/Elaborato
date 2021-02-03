@@ -40,6 +40,35 @@ public class DAOClienteImpl implements DAOCliente {
 		}
 		return clientiCollection;
 	}
+	
+	/*
+	 * Recupera solo i clienti con una prenotazione valida e con soggiorno già iniziato
+	 * Se li vuoi recuperare anche se il loro soggiorno non è ancora cominciato, basta togliere: "and (curdate() >= p.datainizio)"
+	 * */
+	@Override
+	public HashMap<String, Cliente> doRetrieveClientiPrenotati() {
+		HashMap<String, Cliente> clientiCollection = new HashMap<String, Cliente>();
+		Statement statement = null;
+		try {
+			
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select CodiceFiscale, Nome, Cognome from CLIENTI as C "
+					                                + "inner join PrenotazioniAbitazioni as P on C.CodiceFiscale = P.Cliente "
+					                                + "where (curdate() <= p.datafine) and (curdate() >= p.datainizio)");
+
+			while (result.next()) {
+				String codf = result.getString("codicefiscale");
+				String nome=result.getString("nome");
+				String cognome=result.getString("cognome");
+				Cliente c = new  Cliente(codf, nome, cognome);
+				clientiCollection.put(codf, c);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return clientiCollection;
+	}
 
 	@Override
 	public Cliente doRetrieveByCf(String cf) {

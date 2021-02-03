@@ -78,7 +78,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 		return pa;
 	}
 
-	/* Controlla se il cliente ha ancora una prenotazione ad una struttura valida. Se s�, non ne pu� fare altre.
+	/* Controlla se il cliente ha ancora una prenotazione ad una abitazione valida. Se s�, non ne pu� fare altre.
 	 * return null = non ci sono prenotazioni valide per quel cliente, sono tutte scadute o non ce n'� neanche una registrata in passato.
 	 * return object = c'� gi� una prenotazione valida */
 	@Override
@@ -99,9 +99,8 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
 
-				//(fine <= oggi)   ==   not (fine > oggi) 
-				//(oggi >= inizio) ==   not (oggi < inizio)
-				if(!datafine.isAfter(LocalDate.now()) && !datafine.isBefore(LocalDate.now()))
+				//(oggi <= fine) == not (oggi > fine)
+				if(!LocalDate.now().isAfter(datafine))
 					return new PrenotazioneAbitazione(idPrenotazioneAbitazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), 
 							DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), datainizio, datafine);
 			}
@@ -113,7 +112,7 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 	}
 
 	/* Da usare per registrare altre prenotazioni (ristorante, eventi, ...). 
-	 * Controlla se il cliente ha ancora una prenotazione valida e se la prenotazione dell'evento cade nella prenotazione della struttura.
+	 * Controlla se il cliente ha ancora una prenotazione valida e se la prenotazione dell'evento cade nella prenotazione dell'abitazione.
 	 * return true = la prenotazione dell'evento pu� essere registrata
 	 * return false = la prenotazione dell'evento non pu� essere registrata */
 	@Override
@@ -123,11 +122,42 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 
 		LocalDate datainizio = pa.getDataInizio();
 		LocalDate datafine = pa.getDataFine();
-		
-		//(fine <= evento)   ==   not (fine > evento) 
-		//(evento >= inizio) ==   not (evento < inizio)
-		if(!datafine.isAfter(dataEvento) && !datafine.isBefore(dataEvento))
+
+		//(evento <= fine)   ==   not (evento > fine)       --> Data evento sta prima della fine del soggiorno
+		//(evento >= inizio) ==   not (evento < inizio)     --> Data evento sta dopo l'inizio del soggiorno
+		if(!dataEvento.isAfter(datafine) && !dataEvento.isBefore(datainizio))
 			return true;
+		return false;
+	}
+
+	/*
+	 * Serve a controllare se una struttura ha un numero di disponibilit� > 0 per un certo intervallo di date.
+	 * Ho usato questo controllo: (start_vecchia_pren <= end_nuova_pren) 
+	 *                             and 
+	 *                            (end_vecchia_pren >= start_nuova_pren)
+	 *                            
+	 * return true --> Se si pu� prenotare quella struttura ad un cliente in quella data (quindi se non c'� un numero di overlap uguale alle disponibilit�)
+	 * return false --> Quella struttura non ha disponibilit� in quell'intervallo di date
+	 * */
+	@Override
+	public boolean isPrenotazioneAbitazionePossibile(PrenotazioneAbitazione pa) {
+		Statement statement = null;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select count(IdPrenotazioneAbitazione) from PRENOTAZIONIABITAZIONI "
+					+ "where abitazione =\"" + pa.getAbitazione().getIdAbitazione() + "\""
+					+ "and ((datainizio <= '"+ pa.getDataFine().format(dtf) +"') "
+					+ "and  (datafine >= '" + pa.getDataInizio() .format(dtf)+ "'))");
+			if(!result.next()) return false;
+			int count = result.getInt(1);
+			int dispo = pa.getAbitazione().getAbitazioniDisponibili();
+
+			if((dispo - count) > 0) return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -143,11 +173,13 @@ public class DAOPrenotazioneAbitazioneImpl implements DAOPrenotazioneAbitazione 
 	}
 
 	/* Codici di errore:
+	 * -2: Tipologia abitazione al completo in quel periodo di tempo
 	 * -1: Cliente ha gi� una prenotazione valida registrata, non pu� effettuarne altre. 
 	 *  0: Errore generico */
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa) {
 		try {
 			if(this.doRetrivePrenotazioneValidaCliente(pa.getCliente().getCf()) != null) return -1;
+			if(!this.isPrenotazioneAbitazionePossibile(pa)) return -2;
 
 			String query = " insert into PrenotazioniAbitazioni ( IdPrenotazioneAbitazione, Cliente, Abitazione, DataInizio, DataFine)"
 					+ " values (?, ?, ?, ?, ?)";

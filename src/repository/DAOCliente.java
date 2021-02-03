@@ -10,5 +10,6 @@ public interface DAOCliente {
 	public Cliente doRetrieveByCf(String cf);
 	public void delete(String cf);
 	public int updateCliente(Cliente c);
+	HashMap<String, Cliente> doRetrieveClientiPrenotati();
 
 }

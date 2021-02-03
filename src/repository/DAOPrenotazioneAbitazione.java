@@ -13,4 +13,5 @@ public interface DAOPrenotazioneAbitazione {
 	public int updatePrenotazioneAbitazione(PrenotazioneAbitazione pa);
 	PrenotazioneAbitazione doRetrivePrenotazioneValidaCliente(String cf);
 	boolean isPrenotazioneGenericaPossibile(String cf, LocalDate dataEvento);
+	boolean isPrenotazioneAbitazionePossibile(PrenotazioneAbitazione pa);
 }
