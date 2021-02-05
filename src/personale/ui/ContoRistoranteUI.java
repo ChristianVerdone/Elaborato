@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -44,56 +46,56 @@ public class ContoRistoranteUI extends JFrame implements ActionListener{
 	 * Create the application.
 	 */
 	public ContoRistoranteUI() {
-		
+
 		frame = new JFrame();
 		frame.setName("Registrazione conto ristorante");
 		frame.setBounds(100, 100, 490, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		idconto = new JTextField();
 		idconto.setBounds(38, 184, 86, 20);
 		frame.getContentPane().add(idconto);
 		idconto.setColumns(10);
-		
+
 		JLabel lblNewLabel = new JLabel("Numero Conto");
 		lblNewLabel.setBounds(38, 165, 86, 14);
 		frame.getContentPane().add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Importo");
 		lblNewLabel_1.setBounds(172, 165, 46, 14);
 		frame.getContentPane().add(lblNewLabel_1);
-		
+
 		importo = new JTextField();
 		importo.setBounds(172, 184, 86, 20);
 		frame.getContentPane().add(importo);
 		importo.setColumns(10);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Numero prenotazione");
 		lblNewLabel_2.setBounds(300, 165, 137, 14);
 		frame.getContentPane().add(lblNewLabel_2);
-		
+
 		idprenotazione = new JTextField();
 		idprenotazione.setBounds(300, 184, 86, 20);
 		frame.getContentPane().add(idprenotazione);
 		idprenotazione.setColumns(10);
-		
+
 		JButton btnNewButton = new JButton("Registra conto");
 		btnNewButton.setBounds(176, 227, 121, 23);
 		btnNewButton.addActionListener(this);
 		btnNewButton.setActionCommand("registra");
 		frame.getContentPane().add(btnNewButton);
-		
+
 		JLabel lblposate1 = new JLabel("");
 		lblposate1.setBounds(80, 21, 96, 96);
 		lblposate1.setIcon(new ImageIcon("images/posateBianche.png"));
 		frame.getContentPane().add(lblposate1);
-		
+
 		JLabel lblcameriere = new JLabel("");
 		lblcameriere.setBounds(189, 21, 96, 96);
 		lblcameriere.setIcon(new ImageIcon("images/cameriere.png"));
 		frame.getContentPane().add(lblcameriere);
-		
+
 		JLabel lblposate2 = new JLabel("");
 		lblposate2.setBounds(298, 21, 96, 96);
 		lblposate2.setIcon(new ImageIcon("images/posateBianche.png"));
@@ -115,45 +117,53 @@ public class ContoRistoranteUI extends JFrame implements ActionListener{
 				break;
 			}
 			else if(DAOFactory.getDAOContoRistorante().doRetrieveById(idcontoristorante)!= null) {
-				JOptionPane.showMessageDialog(null, "Il conto numero " + idcontoristorante + "è già stato registrato.");
+				JOptionPane.showMessageDialog(null, "Il conto numero " + idcontoristorante + "ï¿½ giï¿½ stato registrato.");
 				break;
 			}
-			
+
 			String costoS=importo.getText();
 			float costo=Float.parseFloat(costoS);
-			
+
 			if(costo==0) {
 				JOptionPane.showMessageDialog(null, "Inserisci l'importo.");
 				break;
 			}
-			
+
 			String idprenotazioneRistorante= idprenotazione.getText().toString();
 			System.out.println(idprenotazioneRistorante);
 			if(idprenotazioneRistorante == null) {
 				JOptionPane.showMessageDialog(null, "Inserisci il numero della prenotazione.");
-				break;
+				return;
 			}
 			else if(idprenotazioneRistorante.length()<5 || idprenotazioneRistorante.length()>5 ) {
 				JOptionPane.showMessageDialog(null, "Il numero della prenotazione deve contenere 5 caratteri.");
-				break;
+				return;
 			}
 			PrenotazioneRistorante pr= DAOFactory.getDAOPrenotazioneRistorante().doRetrieveById(idprenotazioneRistorante);
 			if(pr==null) {
 				JOptionPane.showMessageDialog(null, "La prenotazione numero " + idprenotazioneRistorante + " non esiste.");
-				break;
+				return;
 			}
+
+			LocalDateTime ldt_prenotazione = LocalDateTime.of(pr.getData(), pr.getOra());
+			if(!LocalDateTime.now().isAfter(ldt_prenotazione)) {
+				JOptionPane.showMessageDialog(null, "La registrazione del conto ristorante potrÃ  essere effettuata solo dopo il: " + ldt_prenotazione);
+				return;
+			}
+
+
 			ContoRistorante cr = new ContoRistorante(idcontoristorante, costo, pr);
 			System.out.println(cr.toString());
 			int check= DAOFactory.getDAOContoRistorante().updateContoRistorante(cr);
 			if(check!=0) {
 				JOptionPane.showMessageDialog(null, "Registrazione effettuata");
-				
+
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Errore durante la registrazione del conto.");
-				break;
+				return;
 			}
-			
+
 		}
 		this.dispose();
 	}
