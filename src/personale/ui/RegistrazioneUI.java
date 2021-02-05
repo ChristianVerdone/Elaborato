@@ -25,7 +25,7 @@ import repository.DAOAccount;
 import repository.DAODipendenti;
 import repository.DAOFactory;
 
-public class RegistrazioneUI extends JFrame implements ActionListener{
+public class RegistrazioneUI extends JFrame implements ActionListener {
 
 	private JTextField tf_cf;
 	private JLabel lbl_error_cf;
@@ -115,13 +115,14 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 		lbl_task.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_task);
 
-		String[] choices = {"Addetto reception", "Pulizia camere", "Cuoco", "Cameriere", "Guida escursione", "Responsabile evento", "Amministratore"};
+		String[] choices = { "Addetto reception", "Pulizia camere", "Cuoco", "Cameriere", "Guida escursione",
+				"Responsabile evento", "Amministratore" };
 
 		cbm_description = new DefaultComboBoxModel<String>(choices);
 		JComboBox<String> cb_task = new JComboBox<String>();
 		cb_task.setModel(cbm_description);
 		cb_task.setBounds(110, 230, 128, 21);
-		this.getContentPane().add(cb_task);	
+		this.getContentPane().add(cb_task);
 
 		/* Salary */
 		JLabel lbl_salary = new JLabel("Stipendio:");
@@ -171,34 +172,47 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 		String msg = "";
 
 		String cf = tf_cf.getText().toString();
-		if(cf.length() != 16) msg = "Il codice fiscale deve avere 16 caratteri\n";
+		if (cf.length() != 16)
+			msg = "Il codice fiscale deve avere 16 caratteri\n";
 
 		String name = tf_name.getText().toString();
-		if(name.length() == 0) msg += "Inserisci un nome\n";
-		else if(name.length() > 30) msg += "Dimensione massima del nome: 30 caratteri\n";
+		if (name.length() == 0)
+			msg += "Inserisci un nome\n";
+		else if (name.length() > 30)
+			msg += "Dimensione massima del nome: 30 caratteri\n";
 
 		String surname = tf_surname.getText().toString();
-		if(surname.length() == 0) msg += "Inserisci un cognome\n";
-		else if (surname.length() > 30) msg += "Dimensione massima del cognome: 30 caratteri\n";
+		if (surname.length() == 0)
+			msg += "Inserisci un cognome\n";
+		else if (surname.length() > 30)
+			msg += "Dimensione massima del cognome: 30 caratteri\n";
 
 		String task = cbm_description.getSelectedItem().toString();
 		Permessi prm = Permessi.NONE;
-		if(task == "Addetto reception") prm = Permessi.REDUCED;
-		else if(task == "Amministratore") prm = Permessi.ALL;
+		if (task == "Addetto reception")
+			prm = Permessi.REDUCED;
+		else if (task == "Amministratore")
+			prm = Permessi.ALL;
 
 		Integer salary = (Integer) spinner.getValue();
-		if(salary < 400) msg += "Minimo salariale: 400\n";
-		else if(salary > 3500) msg += "Massimo salariale: 3500\n";
+		if (salary < 400)
+			msg += "Minimo salariale: 400\n";
+		else if (salary > 3500)
+			msg += "Massimo salariale: 3500\n";
 
 		String username = tf_username.getText().toString();
-		if(username.length() == 0) msg += "Inserisci uno username\n";
-		else if(username.length() > 30) msg += "Dimensione massima username: 16 caratteri\n";
+		if (username.length() == 0)
+			msg += "Inserisci uno username\n";
+		else if (username.length() > 30)
+			msg += "Dimensione massima username: 16 caratteri\n";
 
 		String password = String.valueOf(pf.getPassword());
-		if(password.length() < 6) msg += "Dimensione minima password: 6 caratteri";
-		else if(username.length() > 30) msg += "Dimensione massima password: 30 caratteri";
+		if (password.length() < 6)
+			msg += "Dimensione minima password: 6 caratteri";
+		else if (username.length() > 30)
+			msg += "Dimensione massima password: 30 caratteri";
 
-		if(!msg.equals("")) {
+		if (!msg.equals("")) {
 			JOptionPane.showMessageDialog(this, msg);
 			return;
 		}
@@ -206,20 +220,18 @@ public class RegistrazioneUI extends JFrame implements ActionListener{
 		DAOAccount dao_account = DAOFactory.getDAOAccount();
 		Account curr_user = dao_account.doRetrieveByUsername(username);
 
-		if(curr_user != null) {
+		if (curr_user != null) {
 			JOptionPane.showMessageDialog(this, "Username non più disponibile");
 			return;
 		}
 
 		DAODipendenti dao_dipendente = DAOFactory.getDAODipendenti();
-		if(dao_dipendente.update(new Dipendente(cf, name, surname, task, salary)) == 0){
+		if (dao_dipendente.update(new Dipendente(cf, name, surname, task, salary)) == 0) {
 			System.out.println("Errore nella creazione del dipendente");
-		}
-		else {
-			if(dao_account.update(cf, new Account(username, password, prm)) == 0) {
+		} else {
+			if (dao_account.update(cf, new Account(username, password, prm)) == 0) {
 				System.out.println("Errore nella creazione dell'account");
-			}
-			else { 
+			} else {
 				JOptionPane.showMessageDialog(this, "Registrazione avvenuta con successo");
 				this.dispose();
 			}
