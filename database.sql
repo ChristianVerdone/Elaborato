@@ -198,7 +198,6 @@ insert into abitazioni values
 
 insert into contiristorante values
 ("CR001","PR002", 80.00),
-("CR002","PR001", 90.50),
 ("CR003","PR003", 60.50),
 ("CR004","PR004", 67.30),
 ("CR005","PR005", 58.30),

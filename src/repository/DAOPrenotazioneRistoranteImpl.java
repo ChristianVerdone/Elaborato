@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import struttureEventi.classes.PrenotazioneRistorante;
@@ -27,8 +29,8 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 	}
 
 	@Override
-	public HashSet<PrenotazioneRistorante> doRetrieveAll() {
-		HashSet<PrenotazioneRistorante> prCollection = new HashSet<PrenotazioneRistorante>();
+	public ArrayList<PrenotazioneRistorante> doRetrieveAll() {
+		ArrayList<PrenotazioneRistorante> prCollection = new ArrayList<PrenotazioneRistorante>();
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();

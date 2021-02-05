@@ -186,7 +186,6 @@ public class EventoUI extends JFrame implements ActionListener {
 							}
 						}
 					}
-
 				}
 				for (Evento ev : eventi) {
 					dtmE.addRow(new Object[] { ev.getIdEvento(), ev.getNome(), ev.getTipo(), ev.getDescrizione() });
