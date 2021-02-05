@@ -195,5 +195,6 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 			}
 		}
 		this.dispose();
+		frame.dispose();
 	}
 }
