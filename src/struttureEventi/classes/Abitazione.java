@@ -28,13 +28,15 @@ public class Abitazione {
 		return descrizione;
 	}
 	
-
-	
 	public int getAbitazioniDisponibili() {
 		return abitazioniDisponibili;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Abitazione [idAbitazione=" + idAbitazione + ", postiletto=" + postiletto + ", tariffa=" + tariffa
+				+ ", descrizione=" + descrizione + ", abitazioniDisponibili=" + abitazioniDisponibili + "]";
+	}
 
 	private String idAbitazione;
 	private int postiletto;
