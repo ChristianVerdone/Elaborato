@@ -213,6 +213,10 @@ public class RegistrazioneEvento extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Costo biglietto non valido.");
 				break;
 			}
+			if (costoBiglietto >= 100) {
+				JOptionPane.showMessageDialog(this, "Costo biglietto troppo alto.");
+				break;
+			}
 			if (DAOFactory.getDAOEvento().doRetrieveById(id) != null) {
 				JOptionPane.showMessageDialog(this, "Evento con identificativo " + id + "già registrato");
 				break;

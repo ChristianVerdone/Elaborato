@@ -49,6 +49,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 	private LocalDate data;
 	private JSpinner spr_startTime;
 	private JTable table;
+	private JCalendar inizio;
 	/**
 	 * Launch the application.
 	 */
@@ -155,7 +156,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		spr_startTime.setBounds(44, 263, 74, 35);
 		frame.getContentPane().add(spr_startTime);
 
-		JCalendar inizio = new JCalendar();
+		inizio = new JCalendar();
 		inizio.setBounds(210, 176, 184, 153);
 		frame.getContentPane().add(inizio);
 
@@ -192,6 +193,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		switch (command) {
 		case "prenota":
 			Date oraSpinner=  (Date) spr_startTime.getValue();
+			data= inizio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			System.out.println(data);
 			//dataPrenotazione=LocalDateTime.parse(data.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
@@ -205,6 +207,7 @@ public class RistoranteUI extends JFrame implements ActionListener {
 				break;
 			}
 			cliente=clienti.get(i);
+			
 			if (data.isBefore(LocalDate.now())) {
 				JOptionPane.showMessageDialog(this, "Selezionare una data successiva.");
 				break;
