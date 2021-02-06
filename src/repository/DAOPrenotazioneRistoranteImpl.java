@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
+
 import struttureEventi.classes.PrenotazioneRistorante;
 
 public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante {
@@ -100,6 +102,12 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 	}
 
 	public int updatePrenotazioneRistorante(PrenotazioneRistorante pr) {
+		
+		if(!DAOFactory.getDAOPrenotazioneAbitazione().isPrenotazioneGenericaPossibile(pr.getCliente().getCf(), pr.getData())) {
+			JOptionPane.showMessageDialog(null, "Il cliente selezionato non risulta soggiornante in data: " + pr.getData());
+			return 0;
+		}
+			
 		try {
 
 			String query = " insert into PrenotazioniRistorante ( IdPrenotazioneRistorante, Cliente, Tavolo, DataPrenotazione, OraPrenotazione)"

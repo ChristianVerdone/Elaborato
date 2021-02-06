@@ -10,7 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import struttureEventi.classes.Evento;
 
@@ -135,7 +137,7 @@ public class DAOEventoImpl implements DAOEvento {
 			System.out.println(t);
 			Time ora = Time.valueOf(t);
 			System.out.println(ora);
-			preparedStmt.setTime(6, ora);
+			preparedStmt.setTime(6, ora, Calendar.getInstance(TimeZone.getTimeZone("CET")));
 			return preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

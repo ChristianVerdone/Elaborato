@@ -93,42 +93,6 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 		btnNewButton.setActionCommand("registra");
 		frame.getContentPane().add(btnNewButton);
 
-		prenotazioni = new ArrayList<PrenotazioneRistorante>();
-		for (PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) {
-			prenotazioni.add(p);
-		}
-		DefaultTableModel dtm = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		dtm.setColumnIdentifiers(new String[] { "id", "Cliente", "Tavolo" });
-
-		for (PrenotazioneRistorante p : prenotazioni) {
-			dtm.addRow(new Object[] { p.getIdPrenotazione(), p.getCliente().getCognome()+" "+p.getCliente().getNome(), p.getnTavolo() });
-		}
-
-		table = new JTable();
-		table.setBounds(344, 322, 314, -206);
-		table.setModel(dtm);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// table.getSelectionModel().addListSelectionListener(this);
-		JScrollPane scrollPane_table = new JScrollPane(table);
-		scrollPane_table.setBounds(226, 186, 300, 99);
-		frame.getContentPane().add(scrollPane_table);
-
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent arg0) {
-				int i = table.getSelectedRow();
-				if (i != -1) {
-					p = prenotazioni.get(i);
-				}
-			}
-		});
-
 		JLabel lblposate1 = new JLabel("");
 		lblposate1.setBounds(38, 21, 96, 96);
 		lblposate1.setIcon(new ImageIcon("images/posateBianche.png"));
@@ -158,7 +122,7 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Il numero del conto deve contenere 5 caratteri.");
 				break;
 			} else if (DAOFactory.getDAOContoRistorante().doRetrieveById(idcontoristorante) != null) {
-				JOptionPane.showMessageDialog(null, "Il conto numero " + idcontoristorante + "è già stato registrato.");
+				JOptionPane.showMessageDialog(null, "Il conto numero " + idcontoristorante + "ï¿½ giï¿½ stato registrato.");
 				break;
 			}
 
@@ -183,16 +147,25 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 				p = prenotazioni.get(i);
 			}
 
-			ContoRistorante cr = new ContoRistorante(idcontoristorante, costo, p);
+			LocalDateTime ldt_prenotazione = LocalDateTime.of(pr.getData(), pr.getOra());
+			if(!LocalDateTime.now().isAfter(ldt_prenotazione)) {
+				JOptionPane.showMessageDialog(null, "La registrazione del conto ristorante potrÃ  essere effettuata solo dopo il: " + ldt_prenotazione);
+				return;
+			}
+
+
+			ContoRistorante cr = new ContoRistorante(idcontoristorante, costo, pr);
 			System.out.println(cr.toString());
 			int check = DAOFactory.getDAOContoRistorante().updateContoRistorante(cr);
 			if (check != 0) {
 				JOptionPane.showMessageDialog(null, "Registrazione effettuata");
 
-			} else {
-				JOptionPane.showMessageDialog(null, "Errore durante la registrazione del conto.");
-				break;
 			}
+			else {
+				JOptionPane.showMessageDialog(null, "Errore durante la registrazione del conto.");
+				return;
+			}
+
 		}
 		this.dispose();
 		frame.dispose();
