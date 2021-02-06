@@ -250,10 +250,10 @@ insert into prenotazioniabitazioni values
 insert into prenotazioniristorante values
 ("PR001","AMNNCC66G32N523K", "01", "2021-02-02","20:00"),
 ("PR002","FRNELN43B54D432N", "02", "2021-12-15","21:00"),
-("PR003","AMNNCC66G32N523K", "03", "2021-10-30","21:30"),
+("PR003","AMNNCC66G32N523K", "03", "2021-02-03","21:30"),
 ("PR004","CGNPLO78H12N234D", "04", "2021-08-15","20:30"),
 ("PR005","PSTRSL78F34D519C", "05", "2021-01-16","21:30"),
-("PR006","CRSDNT73B24C634L", "06", "2021-12-24","21:30");
+("PR006","CRSDNT73B24C634L", "06", "2021-10-24","21:30");
 
 
 insert into prenotazionieventi values
