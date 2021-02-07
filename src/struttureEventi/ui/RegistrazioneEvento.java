@@ -166,25 +166,27 @@ public class RegistrazioneEvento extends JFrame implements ActionListener {
 			System.out.println(spr_startTime.getValue());
 			oraEvento = LocalTime.of(d.getHours(), d.getMinutes());
 			System.out.println(oraEvento);
-			if (data.isBefore(LocalDate.now())) {
-				JOptionPane.showMessageDialog(this, "Selezionare una data successiva alla data odierna.");
-				break;
-			}
+			
 			if (data == null) {
 				JOptionPane.showMessageDialog(this, "Selezionare una data.");
 				break;
 			}
-			String id = "EV" + g.GenerateRandom();
-			nome = tfnome.getText();
-			if (nome.length() > 30) {
-				JOptionPane.showMessageDialog(this, "Dimensione massima superata.");
+			
+			if (LocalDateTime.of(data, oraEvento).isBefore(LocalDateTime.now())) {
+				JOptionPane.showMessageDialog(this, "Immettere una data ed un orario validi.");
 				break;
 			}
-			if (nome == null) {
+			
+			String id = "EV" + g.GenerateRandom();
+			nome = tfnome.getText();
+			if (nome.equals("")) {
 				JOptionPane.showMessageDialog(this, "Inserire il nome.");
 				break;
 			}
-
+			if (nome.length() > 30) {
+				JOptionPane.showMessageDialog(this, "Dimensione massima superata.");
+				break;
+			}		
 			if (DAOFactory.getDAOEvento().doRetrieveByNome(nome) != null) {
 				JOptionPane.showMessageDialog(this, "Evento con nome " + nome + " già registrato");
 				break;
@@ -195,12 +197,12 @@ public class RegistrazioneEvento extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Dimensione massima superata.");
 				break;
 			}
-			if (tipo == null) {
+			if (tipo.equals("")) {
 				JOptionPane.showMessageDialog(this, "Inserire il tipo.");
 				break;
 			}
 			descrizione = tfdescrizione.getText();
-			if (descrizione == null) {
+			if (descrizione.equals("")) {
 				JOptionPane.showMessageDialog(this, "Inserire la descrizione.");
 				break;
 			}
@@ -208,9 +210,19 @@ public class RegistrazioneEvento extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Dimensione massima superata.");
 				break;
 			}
+			
+			if(tfCosto.getText().equals("")) {
+				JOptionPane.showMessageDialog(this, "Immettere un prezzo per il biglietto");
+				break;
+			}
+			
 			float costoBiglietto = Float.parseFloat(tfCosto.getText());
-			if (costoBiglietto < 0) {
+			if (costoBiglietto <= 0) {
 				JOptionPane.showMessageDialog(this, "Costo biglietto non valido.");
+				break;
+			}
+			if (costoBiglietto >= 100) {
+				JOptionPane.showMessageDialog(this, "Costo biglietto troppo alto.");
 				break;
 			}
 			if (DAOFactory.getDAOEvento().doRetrieveById(id) != null) {

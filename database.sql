@@ -135,7 +135,7 @@ create table MOVIMENTI(
     Tipo boolean NOT NULL
 );
 insert into CLIENTI values 
-("AMNNCC66G32N523K", "NiccolÃ²", "Ammaniti"),
+("AMNNCC66G32N523K", "Niccol�", "Ammaniti"),
 ("FRNELN43B54D432N", "Elena", "Ferrante"),
 ("CRSDNT73B24C634L", "Donato", "Carrisi"),
 ("CGNPLO78H12N234D", "Paolo", "Cognetti"),
@@ -198,7 +198,6 @@ insert into abitazioni values
 
 insert into contiristorante values
 ("CR001","PR002", 80.00),
-("CR002","PR001", 90.50),
 ("CR003","PR003", 60.50),
 ("CR004","PR004", 67.30),
 ("CR005","PR005", 58.30),
@@ -234,13 +233,13 @@ insert into accounts values
 ("gervasod99", "DMRGVS03C29A662P", "gerva99", 1);
 
 insert into turnidilavoro values
-("MRALSN08C52F205P", "SE004", "2020-12-14"),
-("GRNRSL06H65D969E", "SE001", "2020-12-14"),
-("GRNMTT08T29L219Z", "SE002", "2020-12-15"),
-("DMRGVS03C29A662P", "SE003", "2020-12-16");
+("MRALSN08C52F205P", "SE004", "2021-12-14"),
+("GRNRSL06H65D969E", "SE001", "2021-12-14"),
+("GRNMTT08T29L219Z", "SE002", "2021-12-15"),
+("DMRGVS03C29A662P", "SE003", "2021-12-16");
 
 insert into prenotazioniabitazioni values
-("PA01","AMNNCC66G32N523K", "Deluxe", "2021-01-13", curdate()),
+("PA01","AMNNCC66G32N523K", "Deluxe", "2021-02-01", curdate()),
 ("PA02","FRNELN43B54D432N", "Standard",  "2021-12-13", "2021-12-23"),
 ("PA03", "CRSDNT73B24C634L", "Camera doppia", "2021-10-10", "2021-11-02"),
 ("PA04", "CGNPLO78H12N234D", "Appartamento", "2021-08-13", "2021-09-23"),
@@ -249,12 +248,12 @@ insert into prenotazioniabitazioni values
 
 
 insert into prenotazioniristorante values
-("PR001","AMNNCC66G32N523K", "01", "2020-10-14","20:00"),
+("PR001","AMNNCC66G32N523K", "01", "2021-02-02","20:00"),
 ("PR002","FRNELN43B54D432N", "02", "2021-12-15","21:00"),
-("PR003","AMNNCC66G32N523K", "03", "2021-10-30","21:30"),
+("PR003","AMNNCC66G32N523K", "03", "2021-02-03","21:30"),
 ("PR004","CGNPLO78H12N234D", "04", "2021-08-15","20:30"),
 ("PR005","PSTRSL78F34D519C", "05", "2021-01-16","21:30"),
-("PR006","CRSDNT73B24C634L", "06", "2021-12-24","21:30");
+("PR006","CRSDNT73B24C634L", "06", "2021-10-24","21:30");
 
 
 insert into prenotazionieventi values
