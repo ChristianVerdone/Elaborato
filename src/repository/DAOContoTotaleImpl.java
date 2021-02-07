@@ -7,8 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.GregorianCalendar;
+
+import javax.swing.JOptionPane;
 
 import contabilita.ContoTotale;
 
@@ -41,13 +45,17 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 				String dataf=result.getString("DataFine");
 				LocalDate datafine = LocalDate.parse(dataf, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				
-				
-				GregorianCalendar initialDate = new GregorianCalendar(datainizio.getYear(),datainizio.getMonthValue(),datainizio.getDayOfMonth());
-				GregorianCalendar finalDate = new GregorianCalendar(datafine.getYear(),datafine.getMonthValue(),datafine.getDayOfMonth());
-				long  giorniInMillisecondi=finalDate.getTimeInMillis()-initialDate.getTimeInMillis();
-				double giorniSoggiornoDouble=giorniInMillisecondi/(24*60*60*1000);
-				int giorniSoggiorno=(int) giorniSoggiornoDouble;
-				contoAbitazione=giorniSoggiorno*contoLetto;
+				long days= ChronoUnit.DAYS.between(datainizio, datafine);
+			
+			
+				//GregorianCalendar initialDate = new GregorianCalendar(datainizio.getYear(),datainizio.getMonthValue(),datainizio.getDayOfMonth());
+				//GregorianCalendar finalDate = new GregorianCalendar(datafine.getYear(),datafine.getMonthValue(),datafine.getDayOfMonth());
+				//long  giorniInMillisecondi=finalDate.getTimeInMillis()-initialDate.getTimeInMillis();
+				//double giorniSoggiornoDouble=giorniInMillisecondi/(24*60*60*1000);
+				//int giorniSoggiorno=(int) giorniSoggiornoDouble;
+				//System.out.println(giorniSoggiorno);
+				contoAbitazione=days*contoLetto;
+			
 				
 				try {
 					if(datafine.isBefore(datainizio)) {
@@ -138,6 +146,23 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 			e.printStackTrace();
 		}
 		return contoStruttura;
+	}
+	
+	public double getContoTotale(String codCliente) {
+		
+		
+		DAOContoTotaleImpl contoEvento=new DAOContoTotaleImpl();
+		double contoTotaleEvento=contoEvento.doRetrieveContoEventoByCf(codCliente);
+		DAOContoTotaleImpl contoAbitazione=new DAOContoTotaleImpl();
+		double contoTotaleAbitazione=contoAbitazione.doRetrieveContoAbitazioneByCf(codCliente);
+		DAOContoTotaleImpl contoStruttura=new DAOContoTotaleImpl();
+		double contoTotaleStruttura=contoStruttura.doRetrieveContoStrutturaCf(codCliente);
+		DAOContoTotaleImpl contoRistorante=new DAOContoTotaleImpl();
+		double contoTotaleRistorante=contoRistorante.doRetrieveContoRistoranteCf(codCliente);
+		
+		double contoTotale=contoTotaleEvento+contoTotaleAbitazione+contoTotaleStruttura+contoTotaleRistorante;
+		
+		return contoTotale;
 	}
 
 	@Override

@@ -9,20 +9,19 @@ public class Dipendente {
 		this.mansione = mansione;
 		this.stipendio = stipendio;
 	}
-		
-	
+
 	@Override
 	public String toString() {
 		return cf + " | " + nome + " " + cognome + " | " + mansione + " | " + stipendio;
 	}
-	
+
 	/* Getters  */
 	public String getCf() { return cf; }
 	public String getNome() { return nome; }
 	public String getCognome() { return cognome; }
 	public String getMansione() { return mansione; }
 	public Integer getStipendio() { return stipendio; }
-	
+
 	private String cf, nome, cognome, mansione;
 	private Integer stipendio;	
 }

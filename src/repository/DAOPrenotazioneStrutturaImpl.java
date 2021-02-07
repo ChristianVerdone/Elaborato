@@ -48,7 +48,7 @@ public class DAOPrenotazioneStrutturaImpl implements DAOPrenotazioneStruttura {
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONISTRUTTURE WHERE IDPRENOTAZIONISTRUTTURE\"" + id + "\"");
+			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONISTRUTTURE WHERE IDPRENOTAZIONISTRUTTURE=\"" + id + "\"");
 			 
 			while (result.next()) {
 				String idPrenotazione=result.getString("IdPrenotazioneStruttura");
@@ -95,4 +95,14 @@ public class DAOPrenotazioneStrutturaImpl implements DAOPrenotazioneStruttura {
 		return 0;
 	}
 	
+	@Override
+	public void deleteByCliente(String cf) {
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			int result = statement.executeUpdate("DELETE FROM PRENOTAZIONISTRUTTURE WHERE Cliente=\"" + cf + "\"");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
 }

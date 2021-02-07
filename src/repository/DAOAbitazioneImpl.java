@@ -33,7 +33,8 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 				int postiLetto=result.getInt("PostiLetto");
 				float tariffa=(float) result.getDouble("Tariffa");
 				String descrizione=result.getString("Descrizione");
-				Abitazione a = new Abitazione(idAbitazione, postiLetto, tariffa, descrizione);
+				int abitazioniDisponibili=result.getInt("AbitazioniDisponibili");
+				Abitazione a = new Abitazione(idAbitazione, postiLetto, tariffa, descrizione, abitazioniDisponibili);
 				abitazioniCollection.put(idAbitazione, a);
 			
 
@@ -56,7 +57,8 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 				int postiLetto=result.getInt("PostiLetto");
 				float tariffa=(float) result.getDouble("Tariffa");
 				String descrizione=result.getString("Descrizione");
-				a = new Abitazione(idAbitazione, postiLetto, tariffa, descrizione);
+				int abitazioniDisponibili=result.getInt("AbitazioniDisponibili");
+				a = new Abitazione(idAbitazione, postiLetto, tariffa, descrizione, abitazioniDisponibili);
 			
 			}
 
@@ -75,8 +77,5 @@ public class DAOAbitazioneImpl implements DAOAbitazione {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-
 }

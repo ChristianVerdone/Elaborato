@@ -31,9 +31,9 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 			while (result.next()) {
 				String id = result.getString("IdBiglietto");
 				float costo=result.getFloat("Costo");
-				boolean disponibilità=result.getBoolean("Disponibilità");
+				boolean disponibilità=result.getBoolean("Disponibilita");
 				String evento=result.getString("NomeEvento");
-				
+			
 				Biglietto b = new Biglietto(id, costo, disponibilità, evento);
 				bigliettiCollection.put(id, b);
 			}
@@ -46,6 +46,7 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 
 	@Override
 	public Biglietto doRetrieveById(String id) {
+	
 		Biglietto b = null;
 		Statement statement = null;
 		try {
@@ -54,8 +55,9 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 
 			while (result.next()) {
 				String idBiglietto = result.getString("IdBiglietto");
+				
 				float costo=result.getFloat("Costo");
-				boolean disponibilità=result.getBoolean("Disponibilità");
+				boolean disponibilità=result.getBoolean("Disponibilita");
 				String evento=result.getString("NomeEvento");
 				b= new Biglietto(idBiglietto, costo, disponibilità, evento);
 			
@@ -87,18 +89,32 @@ public class DAOBigliettoImpl implements DAOBiglietto {
 	public int updateBiglietto(Biglietto b) {
 		try {
 			//delete(c.getCf());
-			
-			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilità, NomeEvento)"
+			System.out.println(b);
+			String query = " insert into biglietti (IdBiglietto, Costo, Disponibilita, NomeEvento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, b.getIdBiglietto());
 			preparedStmt.setFloat(2, b.getCosto());
 			preparedStmt.setBoolean(3, b.isDisponibilità());
-			preparedStmt.setString(1, b.getNomeEvento());
+			preparedStmt.setString(4, b.getNomeEvento());
 			return preparedStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	
+	public void updateDisponibilita(String id) {
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			String query = "UPDATE biglietti SET disponibilita = false WHERE IDBIGLIETTO=\"" + id + "\"";
+			statement.executeUpdate(query);
+					
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	}

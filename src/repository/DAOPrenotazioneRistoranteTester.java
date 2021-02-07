@@ -9,10 +9,12 @@ public class DAOPrenotazioneRistoranteTester {
 		DAOFactory df = new DAOFactory();
 		HashSet<PrenotazioneRistorante> prenotazioneRistorante = df.getDAOPrenotazioneRistorante().doRetrieveAll();
 
-		if (!prenotazioneRistorante.isEmpty())
+		/**if (!prenotazioneRistorante.isEmpty())
 			for (PrenotazioneRistorante pr : prenotazioneRistorante)
 				System.out.println(pr.toString());
 
-
+*/
+		PrenotazioneRistorante pr=df.getDAOPrenotazioneRistorante().doRetrieveById("PR002");
+		System.out.println(pr.toString());
 	}
 }
