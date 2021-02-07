@@ -14,7 +14,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import javax.swing.JOptionPane;
+
+import contabilita.Cliente;
 import struttureEventi.classes.Evento;
+import struttureEventi.classes.PrenotazioneAbitazione;
 
 public class DAOEventoImpl implements DAOEvento {
 	private MySQLConnection connection;
@@ -80,6 +84,40 @@ public class DAOEventoImpl implements DAOEvento {
 			e.printStackTrace();
 		}
 		return ev;
+	}
+	
+	public HashMap<String, Evento> doRetrieveByCliente(Cliente cl){
+		HashMap<String, Evento> eventiCollection = new HashMap<String, Evento>();
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			PrenotazioneAbitazione pa = DAOFactory.getDAOPrenotazioneAbitazione().doRetrivePrenotazioneValidaCliente(cl.getCf());
+			if(pa == null ) return null;
+			String start = pa.getDataInizio().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			String end = pa.getDataFine().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			
+			ResultSet result = statement.executeQuery("SELECT * FROM eventi "
+					+ "WHERE DataEvento >= '"+ start + "' "
+					+ "AND DataEvento <= '"+ end +"' ");
+			
+			while (result.next()) {
+				String id = result.getString("IdEvento");
+				String nome=result.getString("Nome");
+				String tipo=result.getString("Tipo");
+				String descrizione=result.getString("Descrizione");
+				String data=result.getString("dataEvento");
+				//LocalDate dataPrenotazione = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String ora=result.getString("oraEvento");
+				LocalDate dt=LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				LocalTime t = LocalTime.parse(ora, DateTimeFormatter.ofPattern("HH:mm:ss"));
+				Evento e = new Evento(id, nome, tipo, descrizione, dt, t);
+				eventiCollection.put(id, e);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return eventiCollection;
 	}
 	
 	@Override

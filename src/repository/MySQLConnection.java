@@ -10,7 +10,7 @@ class MySQLConnection {
 	private Connection connection;
 	static String url ="jdbc:mysql://localhost:3306/sanniovillage?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	static String username = "root";
-	static String password = "Dimenticata1";
+	static String password = "";  // --> Da inserire
 	
 	public MySQLConnection() {
 		connection = null;

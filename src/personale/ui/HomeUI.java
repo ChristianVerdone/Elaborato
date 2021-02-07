@@ -24,6 +24,7 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
@@ -71,7 +72,6 @@ public class HomeUI extends JFrame implements ActionListener{
 
 		JLabel lbl_list = new JLabel("I miei turni:");
 		lbl_list.setBounds(264, 110, 227, 19);
-		lbl_list.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_list);
 
 		/* Tabella turni */
@@ -110,11 +110,10 @@ public class HomeUI extends JFrame implements ActionListener{
 		/* Info account */
 		JLabel lbl_info = new JLabel("Informazioni account:");
 		lbl_info.setBounds(10, 110, 176, 13);
-		lbl_info.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_info);
 
 		JLabel lbl_username = new JLabel("Utente:");
-		lbl_username.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lbl_username.setFont(new Font("Liberation Mono", Font.PLAIN, 11));
 		lbl_username.setBounds(10, 145, 56, 20);
 		getContentPane().add(lbl_username);
 
@@ -125,7 +124,7 @@ public class HomeUI extends JFrame implements ActionListener{
 		getContentPane().add(tp_username);
 
 		JLabel lbl_permissions = new JLabel("Permessi:");
-		lbl_permissions.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lbl_permissions.setFont(new Font("Liberation Mono", Font.PLAIN, 11));
 		lbl_permissions.setBounds(10, 170, 82, 20);
 		getContentPane().add(lbl_permissions);
 
@@ -142,7 +141,6 @@ public class HomeUI extends JFrame implements ActionListener{
 		/* Operazioni */
 		JLabel lbl_operations = new JLabel("Operazioni disponibili:");
 		lbl_operations.setBounds(10, 215, 205, 25);
-		lbl_operations.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_operations);
 
 		JButton btn_logout = new JButton("Logout");
@@ -155,7 +153,7 @@ public class HomeUI extends JFrame implements ActionListener{
 	private void refresh() {
 		dtm.setRowCount(0);
 		DAOTurniLavoro dao_turni = DAOFactory.getDAOTurniLavoro();
-		Set<TurnoLavoro> set_turni = dao_turni.doRetrieveByUsername(acc.getUsername());
+		Set<TurnoLavoro> set_turni = dao_turni.doRetrieveByUsernameAndDate(acc.getUsername(), LocalDate.now());
 		if(set_turni.size() > 0) {
 			if(dtm.getColumnCount() < 4) dtm.setColumnIdentifiers(new String[]{"Servizio","Data","Inizio", "Fine"});
 			for(TurnoLavoro tl : set_turni) {
