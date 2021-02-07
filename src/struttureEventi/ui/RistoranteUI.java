@@ -230,32 +230,34 @@ public class RistoranteUI extends JFrame implements ActionListener {
 				break;
 			}
 			
-			String ora= oraSpinner.getHours() + ":" + oraSpinner.getMinutes() + ":" + oraSpinner.getSeconds()+"0";
-			LocalTime t = LocalTime.parse(ora);
+			LocalTime t = oraSpinner.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+			System.out.println(t);
 			int d= disponibilita();
 			if(d==-1) {
-				JOptionPane.showMessageDialog(this, "Tavolo gi� prenotato.");
+				JOptionPane.showMessageDialog(this, "Tavolo gia' prenotato.");
 				break;
 			}
 			
 			GenerateRandom g = new GenerateRandom();
 			String idPrenotazione= "PR" + g.GenerateRandom();
+			while(DAOFactory.getDAOPrenotazioneRistorante().doRetrieveById(idPrenotazione) != null)
+				idPrenotazione= "PR" + g.GenerateRandom();
 
 			PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, cliente, tavolo, data, t);
 
-			int prenotazione = DAOFactory.getDAOPrenotazioneRistorante().updatePrenotazioneRistorante(pr);
-
-			if(prenotazione!= 0) 
-				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
-			else if(prenotazione==0)
+			int prenotazione = DAOFactory.getDAOPrenotazioneRistorante().updatePrenotazioneRistorante(pr);	
+			if(prenotazione == 0)
 				JOptionPane.showMessageDialog(this, "Errore durante la registrazione della prenotazione!");
-
-			else if(DAOFactory.getDAOPrenotazioneRistorante().doRetrieveById(idPrenotazione)!= null) {
-				JOptionPane.showMessageDialog(this, "Non è possibile registrare la prenotazione.\nÈ già presente una prenotazione con identificativo " + idPrenotazione);
+			else if(prenotazione == -1)
+				JOptionPane.showMessageDialog(this, "Il cliente selezionato non risulta soggiornante in data: " + data);
+			else if(prenotazione == -2)
+				JOptionPane.showMessageDialog(this, "Questo cliente ha gi� un tavolo prenotato per questa data ed orario");
+			else {
+				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
+				this.dispose();
+				frame.dispose();
+				break;
 			}
-			this.dispose();
-			frame.dispose();
-			break;
 		}
 	}
 	public int disponibilita () {
