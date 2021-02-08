@@ -2,11 +2,9 @@ package struttureEventi.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -25,7 +23,6 @@ import util.GenerateRandom;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -99,7 +96,6 @@ public class RistoranteUI extends JFrame implements ActionListener {
 
 		JLabel lblNewLabel = new JLabel("Selezionare il tavolo");
 		lblNewLabel.setBounds(44, 157, 144, 14);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel);
 
 		JComboBox comboBox_tavoli = new JComboBox();
@@ -116,7 +112,6 @@ public class RistoranteUI extends JFrame implements ActionListener {
 
 		JLabel lblNewLabel_1 = new JLabel("Selezionare il cliente");
 		lblNewLabel_1.setBounds(44, 339, 167, 14);
-		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_1);
 
 		clienti = new ArrayList<Cliente>();
@@ -162,12 +157,10 @@ public class RistoranteUI extends JFrame implements ActionListener {
 
 		JLabel lblNewLabel_2 = new JLabel("Selezionare la data");
 		lblNewLabel_2.setBounds(210, 157, 153, 14);
-		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("Selezionare l'ora");
 		lblNewLabel_3.setBounds(44, 248, 118, 14);
-		lblNewLabel_3.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		frame.getContentPane().add(lblNewLabel_3);
 		inizio.addPropertyChangeListener("calendar", new PropertyChangeListener() {
 			@Override
@@ -194,7 +187,6 @@ public class RistoranteUI extends JFrame implements ActionListener {
 		case "prenota":
 			Date oraSpinner=  (Date) spr_startTime.getValue();
 			data= inizio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			System.out.println(data);
 			//dataPrenotazione=LocalDateTime.parse(data.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 			if (tavolo==0) { 
@@ -208,8 +200,24 @@ public class RistoranteUI extends JFrame implements ActionListener {
 			}
 			cliente=clienti.get(i);
 			
-			if (data.isBefore(LocalDate.now())) {
-				JOptionPane.showMessageDialog(this, "Selezionare una data successiva.");
+			if (data == null) { 
+				JOptionPane.showMessageDialog(this, "Selezionare una data.");
+				break;
+			}
+			
+			if (oraSpinner == null) { 
+				JOptionPane.showMessageDialog(this, "Selezionare l'ora.");
+				break;
+			}
+			if ((oraSpinner.getHours() < 12 || oraSpinner.getHours() > 14) && ( oraSpinner.getHours() < 19 || oraSpinner.getHours() > 22)) {
+				JOptionPane.showMessageDialog(this, "Selezionare l'orario dei Pasti (12-14 per il pranzo, 19-22 per la cena).");
+				break;
+			}
+			
+			LocalTime t = oraSpinner.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+			
+			if (LocalDateTime.of(data, t).isBefore(LocalDateTime.now())) {
+				JOptionPane.showMessageDialog(this, "Data e/o orario della prenotazione non corretti");
 				break;
 			}
 			if (data.isAfter(DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveByCF(cliente.getCf()).getDataFine())) {
@@ -217,45 +225,34 @@ public class RistoranteUI extends JFrame implements ActionListener {
 						DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveByCF(cliente.getCf()).getDataFine());
 				break;
 			}
-			if (data== null) { 
-				JOptionPane.showMessageDialog(this, "Selezionare una data.");
-				break;
-			}
-			if (oraSpinner==null) { 
-				JOptionPane.showMessageDialog(this, "Selezionare l'ora.");
-				break;
-			}
-			if ((oraSpinner.getHours() < 12 || oraSpinner.getHours() > 14) && ( oraSpinner.getHours() < 19 || oraSpinner.getHours() > 22)) {
-				JOptionPane.showMessageDialog(this, "Selezionare l'orario dei Pasti(12-14 per il pranzo, 19-22 per la cena).");
-				break;
-			}
 			
-			String ora= oraSpinner.getHours() + ":" + oraSpinner.getMinutes() + ":" + oraSpinner.getSeconds()+"0";
-			LocalTime t = LocalTime.parse(ora);
+
 			int d= disponibilita();
 			if(d==-1) {
-				JOptionPane.showMessageDialog(this, "Tavolo gi� prenotato.");
+				JOptionPane.showMessageDialog(this, "Tavolo gia' prenotato.");
 				break;
 			}
 			
 			GenerateRandom g = new GenerateRandom();
 			String idPrenotazione= "PR" + g.GenerateRandom();
+			while(DAOFactory.getDAOPrenotazioneRistorante().doRetrieveById(idPrenotazione) != null)
+				idPrenotazione= "PR" + g.GenerateRandom();
 
 			PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione, cliente, tavolo, data, t);
 
-			int prenotazione = DAOFactory.getDAOPrenotazioneRistorante().updatePrenotazioneRistorante(pr);
-
-			if(prenotazione!= 0) 
-				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
-			else if(prenotazione==0)
+			int prenotazione = DAOFactory.getDAOPrenotazioneRistorante().updatePrenotazioneRistorante(pr);	
+			if(prenotazione == 0)
 				JOptionPane.showMessageDialog(this, "Errore durante la registrazione della prenotazione!");
-
-			else if(DAOFactory.getDAOPrenotazioneRistorante().doRetrieveById(idPrenotazione)!= null) {
-				JOptionPane.showMessageDialog(this, "Non è possibile registrare la prenotazione.\nÈ già presente una prenotazione con identificativo " + idPrenotazione);
+			else if(prenotazione == -1)
+				JOptionPane.showMessageDialog(this, "Il cliente selezionato non risulta soggiornante in data: " + data);
+			else if(prenotazione == -2)
+				JOptionPane.showMessageDialog(this, "Questo cliente ha gi� un tavolo prenotato per questa data ed orario");
+			else {
+				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
+				this.dispose();
+				frame.dispose();
+				break;
 			}
-			this.dispose();
-			frame.dispose();
-			break;
 		}
 	}
 	public int disponibilita () {

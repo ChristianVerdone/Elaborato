@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -116,9 +117,15 @@ public class EventoUI extends JFrame implements ActionListener {
 		/************ CLIENTI ****************/
 
 		clienti = new ArrayList<Cliente>();
-		for (Cliente cl : DAOFactory.getDAOCliente().doRetrieveAll().values()) {
+		Map<String, Cliente> map = DAOFactory.getDAOCliente().doRetrieveClientiPrenotati();
+		if(map == null) {
+			JOptionPane.showMessageDialog(null, "Nessun cliente soggiornante");
+			return;
+		}
+		for (Cliente cl : map.values()) {
 			clienti.add(cl);
 		}
+		
 		DefaultTableModel dtm = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -174,21 +181,15 @@ public class EventoUI extends JFrame implements ActionListener {
 				eventi = new ArrayList<Evento>();
 				if (i != -1) {
 					cliente = clienti.get(i);
-					for (PrenotazioneAbitazione pa : DAOFactory.getDAOPrenotazioneAbitazione().doRetrieveAll()) {
-
-						if (pa.getCliente().getCf().equalsIgnoreCase(cliente.getCf())) {
-
-							for (Evento e : DAOFactory.getDAOEvento().doRetrieveAll().values()) {
-								if (e.getDataEvento().isAfter(pa.getDataInizio())
-										&& e.getDataEvento().isBefore(pa.getDataFine())) {
-									eventi.add(e);
-								}
-							}
-						}
+					Map<String, Evento> hs = DAOFactory.getDAOEvento().doRetrieveByCliente(cliente);
+					if(hs == null) {
+						JOptionPane.showMessageDialog(null, "Nessun evento disponibile nel periodo di soggiorno del cliente");
+						return;
 					}
-				}
-				for (Evento ev : eventi) {
-					dtmE.addRow(new Object[] { ev.getIdEvento(), ev.getNome(), ev.getTipo(), ev.getDescrizione() });
+					for (Evento e : DAOFactory.getDAOEvento().doRetrieveByCliente(cliente).values()) {
+						eventi.add(e);
+						dtmE.addRow(new Object[] { e.getIdEvento(), e.getNome(), e.getTipo(), e.getDescrizione() });
+					}
 				}
 			}
 
@@ -276,16 +277,26 @@ public class EventoUI extends JFrame implements ActionListener {
 			String idPrenotazione = "PE" + g.GenerateRandom();
 			PrenotazioneEvento pe = new PrenotazioneEvento(idPrenotazione, cliente, evento, biglietto);
 			int check = DAOFactory.getDAOPrenotazioneEvento().updatePrenotazioneEvento(pe);
-			if (check != 0) {
+			if(check == 0) {
+				JOptionPane.showMessageDialog(null, "Errore durante la registrazione della prenotazione.");
+				return;
+			}
+			else if(check == -1) {
+				//Questa parte non è raggiungibile, poiché prima è stato effettuato un filtraggio dei clienti
+				JOptionPane.showMessageDialog(null, "Cliente non soggiornante");
+				return;
+			}
+			else if(check == -2) {
+				JOptionPane.showMessageDialog(null, "Il cliente risulta già registrato a questo evento");
+				return;
+			}
+			else {
 				JOptionPane.showMessageDialog(null, "Prenotazione effettuata.");
 				DAOFactory.getDAOBiglietto().updateDisponibilita(biglietto.getIdBiglietto());
 				System.out.println(DAOFactory.getDAOBiglietto().doRetrieveById(biglietto.getIdBiglietto()));
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Errore durante la registrazionee della prenotazione.");
+				this.dispose();
+				frame.dispose();
 			}
-			this.dispose();
-			frame.dispose();
 		}
 	}
 }

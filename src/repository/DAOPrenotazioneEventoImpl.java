@@ -22,7 +22,7 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 		super();
 		this.connection = connection;
 	}
-	
+
 	@Override
 	public HashSet<PrenotazioneEvento> doRetrieveAll() {
 		HashSet<PrenotazioneEvento> peCollection = new HashSet<PrenotazioneEvento>();
@@ -30,7 +30,7 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIEVENTI");
-			 
+
 			while (result.next()) {
 				String idPrenotazione=result.getString("IdPrenotazioneEvento");
 				String cliente=result.getString("Cliente");
@@ -38,11 +38,11 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 				String biglietto=result.getString("Biglietto");
 				PrenotazioneEvento p = new PrenotazioneEvento( idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOEvento().doRetrieveById(evento), DAOFactory.getDAOBiglietto().doRetrieveById(biglietto));
 				peCollection.add(p);
-			
 
-		}} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+			}} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		return peCollection;
 	}
 
@@ -53,19 +53,19 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 		try {
 			statement = connection.getConnection().createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIEVENTI");
-			 
+
 			while (result.next()) {
 				String idPrenotazione=result.getString("IdPrenotazioneEvento");
 				String cliente=result.getString("Cliente");
 				String evento=result.getString("Evento");
 				String biglietto=result.getString("Biglietto");
 				PrenotazioneEvento p = new PrenotazioneEvento( idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente), DAOFactory.getDAOEvento().doRetrieveById(evento), DAOFactory.getDAOBiglietto().doRetrieveById(biglietto));
-	
-			
 
-		}} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+
+			}} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		return pe;
 	}
 	@Override
@@ -77,13 +77,32 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public int updatePrenotazioneEvento(PrenotazioneEvento pe) {
+
+	public boolean checkDoppiaPrenotazioneEvento(PrenotazioneEvento pe) {
+		Statement statement = null;
 		try {
-			
-			
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONIEVENTI WHERE Cliente = '"+ pe.getCliente().getCf() + "' " +
+					"and Evento = '" + pe.getEvento().getIdEvento() + "'");
+
+			if (result.next()) return false;
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public int updatePrenotazioneEvento(PrenotazioneEvento pe) {
+		if(!DAOFactory.getDAOPrenotazioneAbitazione().isPrenotazioneGenericaPossibile(pe.getCliente().getCf(), pe.getEvento().getDataEvento()))
+			return -1;
+		if(!this.checkDoppiaPrenotazioneEvento(pe))
+			return -2;
+
+		try {
 			String query = " insert into PrenotazioniEventi ( IdPrenotazioneEvento, Cliente, Biglietto, Evento)"
 					+ " values (?, ?, ?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
@@ -98,7 +117,7 @@ public class DAOPrenotazioneEventoImpl implements DAOPrenotazioneEvento {
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public void deleteByCliente(String cf) {
 		try {
