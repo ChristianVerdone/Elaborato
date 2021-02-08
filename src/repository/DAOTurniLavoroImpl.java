@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -137,16 +138,23 @@ public class DAOTurniLavoroImpl implements DAOTurniLavoro{
 		return 0;
 	}
 
+	/* Si può usare anche con from = null */
 	@Override
-	public HashSet<TurnoLavoro> doRetrieveByUsername(String username) {
+	public HashSet<TurnoLavoro> doRetrieveByUsernameAndDate(String username, LocalDate from) {
 		HashSet<TurnoLavoro> set_turni = new HashSet<TurnoLavoro>();
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
-			ResultSet result = statement.executeQuery("SELECT s.*, t.dipendente, t.datainizioturno FROM servizi s "
+			String query = "SELECT s.*, t.dipendente, t.datainizioturno FROM servizi s "
 					+ "INNER JOIN turnidilavoro t ON t.servizio = s.idservizio "
 					+ "INNER JOIN accounts a ON a.dipendente = t.dipendente "
-					+ "WHERE a.username = '" + username + "'");
+					+ "WHERE a.username = '" + username + "'";
+			
+			if(from != null) {
+				query += " AND DataInizioTurno >= '" +from.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "'";
+			}
+			
+			ResultSet result = statement.executeQuery(query);
 
 			while (result.next()) {
 				String ser_id = result.getString("IdServizio");

@@ -150,6 +150,7 @@ public class PagamentoUI implements ListSelectionListener {
 		fieldContanti.setColumns(10);
 
 		textFieldResto = new JTextField();
+		textFieldResto.setEditable(false);
 		textFieldResto.setBounds(579, 143, 86, 20);
 		frmPagamentoConto.getContentPane().add(textFieldResto);
 		textFieldResto.setColumns(10);
@@ -207,9 +208,11 @@ public class PagamentoUI implements ListSelectionListener {
 		fieldCodiceCarta.setColumns(10);
 
 		fieldConto = new JTextField();
+		fieldConto.setEditable(false);
 		fieldConto.setBounds(272, 289, 60, 20);
 		frmPagamentoConto.getContentPane().add(fieldConto);
 		fieldConto.setColumns(10);
+		
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(23, 52, 295, 220);
@@ -234,6 +237,7 @@ public class PagamentoUI implements ListSelectionListener {
 		scrollPane.setViewportView(table);
 
 		textCodiceFiscale = new JTextField();
+		textCodiceFiscale.setEditable(false);
 		textCodiceFiscale.setBounds(146, 289, 120, 20);
 		frmPagamentoConto.getContentPane().add(textCodiceFiscale);
 		textCodiceFiscale.setColumns(10);
@@ -277,6 +281,10 @@ public class PagamentoUI implements ListSelectionListener {
 		JLabel lblNewLabel_3 = new JLabel("Resto:");
 		lblNewLabel_3.setBounds(521, 146, 48, 14);
 		frmPagamentoConto.getContentPane().add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Il pagamento si pu\u00F2 effettuare con soltanto un metodo.");
+		lblNewLabel_4.setBounds(368, 15, 275, 14);
+		frmPagamentoConto.getContentPane().add(lblNewLabel_4);
 
 		btnPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

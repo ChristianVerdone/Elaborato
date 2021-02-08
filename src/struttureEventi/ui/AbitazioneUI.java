@@ -108,6 +108,7 @@ public class AbitazioneUI extends JFrame implements ActionListener {
 				dataInizio = inizio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			}
 		});
+		dataInizio = inizio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		JLabel lblDataFine = new JLabel("Data di fine");
 		lblDataFine.setBounds(523, 145, 71, 14);
 		frmPrenotazioneAbitazione.getContentPane().add(lblDataFine);
@@ -122,7 +123,7 @@ public class AbitazioneUI extends JFrame implements ActionListener {
 				dataFine = fine.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			}
 		});
-
+		dataFine = fine.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		JButton btn_Prenota = new JButton("Prenota");
 		btn_Prenota.addActionListener(this);
 		btn_Prenota.setBounds(337, 351, 89, 23);
@@ -215,18 +216,21 @@ public class AbitazioneUI extends JFrame implements ActionListener {
 				break;
 
 			}*/
-
 			pa = new PrenotazioneAbitazione(id, cliente, DAOFactory.getDAOAbitazione().doRetrieveById(abitazione), dataInizio, dataFine);
-
-			System.out.println(pa.toString());	
-			int check = DAOFactory.getDAOPrenotazioneAbitazione().updatePrenotazioneAbitazione(pa);
-			if(check == 0) JOptionPane.showMessageDialog(this, "Errore nella registrazione della prenotazione!");
-			else if(check == -1) JOptionPane.showMessageDialog(null, "Il cliente ha ancora una prenotazione al villaggio non scaduta.");
-			else if(check == -2) JOptionPane.showMessageDialog(null, "Tipologia struttura al completo in quel periodo di tempo.");
+			if(DAOFactory.getDAOPrenotazioneAbitazione().isPrenotazioneAbitazionePossibile(pa)) {
+				int check = DAOFactory.getDAOPrenotazioneAbitazione().updatePrenotazioneAbitazione(pa);
+				if(check == 0) JOptionPane.showMessageDialog(this, "Errore nella registrazione della prenotazione!");
+				else if(check == -1) JOptionPane.showMessageDialog(null, "Il cliente ha ancora una prenotazione al villaggio non scaduta.");
+				else if(check == -2) JOptionPane.showMessageDialog(null, "Tipologia struttura al completo in quel periodo di tempo.");
+				else {
+					JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
+					this.dispose();
+					frmPrenotazioneAbitazione.dispose();
+				}
+			}	
 			else {
-				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
-				this.dispose();
-				frmPrenotazioneAbitazione.dispose();
+				JOptionPane.showMessageDialog(this, "Non ci sono abitazioni richieste disponibili.");
+				break;	
 			}
 		}
 	}

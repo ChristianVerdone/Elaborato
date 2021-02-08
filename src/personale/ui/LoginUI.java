@@ -72,7 +72,6 @@ public class LoginUI extends JFrame implements ActionListener {
 		/* Username */
 		JLabel lbl_username = new JLabel("Username");
 		lbl_username.setBounds(113, 110, 104, 13);
-		lbl_username.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_username);
 
 		tf_username = new JTextField();
@@ -97,7 +96,6 @@ public class LoginUI extends JFrame implements ActionListener {
 		/* Password */
 		JLabel lbl_password = new JLabel("Password");
 		lbl_password.setBounds(113, 165, 104, 13);
-		lbl_password.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_password);
 
 		pf = new JPasswordField();

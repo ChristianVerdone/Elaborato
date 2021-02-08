@@ -10,7 +10,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+
+import javax.swing.JOptionPane;
 
 import struttureEventi.classes.PrenotazioneRistorante;
 
@@ -27,8 +31,8 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 	}
 
 	@Override
-	public HashSet<PrenotazioneRistorante> doRetrieveAll() {
-		HashSet<PrenotazioneRistorante> prCollection = new HashSet<PrenotazioneRistorante>();
+	public ArrayList<PrenotazioneRistorante> doRetrieveAll() {
+		ArrayList<PrenotazioneRistorante> prCollection = new ArrayList<PrenotazioneRistorante>();
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
@@ -96,8 +100,77 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public HashSet<PrenotazioneRistorante> doRetrieveByCliente(String cf) {
+		HashSet<PrenotazioneRistorante> pr = new HashSet<>();
+		Statement statement = null;
+
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement
+					.executeQuery("SELECT * FROM PRENOTAZIONIRISTORANTE WHERE CLIENTE=\"" + cf + "\"");
+
+			while (result.next()) {
+				String idPrenotazione = result.getString("IdPrenotazioneRistorante");
+
+				String cliente = result.getString("Cliente");
+
+				int tavolo = result.getInt("Tavolo");
+
+				String data = result.getString("dataPrenotazione");
+				// LocalDate dataPrenotazione = LocalDate.parse(data,
+				// DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String ora = result.getString("oraPrenotazione");
+				LocalDate dt = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				LocalTime t = LocalTime.parse(ora, DateTimeFormatter.ofPattern("HH:mm:ss"));
+				PrenotazioneRistorante pren = new PrenotazioneRistorante(idPrenotazione, DAOFactory.getDAOCliente().doRetrieveByCf(cliente),
+						tavolo, dt, t);
+				pr.add(pren);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pr;
+	}
+	
+	/*
+	 * Controlla se cliente è prenotato al ristorante per data e periodo di servizio (pranzo o cena)
+	 * */
+	@Override
+	public boolean isClientePrenotatoRistorante(String cf, LocalDate date, LocalTime time) {
+		HashSet<PrenotazioneRistorante> pren =  this.doRetrieveByCliente(cf);
+		boolean periodo_input = this.isPranzo(time.getHour());
+		
+		for(PrenotazioneRistorante p : pren) {
+			if(!date.isEqual(p.getData())) continue;
+			boolean periodo_pren = this.isPranzo(p.getOra().getHour());
+			if(periodo_input == periodo_pren) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * True: Pranzo 
+	 * False: Cena
+	 * */
+	private boolean isPranzo(int x) {
+		if(x <= 14) return true;
+		return false;
+	}
 
 	public int updatePrenotazioneRistorante(PrenotazioneRistorante pr) {
+		
+		if(!DAOFactory.getDAOPrenotazioneAbitazione().isPrenotazioneGenericaPossibile(pr.getCliente().getCf(), pr.getData()))
+			return -1;
+		
+		if(this.isClientePrenotatoRistorante(pr.getCliente().getCf(), pr.getData(), pr.getOra())) {
+			return -2;
+		}
+			
 		try {
 
 			String query = " insert into PrenotazioniRistorante ( IdPrenotazioneRistorante, Cliente, Tavolo, DataPrenotazione, OraPrenotazione)"

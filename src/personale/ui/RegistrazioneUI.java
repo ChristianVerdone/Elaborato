@@ -73,7 +73,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* CF */
 		JLabel lbl_cf = new JLabel("Codice fiscale:");
 		lbl_cf.setBounds(110, 110, 200, 13);
-		lbl_cf.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_cf);
 
 		tf_cf = new JTextField();
@@ -90,7 +89,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* Name */
 		JLabel lbl_name = new JLabel("Nome:");
 		lbl_name.setBounds(110, 160, 90, 13);
-		lbl_name.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_name);
 
 		tf_name = new JTextField();
@@ -101,7 +99,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* Surname */
 		JLabel lbl_surname = new JLabel("Cognome:");
 		lbl_surname.setBounds(220, 160, 90, 13);
-		lbl_surname.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_surname);
 
 		tf_surname = new JTextField();
@@ -112,7 +109,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* Task */
 		JLabel lbl_task = new JLabel("Mansione:");
 		lbl_task.setBounds(110, 213, 137, 13);
-		lbl_task.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_task);
 
 		String[] choices = { "Addetto reception", "Pulizia camere", "Cuoco", "Cameriere", "Guida escursione",
@@ -127,7 +123,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* Salary */
 		JLabel lbl_salary = new JLabel("Stipendio:");
 		lbl_salary.setBounds(227, 213, 83, 13);
-		lbl_salary.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_salary);
 
 		spinner = new JSpinner();
@@ -138,7 +133,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* Username */
 		JLabel lbl_username = new JLabel("Username:");
 		lbl_username.setBounds(110, 262, 200, 13);
-		lbl_username.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_username);
 
 		tf_username = new JTextField();
@@ -149,7 +143,6 @@ public class RegistrazioneUI extends JFrame implements ActionListener {
 		/* Password */
 		JLabel lbl_password = new JLabel("Password:");
 		lbl_password.setBounds(110, 314, 200, 13);
-		lbl_password.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_password);
 
 		pf = new JPasswordField();

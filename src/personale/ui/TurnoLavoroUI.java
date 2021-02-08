@@ -92,7 +92,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		/* Lista dipendenti */
 		JLabel lbl_list = new JLabel("Dipendenti registrati:");
 		lbl_list.setBounds(310, 110, 227, 20);
-		lbl_list.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_list);
 
 		table = new JTable();
@@ -123,7 +122,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		/* Inserimento CF */
 		JLabel lbl_cf = new JLabel("Codice fiscale del dipendente:");
 		lbl_cf.setBounds(10, 110, 231, 20);
-		lbl_cf.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_cf);
 
 		tf_cf = new JTextField();
@@ -134,7 +132,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		/* Scelta descrizione */
 		JLabel lbl_service = new JLabel("Servizio:");
 		lbl_service.setBounds(10, 176, 206, 13);
-		lbl_service.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_service);
 
 		cbm_service = new DefaultComboBoxModel<String>();
@@ -148,7 +145,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 
 		JLabel lbl_startTime = new JLabel("Ora inizio:");
 		lbl_startTime.setBounds(10, 230, 74, 20);
-		lbl_startTime.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_startTime);
 
 		tp_startTime = new JTextPane();
@@ -158,7 +154,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 
 		JLabel lbl_endTime = new JLabel("Ora fine:");
 		lbl_endTime.setBounds(161, 230, 66, 20);
-		lbl_endTime.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		getContentPane().add(lbl_endTime);
 
 		tp_endTime = new JTextPane();
@@ -169,7 +164,6 @@ public class TurnoLavoroUI extends JFrame implements ActionListener, ListSelecti
 		/* Inserimento data e orario di inizio */
 		JLabel lbl_start = new JLabel("Data di inizio turno (gg/mm/aaaa):");
 		lbl_start.setBounds(10, 260, 250, 20);
-		lbl_start.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		this.getContentPane().add(lbl_start);
 
 		spr_startDate = new JSpinner(new SpinnerDateModel());
