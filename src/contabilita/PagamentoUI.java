@@ -97,26 +97,23 @@ public class PagamentoUI implements ListSelectionListener {
 		frmPagamentoConto.getContentPane().setLayout(null);
 
 		lblPagamentoConContanti = new JLabel("Pagamento con contanti");
-		lblPagamentoConContanti.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblPagamentoConContanti.setBounds(502, 35, 184, 23);
 		frmPagamentoConto.getContentPane().add(lblPagamentoConContanti);
 
 		lblPagamentoConCarta = new JLabel("Pagamento con carta");
-		lblPagamentoConCarta.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblPagamentoConCarta.setBounds(499, 211, 169, 14);
 		frmPagamentoConto.getContentPane().add(lblPagamentoConCarta);
 
-		JButton btnPage = new JButton("Pagamento Carta");
+		JButton btnCard = new JButton("Pagamento Carta");
 
-		btnPage.setBounds(511, 279, 163, 23);
-		frmPagamentoConto.getContentPane().add(btnPage);
+		btnCard.setBounds(511, 279, 163, 23);
+		frmPagamentoConto.getContentPane().add(btnCard);
 
-		JButton btnNewButton = new JButton("Pagamento Contanti");
-		btnNewButton.setBounds(511, 109, 163, 23);
-		frmPagamentoConto.getContentPane().add(btnNewButton);
+		JButton btnCash = new JButton("Pagamento Contanti");
+		btnCash.setBounds(511, 109, 163, 23);
+		frmPagamentoConto.getContentPane().add(btnCash);
 
 		JLabel lblRichiediConto = new JLabel("Richiedi conto totale di un cliente");
-		lblRichiediConto.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblRichiediConto.setBounds(23, 15, 241, 14);
 		frmPagamentoConto.getContentPane().add(lblRichiediConto);
 
@@ -126,7 +123,11 @@ public class PagamentoUI implements ListSelectionListener {
 			public void actionPerformed(ActionEvent arg0) {
 
 				codCliente = textCodiceFiscale.getText();
-
+				if(codCliente.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Seleziona un cliente");
+					return;
+				}
+				
 				int check = checkPrenotazione(codCliente);
 				if (check == 0) {
 					JOptionPane.showMessageDialog(null,
@@ -155,46 +156,45 @@ public class PagamentoUI implements ListSelectionListener {
 		frmPagamentoConto.getContentPane().add(textFieldResto);
 		textFieldResto.setColumns(10);
 
-		btnNewButton.addActionListener(new ActionListener() {
+		btnCash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (fieldContanti.getText().length() == 0)
+				if (fieldContanti.getText().length() == 0) {
 					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",
 							JOptionPane.ERROR_MESSAGE);
-
-				else {
-					contanti = Double.parseDouble(fieldContanti.getText()); // contanti che ha inserito il cliente
-					contoTotale = Double.parseDouble(fieldConto.getText());
-
-					GenerateRandom g = new GenerateRandom();
-					String id = "CT" + g.GenerateRandom();
-
-					if (contanti < contoTotale) {
-						JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",
-								JOptionPane.ERROR_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
-						ContoTotale ct = new ContoTotale(id, (Double.parseDouble(fieldConto.getText())),
-								LocalDate.now(), textCodiceFiscale.getText());
-						System.out.println(ct.toString());
-						int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
-						double restod = contanti - contoTotale;
-						float resto = (float) restod;
-						String restoString = String.valueOf(resto).toString();
-						textFieldResto.setText(restoString);
-						if (check == 0)
-							JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
-						else if (check != 0) {
-							JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
-							// DAOFactory.getDAOCliente().delete(codCliente);
-							DAOFactory.getDAOPrenotazioneAbitazione().deleteByCliente(codCliente);
-							// DAOFactory.getDAOPrenotazioneEvento().deleteByCliente(codCliente);
-							// DAOFactory.getDAOPrenotazioneRistorante().deleteByCliente(codCliente);
-							// DAOFactory.getDAOPrenotazioneStruttura().deleteByCliente(codCliente);
-						}
-						frmPagamentoConto.dispose();
-					}
+					return;
 				}
+
+				contanti = Double.parseDouble(fieldContanti.getText()); // contanti che ha inserito il cliente
+				contoTotale = Double.parseDouble(fieldConto.getText());
+				String id = getFreeId();
+				
+				if (contanti < contoTotale || Double.isInfinite(contanti)) {
+					JOptionPane.showMessageDialog(null, "L'importo inserito non è valido, riprova", "Errore",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				ContoTotale ct = new ContoTotale(id, contoTotale, LocalDate.now(), textCodiceFiscale.getText());
+				System.out.println(ct.toString());
+				int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
+				double resto = contanti - contoTotale;
+				String restoString = String.valueOf(resto);
+				textFieldResto.setText(restoString);
+
+				if (check == 0)
+					JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
+				else {
+					JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
+					// DAOFactory.getDAOCliente().delete(codCliente);
+					DAOFactory.getDAOPrenotazioneAbitazione().deleteByCliente(codCliente);
+					DAOFactory.getDAOPrenotazioneRistorante().deletePrenotazioniNonRegistrate(codCliente);
+					DAOFactory.getDAOTessera().deleteTessereByCf(codCliente);
+					// DAOFactory.getDAOPrenotazioneEvento().deleteByCliente(codCliente);
+					// DAOFactory.getDAOPrenotazioneRistorante().deleteByCliente(codCliente);
+					// DAOFactory.getDAOPrenotazioneStruttura().deleteByCliente(codCliente);
+				}
+				frmPagamentoConto.dispose();
 			}
 		});
 
@@ -212,7 +212,7 @@ public class PagamentoUI implements ListSelectionListener {
 		fieldConto.setBounds(272, 289, 60, 20);
 		frmPagamentoConto.getContentPane().add(fieldConto);
 		fieldConto.setColumns(10);
-		
+
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(23, 52, 295, 220);
@@ -281,30 +281,30 @@ public class PagamentoUI implements ListSelectionListener {
 		JLabel lblNewLabel_3 = new JLabel("Resto:");
 		lblNewLabel_3.setBounds(521, 146, 48, 14);
 		frmPagamentoConto.getContentPane().add(lblNewLabel_3);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("Il pagamento si pu\u00F2 effettuare con soltanto un metodo.");
-		lblNewLabel_4.setBounds(368, 15, 275, 14);
+		lblNewLabel_4.setBounds(368, 15, 318, 14);
 		frmPagamentoConto.getContentPane().add(lblNewLabel_4);
 
-		btnPage.addActionListener(new ActionListener() {
+		btnCard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String codiceCarta = fieldCodiceCarta.getText(); // ottengo il codice della carta
-				GenerateRandom g = new GenerateRandom();
-				String id = "CT" + g.GenerateRandom();
+				String id = getFreeId();
+
 				if (codiceCarta.length() != 16) {
 					JOptionPane.showMessageDialog(null, "Il numero della carta è sbagliato riprova", "Errore",
 							JOptionPane.ERROR_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "Il pagamento è andato a buon fine");
-					ContoTotale ct = new ContoTotale(id, (Double.parseDouble(fieldConto.getText())), LocalDate.now(),
-							textCodiceFiscale.getText());
-					System.out.println(ct.toString());
-					int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
-					if (check == 0)
-						JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
-					else if (check != 0)
-						JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
-				}
+					return;
+				} 
+
+				ContoTotale ct = new ContoTotale(id, (Double.parseDouble(fieldConto.getText())), LocalDate.now(),
+						textCodiceFiscale.getText());
+				System.out.println(ct.toString());
+				int check = DAOFactory.getDAOContoTotale().updateContiTotali(ct);
+				if (check == 0)
+					JOptionPane.showMessageDialog(null, "Errore nella registrazione del pagamento!");
+				else 
+					JOptionPane.showMessageDialog(null, "Pagamento effettuato!");
 			}
 		});
 	}
@@ -326,5 +326,15 @@ public class PagamentoUI implements ListSelectionListener {
 			}
 		}
 		return 0;
+	}
+
+	/* Se l'id generato casualmente è occupato, ne crea un altro */
+	private String getFreeId() {
+		GenerateRandom g = new GenerateRandom();
+		String id = "CT" + g.GenerateRandom();
+		while(DAOFactory.getDAOContoTotale().doRetrieveContoTotaleById(id) != null) {
+			id = "CT" + g.GenerateRandom();
+		}
+		return id;
 	}
 }

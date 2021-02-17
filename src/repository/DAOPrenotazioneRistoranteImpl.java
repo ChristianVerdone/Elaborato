@@ -192,6 +192,36 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		}
 		return 0;
 	}
+	
+	@Override
+	public ArrayList<PrenotazioneRistorante> doRetrievePrenotazioniNonRegistrate() {
+		ArrayList<PrenotazioneRistorante> prCollection = new ArrayList<PrenotazioneRistorante>();
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select * from prenotazioniristorante as p "
+					+ "where p.IdPrenotazioneRistorante not in "
+					+ "(select c.PrenotazioneRistorante from contiristorante as c);");
+
+			while (result.next()) {
+				String idPrenotazione = result.getString("IdPrenotazioneRistorante");
+				String cliente = result.getString("Cliente");
+				int tavolo = result.getInt("Tavolo");
+				String data = result.getString("dataPrenotazione");
+				// LocalDate dataPrenotazione = LocalDate.parse(data,
+				// DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String ora = result.getString("oraPrenotazione");
+				LocalDate dt = LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				LocalTime t = LocalTime.parse(ora, DateTimeFormatter.ofPattern("HH:mm:ss"));
+				PrenotazioneRistorante pr = new PrenotazioneRistorante(idPrenotazione,
+						DAOFactory.getDAOCliente().doRetrieveByCf(cliente), tavolo, dt, t);
+				prCollection.add(pr);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return prCollection;
+	}
 
 	@Override
 	public void deleteByCliente(String cf) {
@@ -202,5 +232,20 @@ public class DAOPrenotazioneRistoranteImpl implements DAOPrenotazioneRistorante 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public int deletePrenotazioniNonRegistrate(String cf) {
+		int result = 0;
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			result = statement.executeUpdate("delete p.* from prenotazioniristorante as p "
+					+ "where p.IdPrenotazioneRistorante not in "
+					+ "(select c.PrenotazioneRistorante from contiristorante as c);");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

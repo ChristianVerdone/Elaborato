@@ -22,4 +22,8 @@ public interface DAOPrenotazioneRistorante {
 	boolean isClientePrenotatoRistorante(String cf, LocalDate date, LocalTime time);
 
 	HashSet<PrenotazioneRistorante> doRetrieveByCliente(String cf);
+
+	ArrayList<PrenotazioneRistorante> doRetrievePrenotazioniNonRegistrate();
+
+	int deletePrenotazioniNonRegistrate(String cf);
 }

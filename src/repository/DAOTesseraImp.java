@@ -60,8 +60,32 @@ public class DAOTesseraImp implements DAOTessera {
 		}
 		return t;
 	}
+	
 	@Override
-	public void delete(String  id) {
+	public HashMap<String, Tessera> doRetriveTessereByCf(String cf) {
+		HashMap<String, Tessera> tessereCollection = new HashMap<>();
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select t.* from TESSERE as t "
+					+ "inner join PRENOTAZIONISTRUTTURE as p on t.idtessera = p.Tessera "
+					+ "where p.Cliente = '" + cf +"';");
+
+			while (result.next()) {
+				String id=result.getString("IdTessera");
+				String descrizione=result.getString("DescrizioneTessera");
+				Tessera t = new Tessera(id, descrizione);
+				tessereCollection.put(id, t);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return tessereCollection;
+	}
+	
+	@Override
+	public void delete(String id) {
 		try {
 			Statement statement = connection.getConnection().createStatement();
 			int result = statement.executeUpdate("DELETE FROM  TESSERE WHERE IdTessera=\""+ id + "\"");
@@ -72,11 +96,26 @@ public class DAOTesseraImp implements DAOTessera {
 		
 	}
 	
+	@Override
+	public int deleteTessereByCf(String cf) {
+		int result = 0;
+		try {
+			Statement statement = connection.getConnection().createStatement();
+			result = statement.executeUpdate("delete t.* from TESSERE as t "
+					+ "inner join PRENOTAZIONISTRUTTURE as p on t.idtessera = p.Tessera "
+					+ "where p.Cliente = '" +cf +"';");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public int updateTessera(Tessera t) {
 		try {
 			
 			
-			String query = " insert into Tessera ( IdTessera, DescrizioneTessera)"
+			String query = " insert into Tessere ( IdTessera, DescrizioneTessera)"
 					+ " values (?, ?)";
 			PreparedStatement preparedStmt = connection.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, t.getId());

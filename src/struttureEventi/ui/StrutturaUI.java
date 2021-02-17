@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -170,21 +171,40 @@ public class StrutturaUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Selezionare un cliente.");
 				break;
 			}
-
 			cliente = clienti.get(c);
+			
 			GenerateRandom g = new GenerateRandom();
-			String idPrenotazione = "PE" + g.GenerateRandom();
-			String idTessera = "TS" + g.GenerateRandom();
+			String idTessera = g.generateRandomWithInitials("TS");
+			while(DAOFactory.getDAOTessera().doRetrieveById(idTessera) != null) {
+				idTessera = g.generateRandomWithInitials("TS");
+			}
+			
 			Tessera t = new Tessera(idTessera, "Tessera per il " + struttura.toLowerCase());
 			System.out.println(t.toString());
+			
+			Map<String, Tessera> tessereCliente = DAOFactory.getDAOTessera().doRetriveTessereByCf(cliente.getCf());
+			for(String key : tessereCliente.keySet()) {
+				if(tessereCliente.get(key).getDescrizione().equals(t.getDescrizione())) {
+					JOptionPane.showMessageDialog(this, "Il cliente possiede già questo tipo di tessera.");
+					return;
+				}
+			}
+			
+			String idPrenotazione = g.generateRandomWithInitials("PS");
+			while(DAOFactory.getDAOPrenotazioneStruttura().doRetrieveById(idPrenotazione) != null) {
+				idPrenotazione = g.generateRandomWithInitials("PS");
+			}
+			
 			PrenotazioneSv p = new PrenotazioneSv(idPrenotazione, cliente,
 					DAOFactory.getDAOStrutturaVillaggio().doRetrieveById(struttura), t);
-			System.out.println(DAOFactory.getDAOStrutturaVillaggio().doRetrieveById(struttura));
 			int prenotazione = DAOFactory.getDAOPrenotazioneStruttura().updatePrenotazioneStruttura(p);
-			this.dispose();
-			frame.dispose();
-			if (prenotazione != 0)
-				JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
+
+			if (prenotazione != 0) {
+				if(DAOFactory.getDAOTessera().updateTessera(t) != 0)
+					JOptionPane.showMessageDialog(this, "Prenotazione effettuata!");
+				else
+					JOptionPane.showMessageDialog(this, "Errore durante la registrazione della tessera!");
+			}
 			else if (prenotazione == 0)
 				JOptionPane.showMessageDialog(this, "Errore durante la registrazione della prenotazione!");
 

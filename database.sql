@@ -26,7 +26,7 @@ create table BIGLIETTI(
 
 create table CONTITOTALI(
 	NumeroConto char(5) PRIMARY KEY,
-    Importo decimal(6,2) NOT NULL,
+    Importo decimal(8,2) NOT NULL,
     DataPagamento date NOT NULL,
     Cliente char(16) references CLIENTI(CodiceFiscale)
 );
