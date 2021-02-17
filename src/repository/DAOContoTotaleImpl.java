@@ -7,14 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
 import contabilita.ContoTotale;
+import struttureEventi.classes.PrenotazioneRistorante;
 
 public class DAOContoTotaleImpl implements DAOContoTotale{
 	private MySQLConnection connection;
@@ -148,8 +151,56 @@ public class DAOContoTotaleImpl implements DAOContoTotale{
 		return contoStruttura;
 	}
 	
+	public ContoTotale doRetrieveContoTotaleById(String id) {
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select * from contitotali where numeroconto = '"+ id +"' ");
+			if (result.next()) {
+				double importo = result.getDouble("Importo");
+				String datap = result.getString("DataPagamento");
+				LocalDate datapagamento = LocalDate.parse(datap, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String cf = result.getString("Cliente");
+				return new ContoTotale(id, importo, datapagamento, cf);
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public boolean isCalcoloContoPossibile(String cf) {
+		Statement statement = null;
+		try {
+			statement = connection.getConnection().createStatement();
+			ResultSet result = statement.executeQuery("select IDPrenotazioneRistorante "
+					+ "from prenotazioniristorante "
+					+ "where Cliente = '" + cf + "' "
+					+ "and DataPrenotazione >= curdate() "
+					+ "and OraPrenotazione >= curtime(); ");
+			if (result.next()) return false;
+			
+			result = statement.executeQuery("select cliente "
+					+ "from eventi as e "
+					+ "inner join PRENOTAZIONIEVENTI as p on e.idEvento = p.Evento and p.Cliente = '" + cf +"' "
+					+ "where DataEvento >= curdate() "
+					+ "and oraEvento >= curtime(); ");
+			if (result.next()) return false;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	@Override
 	public double getContoTotale(String codCliente) {
 		
+		if(!this.isCalcoloContoPossibile(codCliente)) 
+			JOptionPane.showMessageDialog(null,
+					"Attenzione! Risulta una prenotazione ad un ristorante e/o un bigletto per un evento ancora in corso.\n"
+					+ "(I biglietti acquistati non sono rimborsabili).");
 		
 		DAOContoTotaleImpl contoEvento=new DAOContoTotaleImpl();
 		double contoTotaleEvento=contoEvento.doRetrieveContoEventoByCf(codCliente);

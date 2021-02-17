@@ -48,7 +48,7 @@ public class DAOPrenotazioneStrutturaImpl implements DAOPrenotazioneStruttura {
 		Statement statement = null;
 		try {
 			statement = connection.getConnection().createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONISTRUTTURE WHERE IDPRENOTAZIONISTRUTTURE=\"" + id + "\"");
+			ResultSet result = statement.executeQuery("SELECT * FROM PRENOTAZIONISTRUTTURE WHERE IDPrenotazioneStruttura=\"" + id + "\"");
 			 
 			while (result.next()) {
 				String idPrenotazione=result.getString("IdPrenotazioneStruttura");

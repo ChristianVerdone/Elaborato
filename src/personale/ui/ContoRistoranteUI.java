@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import repository.DAOFactory;
 import struttureEventi.classes.ContoRistorante;
 import struttureEventi.classes.PrenotazioneRistorante;
+import util.GenerateRandom;
 
 import javax.swing.JButton;
 
@@ -61,11 +62,12 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 
 		idconto = new JTextField();
 		idconto.setBounds(38, 184, 86, 20);
+		idconto.setText(this.getFreeId());
 		frame.getContentPane().add(idconto);
 		idconto.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Numero Ricevuta Ristorante");
-		lblNewLabel.setBounds(38, 165, 158, 14);
+		JLabel lblNewLabel = new JLabel("Numero Ricevuta");
+		lblNewLabel.setBounds(38, 165, 126, 14);
 		frame.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Importo");
@@ -77,8 +79,8 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 		frame.getContentPane().add(importo);
 		importo.setColumns(10);
 
-		JLabel lblNewLabel_2 = new JLabel("Numero prenotazione");
-		lblNewLabel_2.setBounds(389, 165, 137, 14);
+		JLabel lblNewLabel_2 = new JLabel("Prenotazioni");
+		lblNewLabel_2.setBounds(226, 165, 137, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 
 		JButton btnNewButton = new JButton("Registra conto");
@@ -88,7 +90,7 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 		frame.getContentPane().add(btnNewButton);
 
 		prenotazioni = new ArrayList<PrenotazioneRistorante>(); 
-		for (PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrieveAll()) { 
+		for (PrenotazioneRistorante p : DAOFactory.getDAOPrenotazioneRistorante().doRetrievePrenotazioniNonRegistrate()) { 
 			prenotazioni.add(p); 
 		} 
 		DefaultTableModel dtm = new DefaultTableModel() { 
@@ -152,19 +154,23 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Il numero del conto deve contenere 5 caratteri.");
 				break;
 			} else if (DAOFactory.getDAOContoRistorante().doRetrieveById(idcontoristorante) != null) {
-				JOptionPane.showMessageDialog(null, "Il conto numero " + idcontoristorante + "e' gia' stato registrato.");
+				String newId = this.getFreeId();
+				JOptionPane.showMessageDialog(null, "Il conto numero '" + idcontoristorante + "' e' gia' stato registrato.\n"
+						+ "Ecco un id libero: "+ newId);
+				idconto.setText(newId);
 				break;
 			}
 
 			String costoS = importo.getText();
-			float costo = Float.parseFloat(costoS);
-
-			if (costo == 0) {
-				JOptionPane.showMessageDialog(null, "Inserisci l'importo.");
+			if(costoS.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Il campo importo non puo' essere vuoto");
 				break;
 			}
-			if (costo < 0) {
-				JOptionPane.showMessageDialog(null, "Inserisci l'importo positivo.");
+			
+			float costo = Float.parseFloat(costoS);
+
+			if (costo <= 0) {
+				JOptionPane.showMessageDialog(null, "L'importo deve avere un valore positivo.");
 				break;
 			}
 			if (costo >= 1000) {
@@ -173,8 +179,13 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 			}
 			
 			int i = table.getSelectedRow();
+			System.out.println(i);
 			if (i != -1) {
 				p = prenotazioni.get(i);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Seleziona un cliente");
+				break;
 			}
 
 			LocalDateTime ldt_prenotazione = LocalDateTime.of(p.getData(), p.getOra());
@@ -188,14 +199,21 @@ public class ContoRistoranteUI extends JFrame implements ActionListener {
 			int check = DAOFactory.getDAOContoRistorante().updateContoRistorante(cr);
 			if (check != 0) {
 				JOptionPane.showMessageDialog(null, "Registrazione effettuata");
-
+				this.dispose();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Errore durante la registrazione del conto.");
 				return;
 			}
 		}
-		this.dispose();
-		frame.dispose();
+	}
+	
+	private String getFreeId() {
+		GenerateRandom g = new GenerateRandom();
+		String id = g.generateRandomWithInitials("CR");	
+		while(DAOFactory.getDAOContoRistorante().doRetrieveById(id) != null) {
+			id = g.generateRandomWithInitials("CR");
+		}
+		return id;
 	}
 }
