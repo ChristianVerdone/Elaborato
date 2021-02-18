@@ -143,12 +143,12 @@ insert into CLIENTI values
 ("FRNSLV98B43G645F", "Silvia", "Fernandez");
 
 insert into EVENTI values 
-("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria Ã¨ tappa del percorso in questione.", "2021-10-18", "19:00"),
-("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini.", "2021-12-30", "20:00"),
-("EV003", "La Fenice in live", "Spettacolo", " la Fenice offrirï¿½ al suo pubblico ancora una volta la grande musica interpretata dai piï¿½ grandi artisti del veneziano", "2021-11-15", "20:30"),
-("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio", "2021-09-16", "21:00"),
-("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i piï¿½ grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-04-24", "21:30"),
-("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2021-12-25", "19:00");
+("EV001", "Portaria", "Escursione", "Il vecchio convento abbandonato dei frati minori cappuccini di San Pietro di Portaria � tappa del percorso in questione.", "2021-02-17", "19:00"),
+("EV002", "La Cerreta","Escursione","Un giro contraddistinto da un susseguirsi di continui saliscendi, per le colline nei dintorni di Sangemini.", "2021-12-15", "20:00"),
+("EV003", "La Fenice in live", "Spettacolo", "La Fenice offrir� al suo pubblico ancora una volta la grande musica interpretata dai pi� grandi artisti del veneziano", "2021-02-14", "20:30"),
+("EV004", "Campionato di pallavolo", "Evento Sportivo", "Capionato di pallavolo tra i clienti del villaggio", "2021-10-12", "21:00"),
+("EV005", "Le mille note di Beethoven ", "Spettacolo", "Il gruppo Rivoletto si esibira' per voi presentando i pi� grandi pezzi dell'illustre Ludwig van Beethoven ", "2021-09-16", "21:30"),
+("EV006", "Once upon a time", "Spettacolo", "Rivisitazione dei grandi classici di Quentin Tarantino","2021-08-30", "19:00");
 
 
 insert into BIGLIETTI values
@@ -158,7 +158,7 @@ insert into BIGLIETTI values
 ("BI004", "17.50", false,  "Campionato di pallavolo"),
 ("BI005", "12.50", false, "Le mille note di Beethoven "),
 ("BI006", "17.50", false, "Once upon a time"),
-("BI007", "17.50", false, "Once upon a time"),
+("BI007", "17.50", true, "Once upon a time"),
 ("BI008", "13.50", true, "Campionato di pallavolo"),
 ("BI009", "18.50", true, "La Cerreta"),
 ("BI010", "12.50", true, "Portaria");
@@ -201,7 +201,8 @@ insert into contiristorante values
 ("CR003","PR003", 60.50),
 ("CR004","PR004", 67.30),
 ("CR005","PR005", 58.30),
-("CR006","PR006", 120.40);
+("CR006","PR006", 120.40),
+('CR007', 'PR001', '80.00');
 
 insert into tavoliristorante values
 ("01", 6),
@@ -213,7 +214,7 @@ insert into tavoliristorante values
 ("07", 4);
 
 insert into servizi values
-("SE001", "Pulizia camere", "09:00:00", "11:00:00"),	#bisogna gestire le date
+("SE001", "Pulizia camere", "09:00:00", "11:00:00"),
 ("SE002", "Guida per le escursioni", "12:00:00", "16:00:00"),
 ("SE003", "Collaudatore dello spettacolo", "20:00:00", "23:00:00"),
 ("SE004", "Addetto alla reception", "09:00:00", "18:00:00");
@@ -262,8 +263,7 @@ insert into prenotazionieventi values
 ("PE003","AMNNCC66G32N523K", "BI003", "EV003"),
 ("PE004","CRSDNT73B24C634L", "BI004", "EV004"),
 ("PE007","CGNPLO78H12N234D", "BI005", "EV005"),
-("PE005","CGNPLO78H12N234D", "BI006", "EV006"),
-("PE006","PSTRSL78F34D519C", "BI007", "EV006");
+("PE005","CGNPLO78H12N234D", "BI006", "EV006");
 
 
 insert into prenotazionistrutture values

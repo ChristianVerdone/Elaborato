@@ -95,17 +95,17 @@ public class EventoUI extends JFrame implements ActionListener {
 		frame.getContentPane().add(lbl_logo);
 
 		JLabel lblNewLabel = new JLabel("Seleziona l'evento in programma:");
-		lblNewLabel.setBounds(25, 321, 165, 14);
+		lblNewLabel.setBounds(33, 321, 243, 14);
 		frame.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Seleziona il biglietto:");
-		lblNewLabel_1.setBounds(425, 321, 165, 14);
+		lblNewLabel_1.setBounds(491, 321, 195, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 
 		DefaultListModel<String> listmodelB = new DefaultListModel<String>();
 
 		JLabel lblNewLabel_2 = new JLabel("Seleziona il cliente:");
-		lblNewLabel_2.setBounds(203, 175, 165, 14);
+		lblNewLabel_2.setBounds(189, 175, 165, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 
 		JButton btnNewButton = new JButton("Prenota");
@@ -148,7 +148,7 @@ public class EventoUI extends JFrame implements ActionListener {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// table.getSelectionModel().addListSelectionListener(this);
 		JScrollPane scrollPane_table = new JScrollPane(table);
-		scrollPane_table.setBounds(234, 200, 319, 99);
+		scrollPane_table.setBounds(189, 200, 388, 99);
 		frame.getContentPane().add(scrollPane_table);
 
 		/************ EVENTI ****************/
@@ -160,7 +160,7 @@ public class EventoUI extends JFrame implements ActionListener {
 			}
 		};
 
-		dtmE.setColumnIdentifiers(new String[] { "ID", "Nome", "Tipo", "Descrizione" });
+		dtmE.setColumnIdentifiers(new String[] { "Nome", "Tipo", "Descrizione", "Data", "Ora" });
 
 		tableE = new JTable();
 		tableE.setBounds(344, 322, 314, -206);
@@ -169,7 +169,7 @@ public class EventoUI extends JFrame implements ActionListener {
 
 		JScrollPane scrollPane_table_E = new JScrollPane((tableE));
 
-		scrollPane_table_E.setBounds(60, 346, 319, 93);
+		scrollPane_table_E.setBounds(33, 346, 366, 93);
 		frame.getContentPane().add(scrollPane_table_E);
 
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -188,7 +188,7 @@ public class EventoUI extends JFrame implements ActionListener {
 					}
 					for (Evento e : DAOFactory.getDAOEvento().doRetrieveByCliente(cliente).values()) {
 						eventi.add(e);
-						dtmE.addRow(new Object[] { e.getIdEvento(), e.getNome(), e.getTipo(), e.getDescrizione() });
+						dtmE.addRow(new Object[] { e.getNome(), e.getTipo(), e.getDescrizione(), e.getDataEvento(), e.getOraEvento() });
 					}
 				}
 			}
@@ -205,7 +205,7 @@ public class EventoUI extends JFrame implements ActionListener {
 			}
 		};
 
-		dtmB.setColumnIdentifiers(new String[] { "ID", "Costo", "Disponibilità", "Nome Evento" });
+		dtmB.setColumnIdentifiers(new String[] { "ID", "Costo", "Nome Evento" });
 
 		/**
 		 * Da spostare in un controller Set<Biglietto> itemsBiglietto = new
@@ -219,7 +219,7 @@ public class EventoUI extends JFrame implements ActionListener {
 		tableB.setModel(dtmB);
 		tableB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollPane_table_B = new JScrollPane((tableB));
-		scrollPane_table_B.setBounds(459, 346, 319, 93);
+		scrollPane_table_B.setBounds(491, 346, 287, 93);
 		frame.getContentPane().add(scrollPane_table_B);
 
 		tableE.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -239,8 +239,7 @@ public class EventoUI extends JFrame implements ActionListener {
 						}
 					}
 					for (Biglietto b : biglietti) {
-						dtmB.addRow(new Object[] { b.getIdBiglietto(), b.getCosto(), b.isDisponibilità(),
-								b.getNomeEvento() });
+						dtmB.addRow(new Object[] { b.getIdBiglietto(), b.getCosto(), b.getNomeEvento() });
 					}
 				}
 			}
@@ -258,6 +257,13 @@ public class EventoUI extends JFrame implements ActionListener {
 			// }
 			// cliente= clienti.get(i);
 
+			int ev = tableE.getSelectedRow();
+			if (ev == -1) {
+				JOptionPane.showMessageDialog(null, "Seleziona un evento.");
+				break;
+			}
+			evento = eventi.get(ev);
+			
 			int b = tableB.getSelectedRow();
 			if (b == -1) {
 				JOptionPane.showMessageDialog(null, "Seleziona un biglietto.");
@@ -265,13 +271,6 @@ public class EventoUI extends JFrame implements ActionListener {
 			}
 
 			biglietto = biglietti.get(b);
-
-			int ev = tableE.getSelectedRow();
-			if (ev == -1) {
-				JOptionPane.showMessageDialog(null, "Seleziona un evento.");
-				break;
-			}
-			evento = eventi.get(ev);
 
 			GenerateRandom g = new GenerateRandom();
 			String idPrenotazione = "PE" + g.GenerateRandom();
